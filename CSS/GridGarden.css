@@ -179,7 +179,6 @@
     grid-template-columns: 20% 20% 20% 20% 20%;
     grid-template-rows: 20% 20% 20% 20% 20%;
 }
-
 #water {
     grid-area: 1/2/4/6
 }
@@ -191,22 +190,58 @@
     grid-template-columns: 20% 20% 20% 20% 20%;
     grid-template-rows: 20% 20% 20% 20% 20%;
 }
-
 #water-1 {
     grid-area: 1 / 4 / 6 / 5;
 }
-
 #water-2 {
     grid-area: 2 / 3 / 5 /6 ;
 }
 
 
 /*18*/
+#garden {
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-rows: 20% 20% 20% 20% 20%;
+}
+.water {
+    order: 0;
+}
+#poison {
+    order: 1; 
+}
 
 
 /*19*/
+#garden {
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-rows: 20% 20% 20% 20% 20%;
+}
+.water {
+    order: 0;
+}
+.poison {
+    order: -1;
+}
+
+
 /*20*/
+#garden {
+    display: grid;
+    grid-template-columns: 50%; 
+    grid-template-rows: 20% 20% 20% 20% 20%;
+}
+#water {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+
 /*21*/
+
+
+
 /*22*/
 /*23*/
 /*24*/
