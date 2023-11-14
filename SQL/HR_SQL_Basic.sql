@@ -122,6 +122,102 @@ SELECT (COUNT(CITY) - COUNT(DISTINCT CITY)) FROM STATION;
 /*********************************************************************
 10) Weather Observation Station 5 
 Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths (i.e.: number of characters in the name). If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.*/
+select city, length(city) from station order by length(city) DESC, city ASC fetch first row only;
+select city, length(city) from station order by length(city) asc,city asc fetch first row only;
+
+(
+    SELECT 
+        CITY,
+        LENGTH(CITY)
+    FROM STATION
+    ORDER BY LENGTH(CITY), CITY ASC
+    LIMIT 1
+);
+UNION
+(
+    SELECT 
+        CITY,
+        LENGTH(CITY)
+    FROM STATION
+    ORDER BY LENGTH(CITY) DESC, CITY ASC
+    LIMIT 1
+);
+
+/* OUTPUT
+
+*/
+
+
+
+/*********************************************************************
+11) Weather Observation Station 6
+Query the list of CITY names starting with vowels (a, e, i, o, u) from STATION. Your result cannot contain duplicates.*/
+
+/* OUTPUT
+
+*/
+
+
+
+
+/*********************************************************************
+12) Weather Observation Station 7 */
+
+/* OUTPUT
+
+*/
+
+
+
+
+/*********************************************************************
+13) Weather Observation Station 8 */
+
+/* OUTPUT
+
+*/
+
+
+
+
+/*********************************************************************
+14) Weather Observation Station 9  */
+
+/* OUTPUT
+
+*/
+
+
+
+/*********************************************************************
+15) Weather Observation Station 10 */
+
+/* OUTPUT
+
+*/
+
+
+
+/*********************************************************************
+16) Weather Observation Station 11 */
+
+/* OUTPUT
+
+*/
+
+
+
+/*********************************************************************
+17) Weather Observation Station 12 */
+
+/* OUTPUT
+
+*/
+
+
+
+/*********************************************************************
+)  */
 
 /* OUTPUT
 
