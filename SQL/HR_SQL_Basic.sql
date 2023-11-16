@@ -122,29 +122,11 @@ SELECT (COUNT(CITY) - COUNT(DISTINCT CITY)) FROM STATION;
 /*********************************************************************
 10) Weather Observation Station 5 
 Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths (i.e.: number of characters in the name). If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.*/
-select city, length(city) from station order by length(city) DESC, city ASC fetch first row only;
-select city, length(city) from station order by length(city) asc,city asc fetch first row only;
-
-(
-    SELECT 
-        CITY,
-        LENGTH(CITY)
-    FROM STATION
-    ORDER BY LENGTH(CITY), CITY ASC
-    LIMIT 1
-);
-UNION
-(
-    SELECT 
-        CITY,
-        LENGTH(CITY)
-    FROM STATION
-    ORDER BY LENGTH(CITY) DESC, CITY ASC
-    LIMIT 1
-);
-
+SELECT CITY, length(CITY) FROM STATION ORDER BY length(CITY) DESC, CITY ASC fetch first row only;
+SELECT CITY, length(CITY) FROM STATION ORDER BY length(CITY) ASC, CITY ASC fetch first row only;
 /* OUTPUT
-
+Amo 3
+Marine On Saint Croix 21
 */
 
 
@@ -152,54 +134,76 @@ UNION
 /*********************************************************************
 11) Weather Observation Station 6
 Query the list of CITY names starting with vowels (a, e, i, o, u) from STATION. Your result cannot contain duplicates.*/
-
+SELECT DISTINCT CITY FROM STATION WHERE CITY LIKE 'A%' OR CITY LIKE 'E%' OR CITY LIKE 'I%' OR CITY LIKE 'O%' OR CITY LIKE 'U%';
 /* OUTPUT
 
 */
 
 
+/*********************************************************************
+12) Weather Observation Station 7 
+Query the list of CITY names ending with vowels (a, e, i, o, u) from STATION. Your result cannot contain duplicates.*/
+SELECT DISTINCT CITY FROM STATION WHERE CITY LIKE '%a' OR CITY LIKE '%e' OR CITY LIKE '%i' OR CITY LIKE '%o' OR CITY LIKE '%u';
+
+/* OUTPUT
+Acme 
+Aguanga 
+Alba 
+Aliso Viejo 
+Alpine 
+Amazonia 
+....
+Yellville 
+Yuma 
+Zionsville 
+*/
 
 
 /*********************************************************************
-12) Weather Observation Station 7 */
+13) Weather Observation Station 8 
+Query the list of CITY names from STATION which have vowels (i.e., a, e, i, o, and u) as both their first and last characters. Your result cannot contain duplicates.*/
+SELECT DISTINCT CITY FROM STATION WHERE (CITY LIKE 'A%' OR CITY LIKE 'E%' OR CITY LIKE 'I%' OR CITY LIKE 'O%' OR CITY LIKE 'U%') AND (CITY LIKE '%a' OR CITY LIKE '%e' OR CITY LIKE '%i' OR CITY LIKE '%o' OR CITY LIKE '%u') ;
+/* OR */
+SELECT CITY FROM (SELECT DISTINCT CITY FROM STATION WHERE CITY NOT LIKE '%[aeiouAEIOU]%') AS subquery ORDER BY CITY ASC;
+/* OUTPUT
+Acme 
+Aguanga 
+Alba 
+Aliso Viejo 
+Alpine 
+Eriline 
+Ermine 
+Eskridge {-truncated-}
+*/
+
+
+/*********************************************************************
+14) Weather Observation Station 9 
+Query the list of CITY names from STATION that do not start with vowels. Your result cannot contain duplicates.*/
+SELECT DISTINCT CITY FROM STATION WHERE (CITY NOT IN (SELECT CITY FROM STATION WHERE CITY LIKE 'A%' OR CITY LIKE 'E%' OR CITY LIKE 'I%' OR CITY LIKE 'O%' OR CITY LIKE 'U%'));
+
+/* OUTPUT
+Baileyville 
+Bainbridge 
+Baker
+...
+Blue River {-truncated-}
+*/
+
+
+
+/*********************************************************************
+15) Weather Observation Station 11 */
 
 /* OUTPUT
 
 */
 
-
-
-
-/*********************************************************************
-13) Weather Observation Station 8 */
-
-/* OUTPUT
-
-*/
-
-
+SELECT DISTINCT CITY FROM STATION WHERE (CITY NOT IN (SELECT DISTINCT CITY FROM STATION WHERE CITY LIKE '%a' OR CITY LIKE '%e' OR CITY LIKE '%i' OR CITY LIKE '%o' OR CITY LIKE '%u')) OR (CITY NOT IN (SELECT CITY FROM STATION WHERE CITY LIKE 'A%' OR CITY LIKE 'E%' OR CITY LIKE 'I%' OR CITY LIKE 'O%' OR CITY LIKE 'U%'));
 
 
 /*********************************************************************
-14) Weather Observation Station 9  */
-
-/* OUTPUT
-
-*/
-
-
-
-/*********************************************************************
-15) Weather Observation Station 10 */
-
-/* OUTPUT
-
-*/
-
-
-
-/*********************************************************************
-16) Weather Observation Station 11 */
+16) Weather Observation Station 12 */
 
 /* OUTPUT
 
