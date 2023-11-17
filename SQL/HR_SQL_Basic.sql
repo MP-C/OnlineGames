@@ -210,39 +210,23 @@ Yazoo City
 */
 
 
-
 /*********************************************************************
-16) Weather Observation Station 12 */
+16) Weather Observation Station 11
+	Submissions	Leaderboard	Discussions
+Query the list of CITY names from STATION that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates.
+*/
 SELECT DISTINCT CITY FROM STATION WHERE (CITY NOT IN (SELECT DISTINCT CITY FROM STATION WHERE CITY LIKE '%a' OR CITY LIKE '%e' OR CITY LIKE '%i' OR CITY LIKE '%o' OR CITY LIKE '%u')) OR (CITY NOT IN (SELECT CITY FROM STATION WHERE CITY LIKE 'A%' OR CITY LIKE 'E%' OR CITY LIKE 'I%' OR CITY LIKE 'O%' OR CITY LIKE 'U%'));
 
 /* OUTPUT
-
+Addison 
+Agency 
+Alanson 
+Albany 
+Albion
+...
+Bainbridge 
+Baker 
+Baldwin 
+Barrigada 
+Bass Harbor
 */
-
-
-
-/*********************************************************************
-17) Weather Observation Station 12 */
-
-/* OUTPUT
-
-*/
-
-
-
-/*********************************************************************
-)  */
-
-/* OUTPUT
-
-*/
-
-
-
-/*********************************************************************
-)  */
-
-/* OUTPUT
-
-*/
-
