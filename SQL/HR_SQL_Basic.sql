@@ -248,3 +248,16 @@ Yazoo City
 Yoder 
 Zachary
 */
+
+
+/*********************************************************************
+21) Weather Observation Station 14
+Query the greatest value of the Northern Latitudes (LAT_N) from STATION that is less than . Truncate your answer to  decimal places.
+*/
+
+/* NOT WORKING */
+SELECT ROUND(LAT_N, 0) FROM STATION WHERE LAT_N < 137.2345;
+
+/* OUTPUT
+
+*/
