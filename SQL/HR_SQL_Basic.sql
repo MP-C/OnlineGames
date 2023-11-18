@@ -250,17 +250,23 @@ Zachary
 */
 
 
+
+
+
+
 /*********************************************************************
 21) Weather Observation Station 14
 Query the greatest value of the Northern Latitudes (LAT_N) from STATION that is less than . Truncate your answer to  decimal places.
 */
+SELECT SUBSTR(ROUND(MAX(LAT_N), 4), 1, 8) FROM STATION WHERE LAT_N < 137.2345;
 
 /* NOT WORKING */
 SELECT ROUND(LAT_N, 0) FROM STATION WHERE LAT_N < 137.2345;
-SELECT ROUND(MAX(LAT_N), 0) FROM STATION WHERE LAT_N < 137.2345;
-SELECT RIGHT(MAX(LAT_N), 3) AS greatest_lat_n FROM STATION WHERE LAT_N < 137.23450000;
+SELECT ROUND(MAX(LAT_N), 4) FROM STATION WHERE LAT_N < 137.2345;
+SELECT RIGHT(MAX(LAT_N), 4) AS LAT_N FROM STATION WHERE LAT_N < 137.23450000;
 SELECT MAX(LAT_N) AS greatest_lat_n FROM STATION WHERE LAT_N < 137.2345 CAST(FORMAT(greatest_lat_n, '0.0000') AS DECIMAL(10,4));
 
 /* OUTPUT
 
 */
+
