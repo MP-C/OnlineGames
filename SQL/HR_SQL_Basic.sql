@@ -257,6 +257,7 @@ Query the greatest value of the Northern Latitudes (LAT_N) from STATION that is 
 
 /* NOT WORKING */
 SELECT ROUND(LAT_N, 0) FROM STATION WHERE LAT_N < 137.2345;
+SELECT ROUND(MAX(LAT_N), 0) FROM STATION WHERE LAT_N < 137.2345;
 
 /* OUTPUT
 
