@@ -250,13 +250,27 @@ Zachary
 */
 
 
-
+/*********************************************************************
+18) Higher than 75 marks
+Query the Name of any student in STUDENTS who scored higher than  Marks. Order your output by the last three characters of each name. If two or more students both have names ending in the same last three characters (i.e.: Bobby, Robby, etc.), secondary sort them by ascending ID.
+*/
+SELECT NAME FROM STUDENTS WHERE MARKS > 75 ORDER BY RIGHT(Name, 3), ID;
+/* OUTPUT
+Stuart 
+Kristeen 
+Christene 
+Amina
+...
+Belvet 
+Devil 
+Evil
+*/
 
 
 
 /*********************************************************************
 21) Weather Observation Station 14
-Query the greatest value of the Northern Latitudes (LAT_N) from STATION that is less than . Truncate your answer to  decimal places.
+Query the greatest value of the Northern Latitudes (LAT_N) from STATION that is less than 137.2345. Truncate your answer to  decimal places.
 */
 SELECT SUBSTR(ROUND(MAX(LAT_N), 4), 1, 8) FROM STATION WHERE LAT_N < 137.2345;
 
@@ -267,6 +281,7 @@ SELECT RIGHT(MAX(LAT_N), 4) AS LAT_N FROM STATION WHERE LAT_N < 137.23450000;
 SELECT MAX(LAT_N) AS greatest_lat_n FROM STATION WHERE LAT_N < 137.2345 CAST(FORMAT(greatest_lat_n, '0.0000') AS DECIMAL(10,4));
 
 /* OUTPUT
-
+137.0193 
 */
+
 
