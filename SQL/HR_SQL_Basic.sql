@@ -333,3 +333,15 @@ SELECT SUBSTRING(ROUND((LONG_W), 4),1,8) FROM STATION WHERE LAT_N  =
 SELECT MAX(LAT_N) FROM STATION WHERE LAT_N < 137.2345;                          => 137.01930790
 SELECT MAX(LAT_N), FROM STATION WHERE LAT_N < 137.2345;                         => 164.87604770
 SELECT SUBSTR(ROUND(MAX(LONG_W), 4), 1, 8) FROM STATION WHERE LAT_N < 137.2345; => 164.8760
+
+
+/*********************************************************************
+23) Weather Observation Station 16
+Query the smallest Northern Latitude (LAT_N) from STATION that is greater than 38.7780. Round your answer to  decimal places.  */
+SELECT SUBSTR(ROUND(MIN(LAT_N),4),1,7) FROM STATION WHERE LAT_N > 38.7780;
+
+/* OUTPUT */
+38.8526
+
+/*Not Working*/
+SELECT ROUND(MIN(LAT_N),4) FROM STATION WHERE LAT_N > 38.7780; => 38.85260000 
