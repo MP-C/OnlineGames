@@ -383,3 +383,29 @@ SELECT LAT_N, LONG_W FROM STATION WHERE CITY = 'Manhattan';                     
 SELECT LAT_N, LONG_W FROM STATION WHERE CITY = 'Arlington';                                     => 75.17993079 92.94615894
 SELECT ROUND(ABS(MIN(LAT_N) - MAX(LAT_N) + MIN(LONG_W) - MAX(LONG_W)), 4) FROM STATION;         => 259.68590000 
 SELECT ROUND(ABS((MIN(LAT_N) - MAX(LAT_N))) + ABS((MIN(LONG_W) - MAX(LONG_W))), 4) FROM STATION;=> 259.68590000 
+
+
+
+/*********************************************************************
+26) Weather Observation Station 19
+Consider  P1(a, b) and P2(c, d) to be two points on a 2D plane where (a,b) are the respective minimum and maximum values of Northern Latitude (LAT_N) and (c,d) are the respective minimum and maximum values of Western Longitude (LONG_W) in STATION.
+Query the Euclidean Distance between points P1 and P2 and format your answer to display 4 decimal digits.
+
+EXTRA: Deriving the Euclidean distance between two data points involves computing the square root of the sum of the squares of the differences between corresponding values.
+d = √((x2-x1)2 + (y2-y1)2)
+*/
+SELECT ROUND((SQRT(POWER((MAX(LAT_N) - MIN(LAT_N)),2) + POWER((MAX(LONG_W) - MIN(LONG_W)),2))),4) FROM STATION;  
+/* OUTPUT */
+184.1616
+
+/* Others possibilities */
+SELECT SUBSTR(ABS(ROUND(SQRT((POWER((MAX(LAT_N) - MIN(LAT_N)),2)) + (POWER((MAX(LONG_W) - MIN(LONG_W)),2))),4)), 1,8) FROM STATION; => 1.841616
+SELECT SUBSTR(ROUND(SQRT(POWER((MAX(LAT_N) - MIN(LAT_N)),2) + POWER((MAX(LONG_W) - MIN(LONG_W)),2)),6), 1,8)*100 FROM STATION;=> 184.161600 
+SELECT SUBSTR(ROUND(SQRT(POWER((MAX(LAT_N) - MIN(LAT_N)),2) +POWER((MAX(LONG_W) - MIN(LONG_W)),2)),6),1,6)*100 FROM STATION;  => 184.1600 
+SELECT ROUND((SQRT(POWER((MAX(LAT_N) - MIN(LAT_N)),2) + POWER((MAX(LONG_W) - MIN(LONG_W)),2))),4) FROM STATION;               => +1.84161600000000E+002 
+SELECT ROUND(SQRT(POWER((MAX(LAT_N) - MIN(LAT_N)),2) + (POWER(MAX(LONG_W) - MIN(LONG_W),2))), 4) FROM STATION;                => +1.84161600000000E+002 
+SELECT ROUND(SQRT(POWER((MIN(LAT_N) - MIN(LONG_W)),2) + (POWER(MAX(LAT_N) - MAX(LONG_W),2))), 4) FROM STATION;                => +1.98870000000000E+001 
+/*Not Working*/
+SELECT SUBSTR(ROUND(CBRT(POW((MIN(LAT_N) - MIN(LONG_W)),2) + POW(MAX(LAT_N) - MAX(LONG_W), 2)), 4), 1, 8) FROM STATION;       => error, should be SQRT
+select max(LAT_N), min(LAT_N), max(LONG_W), min(LONG_W) FROM STATION;                                                         => 144.98906270 25.07352606 164.87604770 25.10565434 
+
