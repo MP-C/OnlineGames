@@ -417,3 +417,11 @@ SELECT SUBSTR(ROUND(S.LAT_N, 4),1,7) FROM STATION as S WHERE (SELECT count(LAT_N
 83.8913
 /*Not Working*/
 SELECT SUBSTR(ROUND(AVG(LAT_N), 4),1,7) FROM STATION; => 85.8718
+
+
+/*********************************************************************
+28) Revising Aggregations - The Count Function 
+Query a count of the number of cities in CITY having a Population larger than 1000,000.*/
+SELECT COUNT(*) FROM CITY WHERE POPULATION > '100000'; 
+/* OUTPUT */
+6
