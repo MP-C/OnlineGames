@@ -409,3 +409,11 @@ SELECT ROUND(SQRT(POWER((MIN(LAT_N) - MIN(LONG_W)),2) + (POWER(MAX(LAT_N) - MAX(
 SELECT SUBSTR(ROUND(CBRT(POW((MIN(LAT_N) - MIN(LONG_W)),2) + POW(MAX(LAT_N) - MAX(LONG_W), 2)), 4), 1, 8) FROM STATION;       => error, should be SQRT
 select max(LAT_N), min(LAT_N), max(LONG_W), min(LONG_W) FROM STATION;                                                         => 144.98906270 25.07352606 164.87604770 25.10565434 
 
+/*********************************************************************
+27) Weather Observation Station 20 
+A median is defined as a number separating the higher half of a data set from the lower half. Query the median of the Northern Latitudes (LAT_N) from STATION and round your answer to 4 decimal places. */
+SELECT SUBSTR(ROUND(S.LAT_N, 4),1,7) FROM STATION as S WHERE (SELECT count(LAT_N) FROM STATION WHERE LAT_N < S.LAT_N) = (SELECT count(LAT_N) FROM STATION WHERE LAT_N > S.LAT_N); 
+/* OUTPUT */
+83.8913
+/*Not Working*/
+SELECT SUBSTR(ROUND(AVG(LAT_N), 4),1,7) FROM STATION; => 85.8718
