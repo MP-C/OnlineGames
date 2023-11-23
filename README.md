@@ -4,7 +4,8 @@ This repository contains a collection of coding games, structured by programming
 
 **Currently supported languages:**
 * JavaScript
-* C++
+* C#
+* SQL
 * Python
 
 
