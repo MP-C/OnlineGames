@@ -425,3 +425,10 @@ Query a count of the number of cities in CITY having a Population larger than 10
 SELECT COUNT(*) FROM CITY WHERE POPULATION > '100000'; 
 /* OUTPUT */
 6
+
+/*********************************************************************
+29) Revising Aggregations - The Sum Function 
+Query the total population of all cities in CITY where District is California. */
+SELECT SUM(POPULATION) FROM CITY WHERE DISTRICT='California';
+/* OUTPUT */
+339002
