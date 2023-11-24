@@ -432,3 +432,11 @@ Query the total population of all cities in CITY where District is California. *
 SELECT SUM(POPULATION) FROM CITY WHERE DISTRICT='California';
 /* OUTPUT */
 339002
+
+/*********************************************************************
+30) Revising Aggregations - Averages
+Query the average population of all cities in CITY where District is California.*/
+SELECT AVG(Population) FROM CITY WHERE DISTRICT='California';
+/* OUTPUT */
+113000.667
+
