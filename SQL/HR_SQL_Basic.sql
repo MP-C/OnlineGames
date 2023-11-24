@@ -440,3 +440,10 @@ SELECT AVG(Population) FROM CITY WHERE DISTRICT='California';
 /* OUTPUT */
 113000.667
 
+
+/*********************************************************************
+31) Average Population
+Query the average population for all cities in CITY, rounded down to the nearest integer. */
+SELECT FLOOR(AVG(Population)) FROM CITY;
+/* OUTPUT */
+454250
