@@ -454,3 +454,11 @@ Query the sum of the populations for all Japanese cities in CITY. The COUNTRYCOD
 SELECT SUM(Population) FROM CITY WHERE COUNTRYCODE = 'JPN';
 /* OUTPUT */
 879196
+
+/*********************************************************************
+33) Population Density Difference 
+Query the difference between the maximum and minimum populations in CITY. */
+SELECT MAX(POPULATION)-MIN(POPULATION) FROM CITY;
+/* OUTPUT */
+4695354
+
