@@ -462,3 +462,19 @@ SELECT MAX(POPULATION)-MIN(POPULATION) FROM CITY;
 /* OUTPUT */
 4695354
 
+
+/*********************************************************************
+34) The Blunder
+Samantha was tasked with calculating the average monthly salaries for all employees in the EMPLOYEES table, but did not realize her keyboard's  key was broken until after completing the calculation. She wants your help finding the difference between her miscalculation (using salaries with any zeros removed), and the actual average salary.
+Write a query calculating the amount of error (i.e.:  average monthly salaries), and round it up to the next integer.
+*/
+SELECT CEIL(AVG(SALARY) - AVG(REPLACE(SALARY, '0', ''))) from EMPLOYEES; /* Works but is not like what it says or shows */
+/* OUTPUT */
+2253
+
+/*Not Working*/
+SELECT AVG(SALARY*12) FROM EMPLOYEES;
+SELECT SALARY*12 FROM EMPLOYEES WHERE ID='1';
+SELECT ROUND((AVG(A.SALARY) - (M.SALARY)),4) FROM EMPLOYEES WHERE A.SALARY = (SELECT (SALARY*12) FROM EMPLOYEES) AND M.SALARY = (SELECT (replace(salary,'0','')) FROM EMPLOYEES); => ~ no response on stdout ~
+SELECT CEIL(AVG(SALARY*12) - AVG(replace(SALARY, 0, ''))) FROM EMPLOYEES; => 46767
+
