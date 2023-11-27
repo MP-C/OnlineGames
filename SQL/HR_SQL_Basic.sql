@@ -478,3 +478,22 @@ SELECT SALARY*12 FROM EMPLOYEES WHERE ID='1';
 SELECT ROUND((AVG(A.SALARY) - (M.SALARY)),4) FROM EMPLOYEES WHERE A.SALARY = (SELECT (SALARY*12) FROM EMPLOYEES) AND M.SALARY = (SELECT (replace(salary,'0','')) FROM EMPLOYEES); => ~ no response on stdout ~
 SELECT CEIL(AVG(SALARY*12) - AVG(replace(SALARY, 0, ''))) FROM EMPLOYEES; => 46767
 
+
+/*********************************************************************
+35) Top Earners
+We define an employee's total earnings to be their monthly salary X months worked, and the maximum total earnings to be the maximum total earnings for any employee in the Employee table. Write a query to find the maximum total earnings for all employees as well as the total number of employees who have maximum total earnings. Then print these values as 2 space-separated integers.
+ */
+SELECT (SELECT MAX(MONTHS * SALARY) FROM EMPLOYEE),  COUNT(*) FROM EMPLOYEE WHERE (MONTHS * SALARY) = (SELECT MAX(MONTHS * SALARY) FROM EMPLOYEE);
+
+/* OUTPUT */
+108064 7
+
+/*Not Working*/
+SELECT MAX(SALARY * MONTHS) FROM EMPLOYEE;                                       => 108064
+SELECT COUNT(NAME) FROM EMPLOYEE WHERE (SALARY * MONTHS) = MAX(SALARY * MONTHS); => error
+SELECT MAX(SALARY * MONTHS),' ', COUNT(EMPLOYEE_ID) FROM EMPLOYEE WHERE (SALARY * MONTHS) = MAX(SALARY * MONTHS);
+SELECT (SELECT MAX(SALARY * MONTHS) FROM EMPLOYEE), (SELECT COUNT(*) FROM EMPLOYEE WHERE (SALARY * MONTHS) = MAX(SALARY * MONTHS));
+SELECT (SELECT MAX(SALARY * MONTHS) FROM EMPLOYEE),  COUNT(*) FROM EMPLOYEE WHERE (SALARY * MONTHS) = MAX(SALARY * MONTHS);
+SELECT (SELECT max(SALARY * MONTHS) FROM Employee),  COUNT(*) FROM EMPLOYEE WHERE (SALARY * MONTHS); => 106
+SELECT (SELECT MAX(SALARY * MONTHS) FROM EMPLOYEE),  COUNT(*) FROM EMPLOYEE WHERE (SALARY * MONTHS) = SELECT MAX(SALARY * MONTHS) FROM EMPLOYEE);
+
