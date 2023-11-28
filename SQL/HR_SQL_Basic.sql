@@ -497,3 +497,13 @@ SELECT (SELECT MAX(SALARY * MONTHS) FROM EMPLOYEE),  COUNT(*) FROM EMPLOYEE WHER
 SELECT (SELECT max(SALARY * MONTHS) FROM Employee),  COUNT(*) FROM EMPLOYEE WHERE (SALARY * MONTHS); => 106
 SELECT (SELECT MAX(SALARY * MONTHS) FROM EMPLOYEE),  COUNT(*) FROM EMPLOYEE WHERE (SALARY * MONTHS) = SELECT MAX(SALARY * MONTHS) FROM EMPLOYEE);
 
+
+/*********************************************************************
+36) Weather Observation Station 2 
+Query the following two values from the STATION table:
+1.The sum of all values in LAT_N rounded to a scale of  decimal 2 places.
+2.The sum of all values in LONG_W rounded to a scale of  decimal 2 places.*/
+SELECT SUBSTR(ROUND(SUM(LAT_N),2), 1, 8), SUBSTR(ROUND(SUM(LONG_W), 2), 1, 8) FROM STATION;
+/* OUTPUT */
+42850.04 47381.48
+/*Not Working*/
