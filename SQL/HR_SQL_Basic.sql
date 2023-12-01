@@ -528,3 +528,24 @@ SELECT SUM(CITY.POPULATION) FROM CITY, COUNTRY WHERE CITY.COUNTRYCODE = COUNTRY.
 27028484
 /*Not Working*/
 
+
+
+/*********************************************************************
+39) Basic Join - African Cities 
+Given the CITY and COUNTRY tables, query the names of all cities where the CONTINENT is 'Africa'.
+Note: CITY.CountryCode and COUNTRY.Code are matching key columns. */
+
+SELECT CITY.NAME FROM CITY, COUNTRY WHERE CITY.COUNTRYCODE = COUNTRY.CODE AND COUNTRY.CONTINENT= 'Africa';
+
+/* OUTPUT */
+Qina
+Warraq al-Arab
+Kempton Park
+Alberton
+Klerksdorp
+Uitenhage
+Brakpan
+Libreville
+
+/*Not Working*/
+
