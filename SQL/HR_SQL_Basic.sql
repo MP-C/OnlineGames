@@ -549,3 +549,25 @@ Libreville
 
 /*Not Working*/
 
+
+/*********************************************************************
+39) Basic Join - Average Population of Each Continent 
+Given the CITY and COUNTRY tables, query the names of all the continents (COUNTRY.Continent) and their respective average city populations (CITY.Population) rounded down to the nearest integer.
+Note: CITY.CountryCode and COUNTRY.Code are matching key columns. */
+
+SELECT COUNTRY.Continent, FLOOR(AVG(CITY.Population)) FROM CITY, COUNTRY WHERE CITY.COUNTRYCODE = COUNTRY.CODE GROUP BY COUNTRY.Continent;
+
+/* OUTPUT */
+Asia 693038
+Europe 175138
+Oceania 109189
+South America 147435
+Africa 274439
+
+/*Not Working*/
+SELECT COUNTRY.Continent, CEIL(AVG(CITY.Population)) FROM CITY, COUNTRY WHERE CITY.COUNTRYCODE = COUNTRY.CODE GROUP BY COUNTRY.Continent;
+Asia 693039
+Europe 175139
+Oceania 109190
+South America 147436
+Africa 274439
