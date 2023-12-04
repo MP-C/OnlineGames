@@ -618,3 +618,58 @@ WHEN A+B>C AND A+C>B AND B+C>A THEN
  ELSE 'Not A Triangle'
 END FROM TRIANGLES;
 
+
+
+
+/*********************************************************************
+41) The PADS
+Generate the following two result sets:
+
+Query an alphabetically ordered list of all names in OCCUPATIONS, immediately followed by the first letter of each profession as a parenthetical (i.e.: enclosed in parentheses). For example: AnActorName(A), ADoctorName(D), AProfessorName(P), and ASingerName(S).
+Query the number of ocurrences of each occupation in OCCUPATIONS. Sort the occurrences in ascending order, and output them in the following format:
+There are a total of [occupation_count] [occupation]s.
+where [occupation_count] is the number of occurrences of an occupation in OCCUPATIONS and [occupation] is the lowercase occupation name. If more than one Occupation has the same [occupation_count], they should be ordered alphabetically.
+
+Note: There will be at least two entries in the table for each type of occupation.
+*/
+SELECT CONCAT(NAME, '(', UPPER(LEFT(OCCUPATION, 1)),')') FROM OCCUPATIONS ORDER BY NAME;
+SELECT CONCAT('There are a total of ', COUNT(OCCUPATION),' ',LOWER(OCCUPATION),'s.') FROM OCCUPATIONS GROUP BY OCCUPATION ORDER BY COUNT(OCCUPATION) ASC, LOWER(OCCUPATION) ASC; =>was missing 's.'
+
+/* OUTPUT
+Aamina(D)
+Ashley(P)
+Belvet(P)
+Britney(P)
+Christeen(S)
+Eve(A)
+Jane(S)
+Jennifer(A)
+Jenny(S)
+Julia(D)
+Ketty(A)
+Kristeen(S)
+Maria(P)
+Meera(P)
+Naomi(P)
+Priya(D)
+Priyanka(P)
+Samantha(A)
+There are a total of 3 doctor.
+There are a total of 4 actor.
+There are a total of 4 singer.
+There are a total of 7 professor.
+
+/*Not Working*/
+1) SELECT * FROM OCCUPATIONS ORDER BY NAME;
+select concat(name, '(', substring(occupation, 1, 1), ')') as name from occupations order by name;      => ERROR
+select concat('There are a total of ', count(occupation), ' ', lower(occupation), 's.') as profession from occupations group by occupation order by profession;
+SELECT NAME + '(' + UPPER(SUBSTR(OCCUPATION, 1)) +')' FROM OCCUPATIONS ORDER BY NAME;                   => ERROR
+SELECT NAME + '(' + UPPER(LEFT(OCCUPATION, 1)) +')' FROM OCCUPATIONS ORDER BY NAME;                     => ERROR
+SELECT CONCAT(NAME, '(', UPPER(LEFT(OCCUPATION, 1)),')') FROM OCCUPATIONS ORDER BY NAME;                => IT SHOULD WORK, BECAUSE GIVES THE result
+SELECT CONCAT(NAME,'(',UPPER(substr(OCCUPATION, 1, 1)),')') FROM OCCUPATIONS ORDER BY NAME;             => IT SHOULD WORK, BECAUSE GIVES THE result
+
+2) SELECT CONCAT('There are a total of ', COUNT(*),' ', OCCUPATION) FROM OCCUPATIONS GROUP BY OCCUPATION ;
+SELECT CONCAT('There are a total of ', COUNT(*),' ', OCCUPATION,'.') FROM OCCUPATIONS GROUP BY OCCUPATION ;
+SELECT CONCAT('There are a total of ', (COUNT(OCCUPATION) as total),' ', OCCUPATION) FROM OCCUPATIONS GROUP BY OCCUPATION ORDER BY total ASC, LOWER(OCCUPATION); => ERROR
+SELECT CONCAT('There are a total of ', COUNT(OCCUPATION),' ', LOWER(OCCUPATION),'.') FROM OCCUPATIONS GROUP BY OCCUPATION ORDER BY COUNT(OCCUPATION) ASC, OCCUPATION ASC; => IT SHOULD WORK, BECAUSE GIVES THE result
+
