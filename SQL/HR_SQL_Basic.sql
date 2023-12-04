@@ -673,3 +673,21 @@ SELECT CONCAT('There are a total of ', COUNT(*),' ', OCCUPATION,'.') FROM OCCUPA
 SELECT CONCAT('There are a total of ', (COUNT(OCCUPATION) as total),' ', OCCUPATION) FROM OCCUPATIONS GROUP BY OCCUPATION ORDER BY total ASC, LOWER(OCCUPATION); => ERROR
 SELECT CONCAT('There are a total of ', COUNT(OCCUPATION),' ', LOWER(OCCUPATION),'.') FROM OCCUPATIONS GROUP BY OCCUPATION ORDER BY COUNT(OCCUPATION) ASC, OCCUPATION ASC; => IT SHOULD WORK, BECAUSE GIVES THE result
 
+
+
+/*//////////////////////SIMPLE TEST CERTIFICATION BASIC ///////////////////////////*/
+/*********************************************************************
+42) Advanced SelectOccupations
+Pivot the Occupation column in OCCUPATIONS so that each Name is sorted alphabetically and displayed underneath its corresponding Occupation. The output column headers should be Doctor, Professor, Singer, and Actor, respectively.
+Note: Print NULL when there are no more names corresponding to an occupation. */
+
+/* OUTPUT */
+
+/*Not Working*/
+SELECT NAME, OCCUPATION FROM OCCUPATIONS ORDER BY NAME ASC GROUP BY OCCUPATION;
+
+/*BASIC Certificate questions*/
+1) SELECT employee_ID, name FROM employee_information, last_quarter_bonus WHERE employee_information.employee_ID =  last_quarter_bonus.employee_ID, employee_information = 'HR', last_quarter_bonus.bonus => '5000';
+
+2) SELECT s.roll_number, s.name FROM student_information AS s JOIN faculty_information as f ON s.advisor = f.employee_ID WHERE (f.gender = 'M' AND f.salary >15000) OR (f.gender = 'F' AND f.salary >20000);
+
