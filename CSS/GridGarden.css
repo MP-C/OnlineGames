@@ -239,13 +239,40 @@
 
 
 /*21*/
+#garden {
+    display: grid;
+    grid-template-columns: repeat(1, 12.5%);
+    grid-template-rows: 20% 20% 20% 20% 20%;
+}
 
+#water {
+    grid-column: 1;
+    grid-row: 1;
+}
 
 
 /*22*/
+#garden {
+    display: grid;
+    grid-template-columns:100px 3em 40%;
+    grid-template-rows: 20% 20% 20% 20% 20%;
+}
+
+
 /*23*/
+#garden {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows: 20% 20% 20% 20% 20%;
+}
+
+
 /*24*/
+
 /*25*/
+
 /*26*/
+
 /*27*/
+
 /*28*/
