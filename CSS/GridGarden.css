@@ -312,3 +312,9 @@
     grid-row: 1;
 }
 
+
+/*28*/
+#garden {
+    display: grid;
+    grid-template: 835px 50px/ 20% 80%;
+}
