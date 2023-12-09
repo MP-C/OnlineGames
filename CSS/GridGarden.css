@@ -300,3 +300,15 @@
     grid-row: 5 / 6;
 }
 
+
+/*27*/
+#garden {
+    display: grid;
+    grid-template: 60% 40% / 200px;
+}
+
+#water {
+    grid-column: 1;
+    grid-row: 1;
+}
+
