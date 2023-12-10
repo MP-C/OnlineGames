@@ -1,106 +1,130 @@
-#1) {
+/*1*/
+#flexboxFroggy {
     justify-content: flex-end;
 }
 
-#2) {
+/*2*/
+#flexboxFroggy {
     justify-content: center;
 }
 
-#3)  {
+/*3*/
+#flexboxFroggy {
     justify-content: space-around;
 }
 
-#4) {
+/*4*/
+#flexboxFroggy {
     justify-content: space-between;
 }
 
-#5)   {
+/*5*/
+#flexboxFroggy {
     align-items: flex-end;
 }
 
-#6)  {
+/*6*/
+#flexboxFroggy {
     align-items: center;
     justify-content: center;
 }
 
-#7)   {
+/*7*/
+#flexboxFroggy {
     justify-content: space-around;
     align-items: flex-end;
 }
 
-#8) {
+/*8*/
+#flexboxFroggy {
     flex-direction: row-reverse;
 }
 
-#9)  {
+/*9*/
+#flexboxFroggy {
     flex-direction: column;
 }
 
-#10)  {
+/*10*/
+#flexboxFroggy {
     flex-direction: row-reverse;
     justify-content: flex-end;
 }
 
-#11)  {
+/*11*/
+#flexboxFroggy {
     flex-direction: column;
     justify-content: flex-end;
 }
 
-#12)  {
+/*12*/
+#flexboxFroggy {
     flex-direction: column-reverse;
     justify-content: space-between;
 }
 
-#13){
+/*13*/
+#flexboxFroggy {
     flex-direction: row-reverse;
     justify-content: center;   
     align-items: flex-end;
 }
 
-#14){ 
+/*14*/
+#flexboxFroggy {
     order: 1;
 }
 
-#15)  {
+/*15*/
+#flexboxFroggy {
     order: -3;
 }
 
-#16)  {
+/*16*/
+#flexboxFroggy {
     align-self: flex-end;
 }
 
-#17)  {
+/*17*/
+#flexboxFroggy {
     align-self: flex-end;
     order: 1;
 }
 
-#18)  {
+/*18*/
+#flexboxFroggy {
     flex-wrap: wrap;
 }
 
-#19)  {
+/*19*/
+#flexboxFroggy {
     flex-direction: column;
     flex-wrap: wrap;
 }
 
-#20)  {
+/*20*/
+#flexboxFroggy {
     flex-flow: column wrap;
 }
 
-#21)  {
+/*21*/
+#flexboxFroggy {
     align-content: flex-start;
 }
 
-#22)  {
+/*22*/
+#flexboxFroggy {
     align-content: flex-end;
 }
 
-#23) {
+/*23*/
+#flexboxFroggy {
     flex-direction: column-reverse;
     align-content: center; 
 }
 
-#24)  {
+/*24*/
+#flexboxFroggy {
     flex-flow:column-reverse wrap-reverse;
     justify-content: center;
     align-content: space-between;
