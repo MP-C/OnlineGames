@@ -19,7 +19,7 @@ This repository contains a collection of coding games, structured by programming
     * [Grind75](https://www.techinterviewhandbook.org/grind75): A Customize LeetCode study plans according to your needs. a good way to learn and gain skills, with some languages variaty. 
     * [HR](https://hackerrank.com/): A platform to practice and learn about code.
     * [Codingame](https://www.codingame.com/): A platform for coding competitions and challenges. Is a platform for coding competitions and challenges that can help you improve your skills and learn new things.
-    
+    * [LeetCode](https://leetcode.com/): A platform for coding competitions and challenges. Is a platform for coding competitions and challenges that can help you improve your skills and learn new things.
     * [CSS CodeCrunchers](https://CodeCrunchers.com/): A puzzle game that teaches you the basics of CSS Grid. Is a puzzle game that teaches you the basics of CSS Grid.
     * [CSS Disarray](https://Disarray.com/): A puzzle game that teaches you the basics of CSS Grid. Is a puzzle game that teaches you the basics of CSS Grid.
     * [CSS Flexbox Froggy](https://flexboxfroggy.com/): A classic arcade game where you have to help a frog cross a busy road. Is a fun and educational arcade game that teaches you the basics of Flexbox.
