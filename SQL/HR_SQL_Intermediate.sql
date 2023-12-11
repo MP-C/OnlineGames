@@ -115,3 +115,25 @@ WHERE NOT EXISTS (SELECT *
     FROM odd_numbers AS list2
     WHERE list2.n < list1.n AND list1.n % list2.n = 0
 );
+
+
+/*********************************************************************
+45) Alternative QueriesDraw The Triangle 1
+P(R) represents a pattern drawn by Julia in R rows. The following pattern represents P(5):
+Write a query to print the pattern P(20) */
+
+WITH RECURSIVE triangle(n) AS (select 40 UNION ALL SELECT n - 2 FROM triangle WHERE n - 2 >= 2) SELECT lpad(' ', triangle.n, '* ') From triangle;
+
+/* OUTPUT */
+* * * * * 
+* * * * 
+* * * 
+* * 
+*
+
+/*Not Working*/
+WITH RECURSIVE triangle(start(x), end(x)) AS SELECT triangle(start - 1, end), '*') WHERE start <= fim;
+WITH RECURSIVE triangle(start(x), end=1) AS SELECT Concat(triangle(start(20-end), end), '*') WHERE start <= fim;
+
+WITH RECURSIVE triangle(n) as (select 20 union all select n - 1 from triangle where n - 1 >= 2) select Concat(' ', triangle.n, '* ') from triangle;
+
