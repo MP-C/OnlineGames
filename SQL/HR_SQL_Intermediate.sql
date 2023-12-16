@@ -137,3 +137,37 @@ WITH RECURSIVE triangle(start(x), end=1) AS SELECT Concat(triangle(start(20-end)
 
 WITH RECURSIVE triangle(n) as (select 20 union all select n - 1 from triangle where n - 1 >= 2) select Concat(' ', triangle.n, '* ') from triangle;
 
+
+/*********************************************************************
+46) Alternative QueriesDraw The Triangle 2
+P(R) represents a pattern drawn by Julia in R rows. The following pattern represents P(5): */
+WITH RECURSIVE triangle(n) AS (select 1 UNION ALL SELECT n +2 FROM triangle WHERE n + 2 >= n AND n+2 < 40) SELECT lpad('', triangle.n, '* ') From triangle;
+
+/* OUTPUT */
+*
+* *
+* * *
+* * * *
+* * * * *
+* * * * * *
+* * * * * * *
+* * * * * * * *
+* * * * * * * * *
+* * * * * * * * * *
+* * * * * * * * * * *
+* * * * * * * * * * * *
+* * * * * * * * * * * * *
+* * * * * * * * * * * * * *
+* * * * * * * * * * * * * * *
+* * * * * * * * * * * * * * * *
+* * * * * * * * * * * * * * * * *
+* * * * * * * * * * * * * * * * * *
+* * * * * * * * * * * * * * * * * * *
+* * * * * * * * * * * * * * * * * * * *
+
+/*Not Working*/
+WITH RECURSIVE triangle(n) AS (select 40 UNION ALL SELECT n - 2 FROM triangle WHERE n - 2 >= 2) SELECT lpad(' ', triangle.n, '* ') From triangle ASC;
+WITH RECURSIVE triangle(n) AS (select 1 UNION ALL SELECT n +1 FROM triangle WHERE n + 1 >= n AND n+1 < 21) SELECT lpad(' ', triangle.n, '* ') From triangle;
+WITH RECURSIVE triangle(n) AS (select 1 UNION ALL SELECT n +2 FROM triangle WHERE n + 2 >= n AND n+2 < 40) SELECT lpad(' ', triangle.n, '* ') From triangle;
+WITH RECURSIVE triangle(n) AS (select 2 UNION ALL SELECT n +2 FROM triangle WHERE n + 2 >= n AND n+2 < 44) SELECT lpad(' ', triangle.n, '* ') From triangle;
+
