@@ -171,3 +171,87 @@ WITH RECURSIVE triangle(n) AS (select 1 UNION ALL SELECT n +1 FROM triangle WHER
 WITH RECURSIVE triangle(n) AS (select 1 UNION ALL SELECT n +2 FROM triangle WHERE n + 2 >= n AND n+2 < 40) SELECT lpad(' ', triangle.n, '* ') From triangle;
 WITH RECURSIVE triangle(n) AS (select 2 UNION ALL SELECT n +2 FROM triangle WHERE n + 2 >= n AND n+2 < 44) SELECT lpad(' ', triangle.n, '* ') From triangle;
 
+
+
+/*********************************************************************
+47) Basic JoinContest Leaderboard
+You did such a great job helping Julia with her last coding contest challenge that she wants you to work on this one, too!
+
+The total score of a hacker is the sum of their maximum scores for all of the challenges. Write a query to print the hacker_id, name, and total score of the hackers ordered by the descending score. If more than one hacker achieved the same total score, then sort the result by ascending hacker_id. Exclude all hackers with a total score of  from your result.
+
+Input Format
+
+The following tables contain contest data:
+
+Hackers: The hacker_id is the id of the hacker, and name is the name of the hacker.*/
+SELECT hacker_id, name, SUM(total_score) AS total
+    FROM (SELECT s.hacker_id, name, challenge_id, MAX(score) AS total_score
+        FROM Hackers h JOIN Submissions s ON h.hacker_id = s.hacker_id
+        WHERE score<>0 GROUP BY s.hacker_id, challenge_id, name
+        ) AS subq
+    GROUP BY hacker_id, name
+    ORDER BY total DESC, hacker_id;
+
+/* OUTPUT */
+
+
+/*Not Working*/
+
+SELECT Hackers.hacker_id, submissions.score FROM Hackers, Submissions WHERE Hackers.hacker_id = submissions.hacker_id;
+
+SELECT Submissions.hacker_id, Submissions.score FROM Submissions ORDER BY Submissions.hacker_id;
+
+SELECT DISTINCT hackers.hacker_id, hackers.hacker_id.name, 
+    SUM(SELECT submissions.score FROM Submissions WHERE submissions.hacker_id GROUP BY hacker_id) 
+    FROM hackers, submissions 
+    WHERE hackers.hacker_id = submissions.hacker_id ORDER BY submissions.score DES GROUP BY hackers.hacker_id ASC;
+
+SELECT h.hacker_id, h.name, MAX(s.score) AS total_score FROM Hackers h
+    JOIN Submissions s ON h.hacker_id = s.hacker_id
+    GROUP BY h.hacker_id, h.name
+    HAVING MAX(s.score) > 0
+    ORDER BY total_score DESC, h.hacker_id ASC;
+
+SELECT DISTINCT h.hacker_id, h.name, MAX(s.score) AS total_score FROM Hackers h
+    JOIN Submissions s ON h.hacker_id = s.hacker_id
+    GROUP BY h.hacker_id, h.name
+    HAVING MAX(s.score) > 0
+    ORDER BY total_score DESC, h.hacker_id ASC;
+    
+
+SELECT DISTINCT h.hacker_id, h.name, SUM(total_score) AS total_score FROM 
+    (SELECT s.hacker_id, challenge_id, MAX(score) AS table_score FROM Hackers h JOIN Submissions s ON h.hacker_id = s.hacker_id
+    WHERE score <> 0 GROUP BY s.hacker_id, s.challenge_id)
+    GROUP BY h.hacker_id ASC,
+    ORDER BY total_score DESC; 
+
+SELECT DISTINCT h.hacker_id, h.name, SUM(total_score) AS total_score FROM (SELECT s.hacker_id, challenge_id, MAX(score) AS table_score FROM Hackers h JOIN Submissions s ON h.hacker_id = s.hacker_id
+    WHERE score <> 0 GROUP BY s.hacker_id, s.challenge_id)
+    GROUP BY h.hacker_id ASC,
+    ORDER BY total_score DESC, hacker_id;
+
+SELECT h.hacker_id, h.name, SUM(total_score) AS total_score
+FROM (SELECT s.hacker_id, challenge_id, MAX(score) AS table_score FROM Hackers h JOIN Submissions s ON h.hacker_id = s.hacker_id
+    WHERE score>0 GROUP BY s.hacker_id, s.challenge_id)
+    GROUP BY h.hacker_id
+    ORDER BY total_score DESC, hacker_id;
+
+SELECT h.hacker_id, h.name, SUM(total_score) AS total_score FROM (SELECT s.hacker_id, challenge_id, MAX(score) AS table_score
+    FROM Hackers h JOIN Submissions s ON h.hacker_id = s.hacker_id
+    WHERE score>0 GROUP BY s.hacker_id, s.challenge_id)
+    GROUP BY h.hacker_id
+    ORDER BY total_score DESC, h.hacker_id;
+
+SELECT h.hacker_id, h.name, SUM(total_score) AS total_score FROM (SELECT s.hacker_id, name, challenge_id, MAX(score) AS table_score
+    FROM Hackers h JOIN Submissions s ON h.hacker_id = s.hacker_id
+    WHERE score>0 GROUP BY s.hacker_id, s.challenge_id, name)
+    GROUP BY h.hacker_id, name
+    ORDER BY total_score DESC, h.hacker_id;
+
+SELECT hacker_id, name, SUM(total_score) AS total_score
+    FROM (SELECT s.hacker_id, name, challenge_id, MAX(score) AS total_score
+        FROM Hackers h JOIN Submissions s ON h.hacker_id = s.hacker_id
+        WHERE score > 0 GROUP BY s.hacker_id, challenge_id, name
+        )
+    GROUP BY hacker_id, name
+    ORDER BY total_score DESC, hacker_id;
