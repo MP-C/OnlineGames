@@ -53,12 +53,20 @@ var solution = function(isBadVersion) {
      * @return {integer} The first bad version
      */
     return function(n) {
-        versionNum =[];
-        if(isBadVersion!='' && isBadVersion==true){
-            versionNum.push(isBadVersion);
-            console.log("versionNum", versionNum);
+        let previousVersion=1;
+        let nextVersion=n;
+        if(isBadVersion!=''){
+            while(previousVersion <= nextVersion){
+                const average = previousVersion + Math.floor((nextVersion - previousVersion)/2);
+                if(isBadVersion(average)){
+                    nextVersion = average-1;
+                }
+                else{
+                    previousVersion = average+1;
+                }
+            }
         }
-        return Math.min(versionNum);
+        return previousVersion;
     }
 };
 
@@ -94,7 +102,7 @@ return function(n) {
     let version =1;
     if(isBadVersion!=''){
         while(previousVersion <= nextVersion){
-            version = previousVersion + Math.floor(nextVersion - previousVersion)/2;
+            version = previousVersion + Math.floor(nextVersion - previousVersion)/2; // => probleme with floor!! all result must be included 
             if(isBadVersion(version)){
                 nextVersion = version -1;
             }
