@@ -27,7 +27,7 @@ var search = function(nums, target) {
     let previous = 0;
     let next = nums.length - 1;
         while (previous <= next) {
-            let midPosition = Math.ceil((next + previous) / 2);
+            let midPosition = previous + (next - previous) / 2;
             if (nums[midPosition] == target){
                 return midPosition;
             }
@@ -37,6 +37,6 @@ var search = function(nums, target) {
             else{
                 next = midPosition - 1;
             }
+        return -1;
         }
-    return -1;
 };
