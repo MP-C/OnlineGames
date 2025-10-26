@@ -12,14 +12,11 @@ namespace DesignPatterns.classes
 
     /*
      * Tipos de design patterns:
-     * 
      * Creational - Controlar como os objetos são criados
      * 
      * Structural - Controlar como classes e objetos se organizam
      * 
      * Behavioral - Controlar como os objetos interagem e se comunicam
-     *
-     *
      */
 
 
@@ -108,7 +105,7 @@ namespace DesignPatterns.classes
     }
     #endregion
 
-    #region Strategy -> substituiu if/else e melhora ocp (Behavioral)
+    #region Strategy -> substituiu if/else e melhora OCP (Behavioral)
     // Define famílias de algoritmos e escolhe um em tempo de execução
     // Decude como método de comporta
     // Interface da estratégia
