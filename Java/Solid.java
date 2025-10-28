@@ -1,248 +1,317 @@
-public class SOLID {
-    /*
-    SOLID é uma sigla para os primeiros cinco princípios do design orientado a objeto (OOD)
-    Estabelecem práticas que contribuem para o desenvolvimento de software com considerações de manutenção e
-    extensão à medida que o projeto cresce. A adoção dessas práticas também pode contribuir para evitar problemas
-    de código, refatoração de código e o desenvolvimento ágil e adaptativo de software.
-    */
+import java.util.ArrayList;
+import java.util.List;
 
-    //S - Single-Responsability (Princípio da responsabilidade única) => cada class tem a sua responsabilidade:
-    // 1 class para formas, 1a para calculos, 1a para apresentar dados
-    public class Single{
-        public class Square{
-            public float length;
-            public Square (float length){
+/**
+ * Esta classe demonstra os cinco princípios SOLID (Single Responsibility,
+ * Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion),
+ * que são diretrizes cruciais para o design de software orientado a objetos.
+ */
+public class SOLID {
+
+    // =================================================================
+    // S - Single Responsibility Principle (SRP)
+    // Uma classe deve ter apenas uma razão para mudar.
+    // =================================================================
+    public static class SingleResponsibility {
+
+        // CLASSE 1: Responsabilidade única: Gerenciar dados da forma (Entidade)
+        public static class Square {
+            private float length;
+
+            public Square(float length) {
                 this.length = length;
             }
-        }
-        public class Circle{
-            public float radius;
-            public Circle (float radius){
-                this.radius = radius;
+
+            public float getLength() {
+                return length;
             }
         }
-        public class AreaCalculator{
-            protected String shapes;
-            public AreaCalculator(shapes){
-                this.shapes = shapes;
+
+        // CLASSE 2: Responsabilidade única: Calcular a área da forma (Cálculo)
+        public static class AreaCalculator {
+
+            public double calculateSquareArea(Square square) {
+                return square.getLength() * square.getLength();
             }
-            public static void sum{
-                float area;
-                if(shape= square ){
 
-                } else if (shape = circle) {
+            // Se quisermos calcular a área de um círculo (mantendo o SRP,
+            // este método lida apenas com a lógica de cálculo, e não com a exibição).
+            public double calculateCircleArea(Circle circle) {
+                return Math.PI * circle.getRadius() * circle.getRadius();
+            }
+        }
 
-                }
-                return area;
+        // CLASSE 3: Responsabilidade única: Exibir o resultado (Apresentação/Relatório)
+        public static class AreaPresenter {
+            public static void printArea(String shapeName, double area) {
+                System.out.println("A área do(a) " + shapeName + " é: " + area);
             }
         }
     }
 
-    //O - Open-closed Principle (Princípio do aberto-fechado)
-    // Class ou Entities Aberto para extensão e fechado para modificação
-    // Querendo acrescentar mais funcionalidades, ao criar nova classe que herda Formas, permite que cada Class tenha
-    // o seu proprio calculo, Aqui, o metodo sum é removido da Class AreaCalculator, e associadao à class de cada forma
-    // Desta forma a minha Order pode receber qualquer tipo de desconto, desde que essa classe herde a estratégia
-    // Isto também é composition por herança
-    public class Openclosed {
-        // Interface que define o comportamento básico que todas as formas devem ter: calcular a área.
-        interface Shape {
+    // =================================================================
+    // O - Open-Closed Principle (OCP)
+    // Aberto para extensão, fechado para modificação.
+    // =================================================================
+    public static class OpenClosed {
+
+        // INTERFACE: Define o contrato. Adicionar novas formas não exige mudar Shape.
+        public interface Shape {
             double calculateArea();
         }
 
-        // Classe que gere a forma Quadrado.
-        public class SquareClass implements Shape {
-            // Variável privada para armazenar o comprimento do lado.
+        // CLASSE: Quadrado (Aberto para extensão, implementando Shape)
+        public static class SquareClass implements Shape {
             private float length;
 
-            // Construtor para implementar o objecto quando instanciado
-            public SquareClass(float initialLength) {
-                this.length = initialLength;
+            public SquareClass(float length) {
+                this.length = length;
             }
 
-            // Método Getter: Retorna o comprimento atual do lado do quadrado.
-            public float getLength() {
-                return length;
-            }
-
-            // Método Setter: Permite alterar o comprimento do lado.
-            public void setLength(float newLength) {
-                this.length = newLength;
-            }
-
-            // Implementação do método calculateArea da interface Shape.
             @Override
             public double calculateArea() {
                 return Math.pow(this.length, 2);
             }
         }
 
-        // Classe que gere a forma Círculo.
-        class CircleClass implements Shape {
+        // CLASSE: Círculo (Aberto para extensão, implementando Shape)
+        public static class CircleClass implements Shape {
             private float radius;
 
-            public CircleClass(float initialRadius) {
-                this.radius = initialRadius;
+            public CircleClass(float radius) {
+                this.radius = radius;
             }
 
-            // Implementação do método calculateArea da interface Shape.
             @Override
             public double calculateArea() {
                 return Math.PI * Math.pow(this.radius, 2);
             }
         }
 
-        class AreaCalculator {
-            // A coleção agora é uma lista de objetos que implementam a interface Shape.
-            private Shape[] shapes;
+        // CLASSE: AreaCalculator (Fechado para modificação. Se uma nova forma for adicionada,
+        // esta classe não precisa ser alterada, pois depende da abstração Shape).
+        public static class AreaAggregator {
 
-            // Construtor em Java que recebe um array de Shapes.
-            public AreaCalculator(Shape[] shapes) {
-                this.shapes = shapes;
-            }
-
-            // Função para somar as áreas de todas as formas.
-            public double sum() {
+            // A classe depende da abstração (Shape), e não das implementações (SquareClass, CircleClass).
+            public double sumAreas(List<Shape> shapes) {
                 double totalArea = 0.0;
-                // Loop for-each em Java
-                for (Shape shape : this.shapes) {
-                    // Chamamos o método calculateArea, independentemente de ser Square ou Circle.
+                for (Shape shape : shapes) {
+                    // O polimorfismo garante que o método correto seja chamado.
                     totalArea += shape.calculateArea();
                 }
                 return totalArea;
             }
         }
-
-        // Classe para demonstração (main method)
-        class GeometryDemo {
-            public void main(String[] args) {
-                // Criar instâncias das formas
-                SquareClass s1 = new SquareClass(10.0f);
-                CircleClass c1 = new CircleClass(5.5f);
-
-                // Criar um array de Shapes
-                Shape[] minhasFormas = {s1, c1};
-
-                // Criar o calculador com as formas
-                AreaCalculator calculator = new AreaCalculator(minhasFormas);
-
-                // Calcular e imprimir a soma
-                double totalArea = calculator.sum();
-                System.out.println("Área Total Combinada: " + totalArea);
-            }
-        }
     }
 
-    //L - Liskov Substitution Principle (Princípio da substituição de Liskov)
-    // Nunca criar heranças de uma super classe se a subclasse nunca vai implementar alguns destes métodos
-    // Mais vale separar cada uma delas e as suas funcionalidades, e só chamar quando cada uma é necessária
-    class Liskov{
-        public abstract class Bird // Esta class faz uma coisa e unica
-        {
-            public abstract void Eat(); // Comportamento que todos devem ter
+    // =================================================================
+    // L - Liskov Substitution Principle (LSP)
+    // Subclasses devem ser substituíveis por suas superclasses sem alterar
+    // a correção do programa.
+    // =================================================================
+    public static class LiskovSubstitution {
+
+        // CLASSE ABSTRATA: Define um comportamento básico (o que todos podem fazer).
+        public abstract static class Bird {
+            public abstract void eat();
         }
 
-        public interface IFlyable // esta class faz uma coisa e unica, ainda que pudesse estar em Bird
-        {
-            void Fly();
+        // INTERFACE: Define um comportamento específico para aqueles que podem voar.
+        public interface IFlyable {
+            void fly();
         }
 
-        public class Passaro extends Bird implements IFlyable {
+        // CLASSE CORRETA: O Pardal pode ser substituído por Bird (Eat) e por IFlyable (Fly)
+        public static class Sparrow extends Bird implements IFlyable {
             @Override
-            public void Eat() {
-                System.out.println("Eu sei COMER");
+            public void eat() {
+                System.out.println("Pardal: Eu como sementes.");
             }
 
             @Override
-            public void Fly() {
-                System.out.println("Eu sei voar");
+            public void fly() {
+                System.out.println("Pardal: Eu sei voar muito bem.");
+            }
+        }
+
+        // CLASSE CORRETA: A Galinha pode ser substituída por Bird (Eat), mas não por IFlyable,
+        // evitando a herança de um método inútil (como 'fly()' que lança exceção).
+        public static class Chicken extends Bird {
+            @Override
+            public void eat() {
+                System.out.println("Galinha: Eu sei comer, mas não sei voar.");
+            }
+        }
+
+        // Método que aceita apenas aves voadoras
+        public static void forceFlying(IFlyable bird) {
+            bird.fly();
+        }
+    }
+
+    // =================================================================
+    // I - Interface Segregation Principle (ISP)
+    // Clientes não devem ser forçados a depender de interfaces que não usam.
+    // É melhor ter muitas interfaces pequenas do que uma gigante.
+    // =================================================================
+    public static class InterfaceSegregation {
+
+        // INTERFACE PEQUENA 1: Responsável apenas por cálculos de área (2D)
+        public interface Shape2D {
+            double calculateArea();
+        }
+
+        // INTERFACE PEQUENA 2: Responsável apenas por cálculos de volume (3D)
+        public interface Shape3D {
+            double calculateVolume();
+        }
+
+        // CLASSE: Cuboid (Implementa ambos, pois precisa de ambos os cálculos)
+        public static class Cuboid implements Shape2D, Shape3D {
+            private double length, width, height;
+
+            public Cuboid(double l, double w, double h) {
+                this.length = l;
+                this.width = w;
+                this.height = h;
             }
 
-            public class Galinha extends Bird {
-                @Override
-                public void Eat() {
-                    System.out.println("Eu sei comer, mas não sei voar");
-                }
+            @Override
+            public double calculateArea() {
+                // Cálculo da área de superfície do cuboide
+                return 2 * (length * width + length * height + width * height);
+            }
+
+            @Override
+            public double calculateVolume() {
+                return length * width * height;
+            }
+        }
+
+        // CLASSE: Circle (Implementa apenas Shape2D, sem ser forçado a ter calculateVolume)
+        public static class Circle implements Shape2D {
+            private double radius;
+
+            public Circle(double r) {
+                this.radius = r;
+            }
+
+            @Override
+            public double calculateArea() {
+                return Math.PI * Math.pow(radius, 2);
+            }
+
+            // Não é forçado a implementar calculateVolume()
+        }
+    }
+
+    // =================================================================
+    // D - Dependency Inversion Principle (DIP)
+    // Módulos de alto nível não devem depender de módulos de baixo nível.
+    // Ambos devem depender de abstrações (Interfaces).
+    // =================================================================
+    public static class DependencyInversion {
+
+        // ABSTRAÇÃO: Interface de alto nível (o Contrato)
+        public interface DBConnectionInterface {
+            String connect();
+        }
+
+        // MÓDULO DE BAIXO NÍVEL (Implementação): Depende da Abstração.
+        public static class MySQLConnection implements DBConnectionInterface {
+            @Override
+            public String connect() {
+                return "Conexão MySQL estabelecida.";
+            }
+        }
+
+        // MÓDULO DE BAIXO NÍVEL (Nova Implementação): Fácil de substituir.
+        public static class PostgreSQLConnection implements DBConnectionInterface {
+            @Override
+            public String connect() {
+                return "Conexão PostgreSQL estabelecida.";
+            }
+        }
+
+        // MÓDULO DE ALTO NÍVEL: Depende da Abstração (DBConnectionInterface), e não
+        // de uma implementação concreta (como MySQLConnection).
+        public static class PasswordReminder {
+            private final DBConnectionInterface dbConnection;
+
+            // Injeção de Dependência via Construtor
+            public PasswordReminder(DBConnectionInterface dbConnection) {
+                this.dbConnection = dbConnection;
+            }
+
+            public void sendReminder() {
+                String status = dbConnection.connect();
+                System.out.println("Lembrete de senha enviado. Status da Conexão: " + status);
             }
         }
     }
 
-    //I - Interface Segregation Principle (Princípio da segregação de interfaces)
-    // Várias interfaces pequenas e específicas a uma interface gigante
-    // Assim as classes não implementam métodos que não usam
-    class Interface {
-        interface ShapeInterface {
-            public class area {
-            }
-        }
+    // =================================================================
+    // MÉTODO MAIN PARA DEMONSTRAÇÃO
+    // =================================================================
+    public static void main(String[] args) {
 
-        interface ThreeDimensionalShapeInterface {
-            public class volume {
-            }
-        }
+        System.out.println("=========================================");
+        System.out.println("        DEMONSTRAÇÃO DOS PRINCÍPIOS SOLID");
+        System.out.println("=========================================");
 
-        class Cuboid implements ShapeInterface, ThreeDimensionalShapeInterface {
-            public class area {
-                // calculate the surface area of the cuboid
-            }
-            public class volume {
-                // calculate the volume of the cuboid
-            }
-        }
-    }
+        // --- S - Single Responsibility ---
+        System.out.println("\n--- S (SRP) - Responsabilidade Única ---");
+        SingleResponsibility.Square s = new SingleResponsibility.Square(5.0f);
+        SingleResponsibility.AreaCalculator calculator = new SingleResponsibility.AreaCalculator();
+        double area = calculator.calculateSquareArea(s);
+        SingleResponsibility.AreaPresenter.printArea("Quadrado (5x5)", area);
 
-    //D - Dependency Inversion Principle (Princípio da inversão de dependência)
-    // As entidades devem dependender de abstrações e não de de implementações.
-    // Alto nivel não deve depender de baixo nível
-    class Dependency{
+        // --- O - Open/Closed ---
+        System.out.println("\n--- O (OCP) - Aberto/Fechado ---");
+        OpenClosed.SquareClass sq = new OpenClosed.SquareClass(4.0f);
+        OpenClosed.CircleClass ci = new OpenClosed.CircleClass(3.0f);
+        List<OpenClosed.Shape> shapes = new ArrayList<>();
+        shapes.add(sq);
+        shapes.add(ci);
 
-        // ANTES;
-        class MySQLConnection //conecta-se à base de dados
-        {
-            public String connect()
-            {
-                // handle the database connection
-                return 'Database connection';
-            }
-        }
-        class PasswordReminder // usa a conexão que MySQLConnection executa
-        {
-            private dbConnection(){};
+        OpenClosed.AreaAggregator aggregator = new OpenClosed.AreaAggregator();
+        double total = aggregator.sumAreas(shapes);
+        System.out.println("Área Total (Quad. 4x4 + Cír. R=3): " + total);
 
-            public void construct(MySQLConnection dbConnection)
-            {
-                this.dbConnection = dbConnection;
-            }
-        }
-        // Sempre que há uma base nova, a connexão de MySQLConnection tem de ser novamente construida (desrespeita 2 principios
+        // --- L - Liskov Substitution ---
+        System.out.println("\n--- L (LSP) - Substituição de Liskov ---");
+        LiskovSubstitution.Sparrow sparrow = new LiskovSubstitution.Sparrow();
+        LiskovSubstitution.Chicken chicken = new LiskovSubstitution.Chicken();
 
-        // DEPOIS
-        // AO se criar uma nova interface
-        interface DBConnectionInterface
-        {
-            public class connect{};
-        }
+        // Ambas as classes substituem o tipo Bird:
+        sparrow.eat();
+        chicken.eat();
 
-        // A conexão é establecida pela interface
-        class MySQLConnection implements DBConnectionInterface
-        {
-            @override
-            public String connect()
-            {
-                // handle the database connection
-                return 'Database connection';
-            }
-        }
+        // Apenas o Sparrow pode ser usado onde IFlyable é esperado:
+        LiskovSubstitution.forceFlying(sparrow);
+        // LiskovSubstitution.forceFlying(chicken); // Isso geraria um erro de compilação (CORRETO!)
 
-        // e a conexão continua a ser a mesma, sem se ter de mexer na MySQLConnection
-        class PasswordReminder
-        {
-            private dbConnection(){};
+        // --- I - Interface Segregation ---
+        System.out.println("\n--- I (ISP) - Segregação de Interfaces ---");
+        InterfaceSegregation.Cuboid cuboid = new InterfaceSegregation.Cuboid(2, 3, 4);
+        InterfaceSegregation.Circle circle2D = new InterfaceSegregation.Circle(5);
 
-            public void construct(DBConnectionInterface dbConnection)
-            {
-                this.dbConnection = dbConnection;
-            }
-        }
+        // Cuboid usa ambas as interfaces
+        System.out.println("Volume do Cuboide (3D): " + cuboid.calculateVolume());
+        // Circle usa apenas a 2D
+        System.out.println("Área do Círculo (2D): " + circle2D.calculateArea());
+
+        // --- D - Dependency Inversion ---
+        System.out.println("\n--- D (DIP) - Inversão de Dependência ---");
+
+        // Alto nível depende da Abstração (DBConnectionInterface)
+        DependencyInversion.DBConnectionInterface mySql = new DependencyInversion.MySQLConnection();
+        DependencyInversion.PasswordReminder reminder1 = new DependencyInversion.PasswordReminder(mySql);
+        reminder1.sendReminder(); // Conexão MySQL
+
+        // Facilidade de mudar a dependência sem alterar a classe PasswordReminder (alto nível)
+        DependencyInversion.DBConnectionInterface postgreSql = new DependencyInversion.PostgreSQLConnection();
+        DependencyInversion.PasswordReminder reminder2 = new DependencyInversion.PasswordReminder(postgreSql);
+        reminder2.sendReminder(); // Conexão PostgreSQL
     }
 }
