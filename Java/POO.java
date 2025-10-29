@@ -76,11 +76,11 @@ public class POO {
     public static void main(String[] args){
 
         /** POLIMORFISMO */
-        // Overload => mesmo metodo opera resultados diferentes (COMPILE TIME)
+        //Overriding => Implemntação de um método que já existe e é alterado para esta class (RUN TIME)
         POO.Polimorfismo.Animal.Cumprimentar("Olá");
         POO.Polimorfismo.Animal.Cumprimentar("Miau");
 
-        //Overriding => Implemntação de um método que já existe e é alterado para esta class (RUN TIME)
+        // Overload => mesmo metodo opera resultados diferentes (COMPILE TIME)
         Polimorfismo.Pessoa p1=new Polimorfismo.Pessoa();
         Polimorfismo.Pessoa p2=new Polimorfismo.Pessoa();
         p1.Cumprimentar();
