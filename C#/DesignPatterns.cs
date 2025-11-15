@@ -12,11 +12,11 @@ namespace DesignPatterns.classes
 
     /*
      * Tipos de design patterns:
-     * Creational - Controlar como os objetos são criados
+     * Creational - Controlar como os objetos são criados => Singelton -> instancia unica
      * 
-     * Structural - Controlar como classes e objetos se organizam
+     * Structural - Controlar como classes e objetos se organizam => Decorator -> adicionar comportamentos sem herança => atraves de funcionalidades a objetos dinamicamente
      * 
-     * Behavioral - Controlar como os objetos interagem e se comunicam
+     * Behavioral - Controlar como os objetos interagem e se comunicam => Observavel -> Notifica múltiplos objetos quando algo muda
      */
 
 
