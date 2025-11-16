@@ -192,37 +192,55 @@ def selecionar_heroi_adversario(superHeroi_disponivel, numeroHerois, escolha):
    return selecionar_heroi(superHeroi_disponivel, escolha_adversario_index)
 
 def menuopcao(meu_heroi, heroi_adversario):
-    continuar = "sim"
+    rodada = 1
+    max_rodadas = 8  # Definindo um limite para o combate
 
-    while continuar!="terminou" and (meu_heroi.obter_vida() > 0 and heroi_adversario.obter_vida() > 0):
-       print("\n** O que fazer? **")
-       print("1) Combate")
-       print("2) Detalhes do meu heroi")
-       print("3) Conhecer o adversario")
-       print("4) Sair")
-       try:
-           menuopcao = int(input("Escolha de [1-4]: "))
-       except ValueError:
-           erro()
-           continue
+    while meu_heroi.obter_vida() > 0 and heroi_adversario.obter_vida() > 0 and rodada <= max_rodadas:
+        print(f"\n======== ⚔️ RONDA {rodada} / {max_rodadas} ⚔️ ========")
+        print("\n** QUEM ATACA NESTA RONDA? **")
+        print(f"1) {meu_heroi.get_nome()} (Vida: {meu_heroi.obter_vida()})")
+        print(f"2) {heroi_adversario.get_nome()} (Vida: {heroi_adversario.obter_vida()})")
+        print("3) Detalhes e Sair")
 
-       if menuopcao == 1:
-           continuar = combate(meu_heroi, heroi_adversario)
+        try:
+            escolha_atacante = int(input("Escolha de [1-3]: "))
+        except ValueError:
+            erro()
+            continue
 
-       elif menuopcao == 2:
-           print(f"Meu Heroi: {meu_heroi.get_nome()}, Ataque:  {meu_heroi.ataque()}, Defesa: {meu_heroi.defender()}, Vida: {meu_heroi.obter_vida()}.")
+        if escolha_atacante == 1:
+            heroi_ativo = meu_heroi
+            heroi_passivo = heroi_adversario
+            combate_unica_jogada(heroi_ativo, heroi_passivo, True)
+            rodada += 1
 
-       elif menuopcao == 3:
-           print(f"Herói Adversário: {heroi_adversario.get_nome()}, Ataque: <vais descobrir>, Defesa: {heroi_adversario.defender()}, Vida: <desconhecido> ")
+        elif escolha_atacante == 2:
+            heroi_ativo = heroi_adversario
+            heroi_passivo = meu_heroi
+            combate_unica_jogada(heroi_ativo, heroi_passivo, False)
+            rodada += 1
 
-       # Sair
-       elif menuopcao == 4:
-           sair()
-           return
+        elif escolha_atacante == 3:
+            print(f"Meu Heroi: {meu_heroi.get_nome()}, Vida: {meu_heroi.obter_vida()}.")
+            print(f"Adversário: {heroi_adversario.get_nome()}, Vida: {heroi_adversario.obter_vida()}.")
+            sair()
+            return
 
-       # Erro
-       else:
-           erro()
+        else:
+            erro()
+
+    print("\n==================================================================")
+    if rodada > max_rodadas:
+        print("⏰ FIM DO TEMPO! O combate terminou por limite de rondas.")
+
+    # Exibir o resultado final
+    if meu_heroi.obter_vida() > heroi_adversario.obter_vida():
+        print(f"🎉 O vencedor é {meu_heroi.get_nome()}! (Vida: {meu_heroi.obter_vida()})")
+    elif heroi_adversario.obter_vida() > meu_heroi.obter_vida():
+        print(f"😔 O vencedor é {heroi_adversario.get_nome()}. (Vida: {heroi_adversario.obter_vida()})")
+    else:
+        print("🤝 EMPATE! Ambos caíram ou têm vida igual.")
+    print("\n==================================================================")
 
 def trocar_personagem(meu_heroi, heroi_adversario):
     if meu_heroi.obter_vida() > 0 and heroi_adversario.obter_vida() > 0:
@@ -236,122 +254,58 @@ def trocar_personagem(meu_heroi, heroi_adversario):
 
 #3. Permita ao utilizador escolher dois personagens para uma luta. Os utilizadores podem alternar
 # entre os personagens e escolher ações de ataque e defesa para cada rodada.
-def combate(meu_heroi, heroi_adversario):
-   # Establecer critérios de rodadas por combate
-   rodada = 1
-   max_rodada = 8
+def combate_unica_jogada(heroi_ativo, heroi_passivo, is_player_hero):
+    """Executa a lógica de ataque/defesa para um único herói numa rodada."""
 
-   # Permite escolher qual o heroi que começa
-   # 0 => Jogador | 1 = Adversário
-   actual_jogador = 1
+    if is_player_hero:
+        print(f"\nO que {heroi_ativo.get_nome()} vai fazer?")
+        print("1) Atacar (tenta vencer a defesa do alvo)")
+        print("2) Defender (tenta reduzir o ataque do alvo)")
 
-   if meu_heroi.obter_vida() > 0 and heroi_adversario.obter_vida() > 0 :
-       trocar = trocar_personagem(meu_heroi, heroi_adversario)
-       if actual_jogador == trocar:
-           heroi_ativo = meu_heroi
-           heroi_passivo = heroi_adversario
-       else:
-           heroi_ativo = heroi_adversario
-           heroi_passivo = meu_heroi
-   else:
-       print("Partida terminada.")
+        try:
+            jogada = int(input("O que pertende fazer? [1-2]:"))
+        except ValueError:
+            erro()
+            return
 
-   #5. Exiba informações sobre o resultado de cada rodada de combate, incluindo a quantidade de vida restante de cada personagem.
-   while rodada <= max_rodada and (heroi_ativo.obter_vida() > 0 and heroi_passivo.obter_vida() > 0):
-       print(f"\n{30*'-'}")
-       print(f"{5*'-'}     Rodada: {rodada}     {5*'-'}")
-       print(f"{30*'-'}")
-       print(f"\nO combate é entre {heroi_ativo.get_nome()} (heroi escolhido) VS {heroi_passivo.get_nome()} (heroi aleatório)")
-       print("1) Atacar")
-       print("2) Defender")
-       print("3) Obter estado de vida")
-       print("4) Sair")
-       try:
-           jogada = int(input("O que pertende fazer? [1-4]:"))
-           if rodada == 0:
-               return "terminou"
-       except ValueError:
-           erro()
-           continue
-       print("\n")
+        if jogada == 1:
+            # Lógica de ataque: Ativo ataca Passivo
+            dano_bruto = heroi_ativo.ataque()
+            defesa_alvo = heroi_passivo.defender()
+            dano_final = max(0, dano_bruto - defesa_alvo)
+            heroi_passivo.receber_dano(dano_final)
 
-       if jogada == 1:
-           print(f"O {heroi_ativo.get_nome()} ataca com possibilidade de dano: {heroi_ativo.ataque()}.")
-           print(f"O {heroi_passivo.get_nome()} defende com {heroi_passivo.defender()} pontos.\n")
-           dano = abs(heroi_ativo.ataque() - heroi_passivo.defender())
-           if dano > 0:
-               heroi_passivo.receber_dano(abs(heroi_ativo.ataque()))
-               print(f"{heroi_passivo.get_nome()} sofreu {heroi_ativo.ataque()} de dano e agora tem {heroi_passivo.obter_vida()} de vida.")
-           else:
-               print(f"{heroi_passivo.get_nome()} defendeu o ataque com sucesso! Vida atual: {heroi_passivo.obter_vida()}.")
+            print(
+                f"💥 {heroi_ativo.get_nome()} ATACA! (Ataque: {dano_bruto}) vs Defesa de {heroi_passivo.get_nome()} ({defesa_alvo}).")
+            print(
+                f"💔 Dano causado: {dano_final}. Vida restante de {heroi_passivo.get_nome()}: {heroi_passivo.obter_vida()}.")
 
-           if (heroi_ativo.obter_vida() > 0 and heroi_passivo.obter_vida() > 0):
+        elif jogada == 2:
+            # Lógica de defesa: Ativo defende-se de um ataque do Passivo
+            ataque_passivo = heroi_passivo.ataque()  # Simula um contra-ataque do passivo
+            defesa_ativa = heroi_ativo.defender()
+            dano_sofrido = max(0, ataque_passivo - defesa_ativa)
+            heroi_ativo.receber_dano(dano_sofrido)
 
-               rodada_em_falta = max_rodada - rodada
-               print(f"\n{30 * '-'}")
-               print(f"Faltam {rodada_em_falta} / {max_rodada} rodadas")
-               rodada += 1
+            print(
+                f"🛡️ {heroi_ativo.get_nome()} DEFENDE! (Defesa: {defesa_ativa}) vs Ataque de {heroi_passivo.get_nome()} ({ataque_passivo}).")
+            print(
+                f"🩹 Dano sofrido: {dano_sofrido}. Vida restante de {heroi_ativo.get_nome()}: {heroi_ativo.obter_vida()}.")
+        else:
+            erro()
 
-               if rodada == 0:
-                   print("Partida terminada.")
-                   return "terminou"
+    else:
+        # Lógica para o adversário (Simplificada: ataca por defeito)
+        print(f"\n{heroi_ativo.get_nome()} (Adversário) ataca automaticamente.")
+        dano_bruto = heroi_ativo.ataque()
+        defesa_alvo = heroi_passivo.defender()
+        dano_final = max(0, dano_bruto - defesa_alvo)
+        heroi_passivo.receber_dano(dano_final)
 
-               trocar = trocar_personagem(heroi_ativo, heroi_adversario)
-
-               if actual_jogador == trocar:
-                   heroi_ativo = heroi_ativo
-                   heroi_passivo = heroi_adversario
-               else:
-                   heroi_transicao = heroi_ativo
-                   heroi_ativo = heroi_adversario
-                   heroi_passivo = heroi_transicao
-
-           else:
-               print("Partida terminada.")
-               return "terminou"
-
-       if jogada == 2:
-           print(f"O {heroi_ativo.get_nome()} tem {heroi_ativo.defender()} de defesa.")
-           dano = abs(heroi_ativo.defender() - heroi_passivo.ataque())
-           if dano < 0:
-               heroi_ativo.receber_dano(abs(heroi_passivo.ataque()))
-               print(f"{heroi_ativo.get_nome()} sofreu {dano} de dano e agora tem {heroi_ativo.obter_vida()} de vida.")
-           else:
-               print(f"{heroi_ativo.get_nome()} defendeu com sucesso! Vida atual: {heroi_ativo.obter_vida()}.")
-
-           if (heroi_ativo.obter_vida() > 0 and heroi_passivo.obter_vida() > 0):
-               rodada_em_falta = max_rodada - rodada
-               print(f"\n{30 * '-'}")
-               print(f"Faltam {rodada_em_falta} / {max_rodada} rodadas")
-               rodada += 1
-
-               trocar = trocar_personagem(heroi_ativo, heroi_adversario)
-               if actual_jogador == trocar:
-                   heroi_ativo = heroi_ativo
-                   heroi_passivo = heroi_adversario
-               else:
-                   heroi_transicao = heroi_ativo
-                   heroi_ativo = heroi_adversario
-                   heroi_passivo = heroi_transicao
-
-           else:
-               print("Partida terminada.")
-               return "terminou"
-
-       if jogada == 3:
-           print(f"O {heroi_ativo.get_nome()} tem {heroi_ativo.obter_vida()} pontos de vida. E o {heroi_passivo.get_nome()}, tem {heroi_passivo.obter_vida()} de vida.")
-
-           trocar = trocar_personagem(meu_heroi, heroi_adversario)
-           if actual_jogador == trocar:
-               heroi_ativo = meu_heroi
-               heroi_passivo = heroi_adversario
-           else:
-               heroi_ativo = heroi_adversario
-               heroi_passivo = meu_heroi
-
-       if jogada == 4:
-           sair()
-           return "terminou"
+        print(
+            f"💥 {heroi_ativo.get_nome()} ATACA! (Ataque: {dano_bruto}) vs Defesa de {heroi_passivo.get_nome()} ({defesa_alvo}).")
+        print(
+            f"💔 Dano causado: {dano_final}. Vida restante de {heroi_passivo.get_nome()}: {heroi_passivo.obter_vida()}.")
 
 # -- PROGRAMA PRINCIPAL
 def main():
@@ -367,7 +321,6 @@ def main():
        except ValueError:
            erro()  # Chama a função que imprime "Opção inválida"
            continue  # Volta ao início do loop 'while True', caso utilisador escreva valor errado
-           
        print("________________________________\n")
 
        if escolha in range(1, numeroHerois):
