@@ -5,7 +5,7 @@
 + 10 lugares moto / andar 
 '''
 
-class Veiculo():
+class Veiculo:
     preco_vip = 0.8
 
     def __init__(self, handicap, tipo, nome, identificador, preco, vip, data_in, data_out):
@@ -31,20 +31,23 @@ class Veiculo():
         return self.vip
 
     def preco_pagar(preco_minuto, vip, data_in, data_out):
-        tempo_estacionamento = data_out - data_in
-        if tempo_estacionamento <= 60 and vip == 0:
-            preco = tempo_estacionamento * preco_minuto 
-            return preco 
-        elif tempo_estacionamento <= 60 and vip == 1:
-            preco = tempo_estacionamento * preco_minuto 
-            return preco 
-        elif tempo_estacionamento > 60 and vip == 0:
-            preco = tempo_estacionamento * (preco_minuto*vip) 
-            return preco
-        elif tempo_estacionamento > 60 and vip == 1:
-            preco = tempo_estacionamento * (preco_minuto*vip) 
-            return preco
-
+        tempo_estacionamento_min = (data_out - data_in).total_segundos() /60
+        preco_final = 0
+        if tempo_estacionamento_min <= 60 and vip == 0:
+            preco_final = tempo_estacionamento_min * preco_minuto 
+            return preco_final 
+        elif tempo_estacionamento_min <= 60 and vip == 1:
+            preco_final = tempo_estacionamento_min * (preco_minuto*vip)
+            return preco_final 
+        elif tempo_estacionamento_min > 60 and vip == 0:
+            preco_final = tempo_estacionamento_min * preco_minuto 
+            return preco_final
+        elif tempo_estacionamento_min > 60 and vip == 1:
+            preco_final = tempo_estacionamento_min * (preco_minuto*vip) 
+            return preco_final
+        if tempo_estacionamento_min > 180:
+            preco_final = preco_final + 3
+            return preco_final
 
 class moto(Veiculo):
     def __init__(self, dimenssoes):
@@ -55,19 +58,31 @@ class Carro(Veiculo):
         self.dimenssoes = dimenssoes
         
 class Parking():
-    def __init__(self, veiculo):
-        self.veiculo = veiculo
+    andares = ["rdc","primeiro","segundo","terceiro","quarto"]
+    
+    def __init__(self, andares):
+        self.andares = andares
 
-    def esta_cheio():
-        pass
+    # def piso(self,veiculo,lugar):
+    #     self.veiculo = veiculo
+    #     self.lugar = lugar
+
+    def esta_cheio(self, tipo):
+        for andar in self.andares:
+            if andar.full(tipo) == 1:
+                pass
+            else:
+                return andar.nome
+        return "Full"
+
     
     def andar_disponivel():
         pass
 
-    def client_vip():
+    def cliente_vip():
         pass
     
-    def client_handicap():
+    def cliente_handicap():
         pass
 
     def calcular_tempo():
@@ -76,8 +91,11 @@ class Parking():
     def calcular_preco(tempo):
         pass
 
-class andar():
-    def piso(self,veiculo,lugar):
-        self.veiculo = veiculo
-        self.lugar = lugar
+class Andar:
+    lugares_carros = []
+    lugares_motas = []
     
+    estacionamento_andar = [lugares_carros,lugares_motas]
+
+    def __init__(self, nome):
+        self.nome = nome
