@@ -109,3 +109,32 @@ dicionario.pop("material")
 
 print("um_set: ",um_set)
 print("dicionario: ", dicionario)
+
+
+
+#### 4 Completar o exercício aqui
+matriz = [ 
+    [1, 1, 1],
+    [2, 2, 7],
+    [3, 3, 9],
+    [4, 4, 13]
+]
+
+for sublista in matriz:
+    elemento_somado = sum(sublista)
+    sublista.append(elemento_somado)
+
+print(matriz)
+
+cavaleiro = { 'vida':2, 'ataque':2, 'defesa': 2, 'alcance':2 }
+guerreiro = { 'vida':2, 'ataque':2, 'defesa': 2, 'alcance':2 }
+arqueiro  = { 'vida':2, 'ataque':2, 'defesa': 2, 'alcance':2 }
+
+# Completar o exercício aqui
+cavaleiro = { 'vida':guerreiro['vida']*2, 'ataque':2, 'defesa': guerreiro['defesa']*2, 'alcance':2 }
+guerreiro = { 'vida':2, 'ataque':cavaleiro['ataque']*2, 'defesa': 2, 'alcance':cavaleiro['alcance']*2 }
+arqueiro  = { 'vida':guerreiro['vida'], 'ataque':guerreiro['ataque'], 'defesa': int(guerreiro['defesa']/2), 'alcance':guerreiro['alcance']*2 }
+
+print(cavaleiro)
+print(guerreiro)
+print(arqueiro)
