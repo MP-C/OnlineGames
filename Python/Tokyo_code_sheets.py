@@ -138,3 +138,12 @@ arqueiro  = { 'vida':guerreiro['vida'], 'ataque':guerreiro['ataque'], 'defesa': 
 print(cavaleiro)
 print(guerreiro)
 print(arqueiro)
+
+
+#### 5 Completar o exercício aqui
+l=[[1,2,3],[4,5,6]]
+t=([1,2,3],[4,5,6])
+s={1,2,3,4,5,6}
+print(type(l))
+print(type(t))
+print(type(s))
