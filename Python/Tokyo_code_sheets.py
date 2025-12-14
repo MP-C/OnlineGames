@@ -147,3 +147,19 @@ s={1,2,3,4,5,6}
 print(type(l))
 print(type(t))
 print(type(s))
+
+
+#### 6 Completar o exercício aqui
+#1
+numero_1=(input("Insira um número:"))
+print("1º Numero :", numero_1)
+print("Tipo de 1º Numero :", type(numero_1),"\n")
+
+#2
+numero_2=int(input("Insira outro número:"))
+print("2º Numero :", numero_2)
+print("Tipo de 2º Numero :", type(numero_2),"\n")
+
+numero_3=float(input("Insira o último número:"))
+print("3º Numero :", numero_3)
+print("Tipo de 3º Numero :", type(numero_3),"\n")
