@@ -163,3 +163,35 @@ print("Tipo de 2º Numero :", type(numero_2),"\n")
 numero_3=float(input("Insira o último número:"))
 print("3º Numero :", numero_3)
 print("Tipo de 3º Numero :", type(numero_3),"\n")
+
+
+
+#### 7 Completar o exercício aqui
+welcome="Olá Mundo"
+#1 Alinhado à direita em 20 caracteres
+print(f"{'':>20},{welcome}")
+
+#2 Trucate com indice
+print(welcome[:3])
+
+#3 Alinhamento ao centro em 20 caracteres com truncagem no segundo carácter
+#print(f"{'':^20}{welcome}")
+print(welcome[:1].center(20," "))
+
+#4 format 5 int com 0 
+numero_1 = 150
+print('{:0>5}'.format(numero_1))
+
+#5 format 7 int com ' '
+numero_2 = 7887
+print('{:' '>7}'.format(numero_2))
+
+#6 format 3 int + 3 float
+numero_3 = 20.02
+numero_3 = '{:.03f}'.format(numero_3)
+numero_3 = '{:0>3}'.format(numero_3)
+print(numero_3)
+
+#6 or
+numero_3 = 20.02
+print('{:03.3f}'.format(numero_3))
