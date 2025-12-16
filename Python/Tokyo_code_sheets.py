@@ -195,3 +195,40 @@ print(numero_3)
 #6 or
 numero_3 = 20.02
 print('{:03.3f}'.format(numero_3))
+
+
+#### 8 Completar o exercício aqui
+def obter_numero(mensagem):
+    print(mensagem)
+    numero = int(input())
+    return numero
+
+a = obter_numero("Introduz um numero:")
+if a != 0:
+    b = obter_numero("Introduz um numero:")
+    c = obter_numero("Introduz um numero:")
+
+    if(a<b<c):
+        print("Ordem ascendente")
+    elif(a>b>c):
+        print("Ordem descendente")
+    elif(b==0):
+        if(a<c):
+            print("Ordem ascendente")
+        elif(a>c):
+            print("Ordem descendente")
+    else:
+        print("Sem ordem")
+        
+else:
+    print("Erro. O primeiro numero não pode ser 0.")
+
+    # Completar o exercício aqui
+max_numero=int(input("Quantos numeros quer somar, entre 0-x? x = a valor maximo."))
+iterator = 0
+total= 0
+
+for i in range(max_numero):
+    total = total + i
+    i=i+1
+print("Total:", total)
