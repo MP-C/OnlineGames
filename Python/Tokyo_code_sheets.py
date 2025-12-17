@@ -223,7 +223,9 @@ if a != 0:
 else:
     print("Erro. O primeiro numero não pode ser 0.")
 
-    # Completar o exercício aqui
+
+
+#### 9 Completar o exercício aqui
 max_numero=int(input("Quantos numeros quer somar, entre 0-x? x = a valor maximo."))
 iterator = 0
 total= 0
@@ -232,3 +234,4 @@ for i in range(max_numero):
     total = total + i
     i=i+1
 print("Total:", total)
+
