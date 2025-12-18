@@ -253,3 +253,15 @@ else:
     print("A soma dos numeros introduzidos:", primeiro+segundo)
     print("O resto da subtração dos dois numeros introduzidos:{primeiro} - {segundo}:", primeiro-segundo)
     print("A multiplicação dos dois numeros introduzidos:", primeiro * segundo)
+
+
+
+#### 11 Completar o exercício aqui
+status = True
+while status:
+    numero = int(input("Introduz um numero"))
+    
+    if numero % 2 != 0:
+        print("Numero introduzido:", numero)
+    else:
+        status = False
