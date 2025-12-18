@@ -235,3 +235,21 @@ for i in range(max_numero):
     i=i+1
 print("Total:", total)
 
+
+#### 10 Completar o exercício aqui
+def intro_dois_numeros_validos(mensagem):
+    numero = int(input(mensagem))
+    if numero > 0:
+        return numero
+    else:
+        print("Numero não válido")
+
+primeiro = intro_dois_numeros_validos("Introduz um numero maior que 0:")
+
+segundo = intro_dois_numeros_validos("Introduz um numero menor que o anterior:")
+if(segundo>primeiro):
+    print("O segundo numero deveria ser menor que o primeiro")
+else:
+    print("A soma dos numeros introduzidos:", primeiro+segundo)
+    print("O resto da subtração dos dois numeros introduzidos:{primeiro} - {segundo}:", primeiro-segundo)
+    print("A multiplicação dos dois numeros introduzidos:", primeiro * segundo)
