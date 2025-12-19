@@ -265,3 +265,9 @@ while status:
         print("Numero introduzido:", numero)
     else:
         status = False
+
+
+#### 12 Completar o exercício aqui
+numbers = range(0,100,1)
+total = sum(numbers)
+print(total)
