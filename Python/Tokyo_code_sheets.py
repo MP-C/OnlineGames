@@ -274,20 +274,6 @@ print(total)
 
 
 
-#### 13 Completar o exercício aqui
-def obter_numero(mensagem):
-    print(mensagem)
-    numero = int(input())
-    return numero
-
-status = True
-while status:
-    numero_inteiro = obter_numero("Introduz um numero de 0-9")
-    lista_valida = (2,4,5,7)
-    if numero_inteiro in lista_valida:
-        print("Numero existe na lista")
-        status = False
-
 
 #### 14 Completar o exercício aqui
 #1
