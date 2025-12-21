@@ -271,3 +271,36 @@ while status:
 numbers = range(0,100,1)
 total = sum(numbers)
 print(total)
+
+
+
+#### 13 Completar o exercício aqui
+def obter_numero(mensagem):
+    print(mensagem)
+    numero = int(input())
+    return numero
+
+status = True
+while status:
+    numero_inteiro = obter_numero("Introduz um numero de 0-9")
+    lista_valida = (2,4,5,7)
+    if numero_inteiro in lista_valida:
+        print("Numero existe na lista")
+        status = False
+
+
+#### 14 Completar o exercício aqui
+#1
+print(list(range(0,11,1)))
+
+#2
+print(list(range(-10,1,1)))
+
+#3
+print(list(range(0,22,2)))
+
+#4
+print(list(range(-19,0,1)))
+
+#5
+print(list(range(0,55,5)))
