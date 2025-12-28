@@ -314,3 +314,20 @@ lista_3 = []
 
 lista_3 = list(set(lista_1) - set(lista_2))
 print(lista_3)
+
+
+##### 16 Completar o exercício aqui
+def introduzir_valor(mensagem):
+    '''Para obter vários numeros'''
+    numero = int(input(mensagem))
+    return numero
+
+def calcular_area(base, altura):
+    '''Para calcular area'''
+    resultado = base*altura
+    print("A área é: ", resultado)
+
+print("Calcular a area de um retangulo:")
+base = introduzir_valor("Introduz uma base:")
+altura = introduzir_valor("Introduz uma altura:")
+calcular_area(base, altura)
