@@ -331,3 +331,20 @@ print("Calcular a area de um retangulo:")
 base = introduzir_valor("Introduz uma base:")
 altura = introduzir_valor("Introduz uma altura:")
 calcular_area(base, altura)
+
+
+
+##### 17 Completar o exercício aqui
+import math
+def introduzir_valor(mensagem):
+    '''Para obter vários numeros'''
+    numero = int(input(mensagem))
+    return numero
+
+def calcular_area(raio):
+    '''Para calcular area'''
+    resultado = math.pi * raio
+    print("A área é: ", resultado)
+
+raio = introduzir_valor("Introduz um raio:")
+calcular_area(raio)
