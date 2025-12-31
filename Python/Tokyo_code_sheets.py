@@ -348,3 +348,25 @@ def calcular_area(raio):
 
 raio = introduzir_valor("Introduz um raio:")
 calcular_area(raio)
+
+
+##### 18 Completar o exercício aqui
+def obter_numero(mensagem):
+    numero = int(input())
+    return numero
+
+def comparar_numeros(a,b):
+    if(a>b):
+        print("1")
+    elif(a<b):
+        print("-1")
+    elif(a==b):
+        print("0")
+
+comparar_numeros(5,10)
+comparar_numeros(10,5)
+comparar_numeros(5,5)
+
+primeiro = obter_numero("Introduz um numero:")
+segundo = obter_numero("Introduz um numero:")
+comparar_numeros(primeiro,segundo)
