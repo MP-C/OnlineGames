@@ -370,3 +370,26 @@ comparar_numeros(5,5)
 primeiro = obter_numero("Introduz um numero:")
 segundo = obter_numero("Introduz um numero:")
 comparar_numeros(primeiro,segundo)
+
+
+
+#### 19 Completar o exercício aqui
+def ler_numero(mensagem):
+    print(mensagem)
+    numero = int(input())
+    return numero
+
+def maior(a,b,c):
+    if(a>b and a>c):
+        print("O maior numero é:", a)
+    elif(b>c and b>a):
+        print("O maior numero é:", b)
+    elif(c>b and c>a):
+        print("O maior numero é:", c)
+    else:
+        print("Sem ordem")
+
+a = ler_numero("Introduz um numero:")
+b = ler_numero("Introduz um numero:")
+c = ler_numero("Introduz um numero:")
+maior(a,b,c)
