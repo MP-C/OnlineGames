@@ -393,3 +393,29 @@ a = ler_numero("Introduz um numero:")
 b = ler_numero("Introduz um numero:")
 c = ler_numero("Introduz um numero:")
 maior(a,b,c)
+
+### 20 Completar o exercício aqui
+def pedir_medidas(mensagem):
+    print(mensagem)
+    numero = float(input())
+    print(numero)
+    return numero
+
+def imc(p,a):
+    resultado = p/(a*a)
+    if resultado < 18.50:
+        return "Baixo peso"
+    elif  resultado >= 18.50 and resultado < 25.00:
+        return "Normal"
+    elif  resultado >= 25.00 and resultado < 30.00:
+        return "Sobrepeso"
+    elif  resultado >= 30.00:
+        return "Obesidade"
+    else:
+        return "Erro de calculo"
+
+
+peso = pedir_medidas("Introduza o seu peso [kg]:")
+altura = pedir_medidas("Introduza a sua altura [m] (max duas casas décimais): ")
+print("O indice massa corporal é de", imc(peso,altura))
+
