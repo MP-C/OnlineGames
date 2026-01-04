@@ -419,3 +419,47 @@ peso = pedir_medidas("Introduza o seu peso [kg]:")
 altura = pedir_medidas("Introduza a sua altura [m] (max duas casas décimais): ")
 print("O indice massa corporal é de", imc(peso,altura))
 
+
+### 21  Fazer o exercício aqui
+# Crie uma classe chamada Ponto com os atributos X e Y.
+class Ponto():
+    X = ''
+    Y = ''
+
+    # Adicione um construtor que inicialize X e Y com valores padrão zero.
+    def __init__(self, X=0, Y=0) :
+        self.X = X
+        self.Y = Y
+
+    # Implemente o método __str__ para exibir o ponto no formato (X,Y).
+    def __str__(self):
+        return (f"{self.X}, {self.Y}")
+
+    def quadrante(self):
+        print(self)
+        if self.X == 0 and self.Y == 0 : return "Origem"
+        elif self.X > 0 and self.Y > 0 : return "Primeiro Quadrante"
+        elif self.X < 0 and self.Y > 0 : return "Segundo Quadrante"
+        elif self.X < 0 and self.Y < 0 : return "Terceiro Quadrante"
+        elif self.X > 0 and self.Y < 0 : return "Quarto Quadrante"
+
+    # * Adicione um método vetor que recebe outro objeto ponto e calcula o vetor resultante entre os dois objetos pontos.
+    def vetor(self, Ponto_B): # AB=(x2−x1,y2−y1)
+        return abs(Ponto_B.X - self.X), abs(Ponto_B.Y - self.Y)
+
+# --- Testes ---
+#Criar os pontos A(2, 3), B(5,5), C(-3, -1) e D(0,0).
+A = Ponto(2,3)
+B = Ponto(5,5)
+C = Ponto(-3,-1)
+D = Ponto (0,0)
+
+# Verifique a que quadrantes pertencem os pontos A, C e D.
+print(A.quadrante())
+print(B.quadrante())
+print(C.quadrante())
+print(D.quadrante())
+
+# Calcule os vetores AB e BA e exiba os resultados.
+print(f"Vetor AB ({B} - {A}) = {A.vetor(B)}")
+print(f"Vetor BA ({A} - {B}) = {B.vetor(A)}")
