@@ -463,3 +463,41 @@ print(D.quadrante())
 # Calcule os vetores AB e BA e exiba os resultados.
 print(f"Vetor AB ({B} - {A}) = {A.vetor(B)}")
 print(f"Vetor BA ({A} - {B}) = {B.vetor(A)}")
+
+
+
+### 22  Fazer o exercício aqui
+# ----- IMPLEMENTAÇÃO -----
+class Retangulo():
+    ponto_inicial = ''
+    ponto_final = ''
+
+    def __init__(self, ponto_inicial=0, ponto_final=0):
+        self.ponto_inicial = ponto_inicial
+        self.ponto_final = ponto_final
+    
+    def base(self):
+        return abs(self.ponto_inicial.X - self.ponto_final.X)
+
+    def altura(self):
+        return abs(self.ponto_inicial.X - self.ponto_final.Y)
+    
+    def area(self):
+        return self.base() * self.altura()
+
+
+# ----- EXECUÇÃO E TESTE -----
+A = Ponto(2,3)
+B = Ponto(5,5)
+meu_retangulo = Retangulo(A,B)
+
+print("--- Calculos de dimensões---")
+base = meu_retangulo.base()
+print("A base é : ", base)
+
+altura = meu_retangulo.altura()
+print("A altura é : ", altura)
+
+area = meu_retangulo.area()
+print("A área é : ", area)
+
