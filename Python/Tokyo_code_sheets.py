@@ -501,3 +501,105 @@ print("A altura é : ", altura)
 area = meu_retangulo.area()
 print("A área é : ", area)
 
+
+
+### 23  Fazer o exercício aqui
+# ----- IMPLEMENTAÇÃO
+class Veiculo():
+    def __init__(self, cor, rodas):
+        self.cor = str(cor)
+        self.rodas = int(rodas)
+    
+    def __str__(self):
+        return f"\tCor: {self.cor} - \tRodas: {self.rodas}"
+
+class Carro (Veiculo):
+    def __init__(self, cor, rodas, velocidade, cilindrada):
+        super().__init__(cor, rodas)
+        self.velocidade = int(velocidade)
+        self.cilindrada = float(cilindrada)
+    
+    def __str__(self):
+        return f"Carro: Cor: {self.cor} \t- Rodas: {self.rodas} \t- Velocidade: {self.velocidade}km/h \t- Cilindrada: {self.cilindrada}L"
+
+class Bicicleta (Veiculo):
+    # Bicicletas não costumam ter cilindrada, mas mantive o mesmo principio, pois, as eletricas terão uma capacidade também
+    def __init__(self, cor, rodas, velocidade, cilindrada=0):
+        super().__init__(cor, rodas)
+        self.velocidade = int(velocidade)
+        self.cilindrada = float(cilindrada)
+    
+    def __str__(self):
+        return f"Bicicleta: Cor: {self.cor} \t- Rodas: {self.rodas} \t- Velocidade: {self.velocidade}km/h \t- Cilindrada: {self.cilindrada}L"
+
+class Moto (Veiculo):
+    def __init__(self, cor, rodas, velocidade, cilindrada):
+        super().__init__(cor, rodas)
+        self.velocidade = int(velocidade)
+        self.cilindrada = float(cilindrada)
+    
+    def __str__(self):
+        return f"Moto: Cor: {self.cor} \t- Rodas: {self.rodas} \t- Velocidade: {self.velocidade}km/h \t- Cilindrada: {self.cilindrada}L"
+
+class Camiao (Veiculo):
+    def __init__(self, cor, rodas, velocidade, cilindrada):
+        super().__init__(cor, rodas)
+        self.velocidade = int(velocidade)
+        self.cilindrada = float(cilindrada)
+    
+    def __str__(self):
+        return f"Camião: Cor: {self.cor} \t- Rodas: {self.rodas} \t- Velocidade: {self.velocidade}km/h \t- Cilindrada: {self.cilindrada}L"
+
+class Concessionario():
+    def __init__(self):
+        self.lista_veiculos = []
+
+    def catalogar(self, lista_veiculos):
+        self.lista_veiculos = lista_veiculos
+    
+    def filtrar(self, tipo_veiculo):
+        """Filtra e retorna os veículos do tipo especificado da lista catalogada."""
+        filtro = []
+        for veiculo in self.lista_veiculos:
+            if type(veiculo).__name__ == tipo_veiculo:
+                filtro.append(veiculo) 
+        return filtro
+
+
+# ----- EXECUÇÃO -----
+lista_veiculos=[]
+
+Carro1 = Carro("vermelho", 4, 180, 2.4)
+Carro2 = Carro("azul", 4, 150, 1.4)
+print(Carro1)
+lista_veiculos.append(Carro1)
+lista_veiculos.append(Carro2)
+
+Bicicleta1 = Bicicleta("preto", 2, 20) # Não precisa de cilindrada
+Bicicleta2 = Bicicleta("preto", 2, 40)
+print(Bicicleta1)
+lista_veiculos.append(Bicicleta1)
+lista_veiculos.append(Bicicleta2)
+
+Moto1 = Moto("branco", 2, 180, 0.8)
+Moto2 = Moto("preto", 2, 240, 1.2)
+print(Moto1)
+lista_veiculos.append(Moto1)
+lista_veiculos.append(Moto2)
+
+Camiao1 = Camiao("vermelho", 8, 90, 15)
+Camiao2 = Camiao("amarelo", 8, 110, 20)
+print(Camiao1)
+lista_veiculos.append(Camiao1)
+lista_veiculos.append(Camiao2)
+
+
+# ----- TESTE -----
+print("\n--- Catálogo e Filtro ---")
+Concessionario_CarrosUsados = Concessionario()
+Concessionario_CarrosUsados.catalogar(lista_veiculos)
+filtro = Concessionario_CarrosUsados.filtrar("Carro") 
+
+print(f"Veículos encontrados ({len(filtro)}):")
+for veiculo in filtro:
+    print(f"- {veiculo}")
