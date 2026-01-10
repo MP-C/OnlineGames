@@ -603,3 +603,35 @@ filtro = Concessionario_CarrosUsados.filtrar("Carro")
 print(f"Veículos encontrados ({len(filtro)}):")
 for veiculo in filtro:
     print(f"- {veiculo}")
+
+
+### 24  Fazer o exercício aqui
+class GerenciadorLista:
+    def __init__(self, lista_inicial=None):
+        if lista_inicial is None:
+            self.lista = []
+        else:
+            self.lista = list(lista_inicial)
+        
+    def adicionar_elemento(self, elemento):
+        try: 
+            print(f"\nA tentar adicionar: {elemento}")
+            if elemento not in self.lista:
+                self.lista.append(elemento)
+                print(f"Elemento '{elemento}' adicionado com sucesso.")
+                print(f"Conteúdo atual da lista: {self.lista}")
+            else:
+                raise ValueError(f"Erro: Impossível adicionar elementos duplicados => [{elemento}].")
+        except:
+                print(f"Item duplicated : {elemento}. Não adicionado.")
+
+# --- Implementação ---
+gerenciador = GerenciadorLista()
+print(f"Lista Inicial: {gerenciador.lista}")
+gerenciador.adicionar_elemento(10)
+gerenciador.adicionar_elemento(-2)
+gerenciador.adicionar_elemento("Olá")
+
+# --- Teste de erro ---
+gerenciador.adicionar_elemento("Olá")
+
