@@ -635,3 +635,41 @@ gerenciador.adicionar_elemento("Olá")
 # --- Teste de erro ---
 gerenciador.adicionar_elemento("Olá")
 
+
+
+#### 25 Fazer o exercício aqui
+from datetime import datetime, timedelta
+#import pytz
+
+# 1 Apresentar datas  atuais
+today = datetime.now()
+print("datetimwe now:", today)
+
+# lisboa_now = pytz.timezone('Europe/Lisbon')
+# print(lisboa_now.tz.zone, end=" ")
+
+# 2 Formatos de datas
+print("\ndata e hora em formatos diferentes:")
+print("{}/{}/{}".format(today.day, today.month, today.year))
+print("{}-{}-{} {}:{}".format(today.year, today.month, today.day, today.hour, today.minute))
+
+# 3 Duração Projetos
+print("\nCalcular duração projeto:")
+try:
+    start_date = input("Data de inicio do projeto?") # Exemplo: 2025-11-09 23:31
+    end_date = input("Date de termino do projeto?") # Exemplo: 2025-12-19 23:31
+except ValueError:
+    print("\nERRO: Formato de data inválido!")
+    print(f"Certifica-te que usas o formato: 2025-12-19 23:31")
+formato = "%Y-%m-%d %H:%M" # => CORRECÇÃO DE: delta = end_date + start_date # reage como con
+start = datetime.strptime(end_date, formato) # => É preciso separar, pois neste formato não 
+end = datetime.strptime(start_date, formato)
+delta = start - end
+print(delta)
+
+# 4 Calcular DeadLines
+print("\nCalcular a data final do vencimento do projeto:")
+tempo_tarefa = int(input("Dias de tempo de tarefa?")) # Exemplo: 5 (dias)
+t = timedelta(days = int(tempo_tarefa), hours=0, seconds = 0000)
+vencimento_date = today + t
+print(f"{vencimento_date.year}-{vencimento_date.month}-{vencimento_date.day}") # => Igual re
