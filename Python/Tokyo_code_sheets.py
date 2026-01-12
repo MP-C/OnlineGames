@@ -673,3 +673,78 @@ tempo_tarefa = int(input("Dias de tempo de tarefa?")) # Exemplo: 5 (dias)
 t = timedelta(days = int(tempo_tarefa), hours=0, seconds = 0000)
 vencimento_date = today + t
 print(f"{vencimento_date.year}-{vencimento_date.month}-{vencimento_date.day}") # => Igual re
+
+
+#### 26 Fazer o exercício aqui
+from datetime import datetime
+class Evento():
+    def __init__(self, titulo, data_hora_inicio, data_hora_fim):
+        formato = "%Y-%m-%d %H:%M:%S"
+        self.titulo = titulo
+        self.data_hora_inicio = datetime.strptime(data_hora_inicio, formato) # Importante que esta conversão seja feita logo com o construtor para que possa ser usa
+        self.data_hora_fim = datetime.strptime(data_hora_fim, formato)
+    
+    def __str__(self):
+        return f"Evento: {self.titulo} \t| {self.data_hora_inicio} \t| {self.data_hora_fim}" 
+
+
+class Agenda():
+    def __init__(self):
+        self.lista_eventos = []
+    
+    def adicionar_evento(self, evento):
+        self.lista_eventos.append(evento)
+
+
+    def listar_eventos(self):
+        '''Lista todos os eventos na agenda, mostrando o título, a data e hora de início, e a data e hora de término.'''
+        for evento in self.lista_eventos:
+            print(f"{evento.titulo} - {evento.data_hora_inicio} - {evento.data_hora_fim}")
+
+
+    def proximo_evento(self):
+        '''Mostra o próximo evento na agenda com base na data atual "M4_01_Outras ferramentas_de_POO.ipynb"'''
+        data_atual = datetime.now()
+        for evento in self.lista_eventos:
+            if  evento.data_hora_inicio > data_atual:
+                print(f"{evento.titulo} - {evento.data_hora_inicio} - {evento.data_hora_fim}")
+
+
+    def eventos_do_dia(self, data):
+        '''Eventos_do_dia. Detalhe:
+        - datetime: É uma data e hora específica (Ex: 25 de Dezembro às 10:00). Não tem .days.
+        - timedelta: É um intervalo de tempo (Ex: 5 dias de diferença). Este é que tem .days.'''
+        data_pesquisa = datetime.strptime(data, "%Y-%m-%d").date()
+        encontrou = False
+        if len(self.lista_eventos)> 0:
+            for evento in self.lista_eventos:
+                if evento.data_hora_inicio.date() == data_pesquisa:
+                    print(f"{evento.titulo} - {evento.data_hora_inicio} - {evento.data_hora_fim}")
+                    encontrou = True
+        if not encontrou:
+            print(f"Não existem eventos nesta data")
+
+# 1 Crie um objeto da classe Agenda.
+agenda = Agenda()
+
+# 2 Crie pelo menos 5 objetos da classe Evento e adicione à agenda.
+agenda.adicionar_evento(Evento("Ler", "2025-02-09 00:22:01", "2025-12-20 23:59:01"))
+agenda.adicionar_evento(Evento("Trabalhar", "2025-12-11 00:22:58", "2025-12-27 23:59:02"))
+agenda.adicionar_evento(Evento("Almoçar", "2026-12-14 00:22:57", "2025-12-18 23:59:03"))
+agenda.adicionar_evento(Evento("Jantar", "2026-12-14 00:22:57", "2025-12-18 23:59:03"))
+agenda.adicionar_evento(Evento("Estudar", "2026-12-23 00:22:56", "2025-12-19 23:59:04"))
+agenda.adicionar_evento(Evento("Conferencia","2025-12-30 00:22:55", "2025-12-22 23:59:05"))
+
+# 3 Liste todos os eventos.
+print("\n3\) Listar eventos:")
+agenda.listar_eventos()
+
+# 4 Mostre o próximo evento.
+print("\n4\) Mostrar proximo evento:")
+agenda.proximo_evento()
+
+# 5 Liste todos os eventos para uma data específica
+print("\n5\) Listar eventos de uma data especifica:")
+agenda.eventos_do_dia("2025-02-08")
+agenda.eventos_do_dia("2026-12-12")
+agenda.eventos_do_dia("2026-12-14")
