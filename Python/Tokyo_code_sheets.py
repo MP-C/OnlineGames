@@ -748,3 +748,25 @@ print("\n5\) Listar eventos de uma data especifica:")
 agenda.eventos_do_dia("2025-02-08")
 agenda.eventos_do_dia("2026-12-12")
 agenda.eventos_do_dia("2026-12-14")
+
+
+
+#### 27 Fazer o exercício aqui
+class DivisaoPorZeroHandler():
+    def __init__(self, denominador, numerador):
+        self.denominador = denominador
+        self.numerador = numerador
+    
+    def calcular(self):
+        try:
+            resultado = self.numerador / self.denominador
+            print(resultado)
+        
+        except ZeroDivisionError:
+            print("Não se pode dividir um valor por zero '0'. Escolhe um numero maior")
+
+calculoOk = DivisaoPorZeroHandler(1,5)
+calculoOk.calcular()
+
+calculoNok = DivisaoPorZeroHandler(0,3)
+calculoNok.calcular()
