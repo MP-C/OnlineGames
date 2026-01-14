@@ -830,3 +830,69 @@ print(" ----- ")
 gerenciador = GerenciadorLista([10])
 print(f"Lista Inicial: {gerenciador.lista}")
 gerenciador.adicionar_elemento(10)
+
+
+
+### 29 Fazer o exercício aqui
+# ---- Funções ---
+def criar_ficheiro(nome_ficheiro, conteudo):
+    print("criar ficheiro de raiz, para o exercicio: ", nome_ficheiro)
+    file = open(nome_ficheiro, "w", encoding="UTF8") 
+    file.write(conteudo)
+    file.close()
+
+def ler_ficheiro(nome_do_ficheiro):
+    lista_final = []
+    with open(nome_do_ficheiro, "r", encoding="UTF8") as ficheiro:
+        for linha in ficheiro:
+            dados_pessoa = linha.strip().split(",") # .strip() remove o \n invisível no fim da linha
+            #linha = (f"nome:{dados_pessoa[0]}, idade:{dados_pessoa[1]}, email:{dados_pessoa[2]}")
+            lista_final.append(dados_pessoa)
+        return lista_final
+
+def calcular_media_idades(conteudo):
+    total_pessoas = 0
+    idades = 0
+    for pessoa in conteudo:
+        if int(pessoa[1]) > 0:
+            idades += int(pessoa[1])
+            total_pessoas += 1
+    
+    media = idades / total_pessoas
+    print(media)
+
+def adicionar_pessoa(nome_do_ficheiro, nome, idade, mail):
+    if (len(str(nome)) >= 5) and (int(idade) > 0):
+        linha = f"'],[{nome},{idade},{mail}\n"
+        # print(linha)
+
+        try:
+            with open(nome_do_ficheiro, "a", encoding="UTF8") as file:
+                file.write(linha)
+                print(f"Dados para pessoa {nome}, foram adicionados ao ficheiro.")
+            
+        except Exception as e:
+            print(f"Erro ao escrever no ficheiro: {e}")
+    else:
+        print(f"Dados inválidos. É necessáro verificar o nome '{str(nome)}' e / ou a idade'{idade}'.")
+
+# --- Implementação --
+# - Criar ficheiro
+nome_do_ficheiro = "dados.txt"
+texto_ficheiro_novo = "João,25,joao@example.com\nMaria,30,maria@example.com\nCarlos,22,carlos@example.com\nAna,27,ana@example.com"
+criar_ficheiro(nome_do_ficheiro, texto_ficheiro_novo)
+
+# - Ler e Mostrar resultado
+conteudo = ler_ficheiro(nome_do_ficheiro)
+print(conteudo)
+
+# - Calcular media de idades
+calcular_media_idades(conteudo)
+
+# - Adicionar nova pessoa
+adicionar_pessoa(nome_do_ficheiro, "MarioCapela", "37", "mario@gmail.com")
+adicionar_pessoa(nome_do_ficheiro, "test", "-1", "teste@gmail.com")
+
+# - Confirmar controlo de nome e de idade adicionado
+conteudo = ler_ficheiro(nome_do_ficheiro)
+print(conteudo)
