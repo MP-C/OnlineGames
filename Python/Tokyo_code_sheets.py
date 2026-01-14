@@ -770,3 +770,63 @@ calculoOk.calcular()
 
 calculoNok = DivisaoPorZeroHandler(0,3)
 calculoNok.calcular()
+
+
+
+#### 28 Fazer o exercício aqui
+class IndiceForaDosLimitesHandler():
+    def __init__(self,lista):
+        self.lista = lista
+    
+    def aceder_elemento(self, indice):
+        try:
+            elemento = self.lista[indice]
+            print(elemento)
+        except IndexError:
+            print(f"O índice fornecido ({indice}) está fora do intervalo válido. O comprimento da lista é {len(self.lista)}.")
+            print("Essa posição não existe. Tera de escolher um valor diferente")
+
+lista = [0,3,6,9,12]
+valor_lista = IndiceForaDosLimitesHandler(lista)
+valor_lista.aceder_elemento(2)
+valor_lista.aceder_elemento(6)
+
+
+class GerenciadorLista:
+    def __init__(self, lista_inicial=None):
+        if lista_inicial is None:
+            self.lista = []
+        else:
+            self.lista = list(lista_inicial)
+        
+    def adicionar_elemento(self, elemento):
+        #print(f"\nA tentar adicionar: {elemento}")
+        try:
+            if elemento in self.lista:
+                # Lançamos o erro para que quem chama o método decida o que fazer
+                #print(f"Item duplicated : {elemento}. Não adicionado.")
+                raise ValueError(f"Impossível adicionar elementos duplicados => [{elemento}].")
+            else:
+                self.lista.append(elemento)
+            #print(f"Elemento '{elemento}' adicionado com sucesso.")
+            print(f"Conteúdo atual da lista: {self.lista}")
+        except ValueError as e:
+            print(f"Erro: {e}")
+
+# --- Implementação ---
+gerenciador = GerenciadorLista()
+print(f"Lista Inicial: {gerenciador.lista}")
+gerenciador.adicionar_elemento(10)
+gerenciador.adicionar_elemento(-2)
+gerenciador.adicionar_elemento("Olá")
+
+# --- Teste do erro com lista vazia ---
+print(" ----- ")
+gerenciador.adicionar_elemento("Olá")
+gerenciador.adicionar_elemento(-2)
+
+# --- Teste do erro com lista já preenchida ---
+print(" ----- ")
+gerenciador = GerenciadorLista([10])
+print(f"Lista Inicial: {gerenciador.lista}")
+gerenciador.adicionar_elemento(10)
