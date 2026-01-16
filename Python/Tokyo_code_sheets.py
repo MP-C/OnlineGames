@@ -896,3 +896,86 @@ adicionar_pessoa(nome_do_ficheiro, "test", "-1", "teste@gmail.com")
 # - Confirmar controlo de nome e de idade adicionado
 conteudo = ler_ficheiro(nome_do_ficheiro)
 print(conteudo)
+
+
+#### 30
+
+# Fazer o exercício aqui
+# ---- Classes
+class Produto():
+    """"Representa as propriedades de um produto"""
+    def __init__(self, nome, preco, quantidade):
+        self.nome = str(nome)
+        self.preco = int(preco)
+        self.quantidade = int(quantidade)
+    
+class GerenciadorDeProdutos():
+    """"Representa as propriedades de um fiheiro com produtos"""
+    def __init__(self, nome_ficheiro):
+        self.nome_ficheiro = nome_ficheiro
+        file = open(nome_ficheiro, "a", encoding="UTF8") 
+        file.write("")
+        file.close()
+
+    def adicionar_produto(self, produto):
+        detalhes = (f"{produto.nome},{produto.quantidade},{produto.preco}\n")
+        #with open(self.nome_ficheiro, "a", encoding="UTF8") as file:
+        #    file.write(detalhes)
+
+        file = open(nome_ficheiro, "a", encoding="UTF8") 
+        file.write(detalhes)
+        file.close()
+
+    def retornar_todos_os_dados(self): # print=> (nome=Arroz) - [QUT=15] | {preço=34}
+        with open(self.nome_ficheiro, "r", encoding="UTF8") as file:
+            for conteudo in file:
+                detalhes = conteudo.replace('\n', '').split(",")
+                # o método replace corrige o espaço final \n que existe, caso contrario, o output seria:
+                # (nome=Arroz) - [QUT=34] | {preço=15
+                # }"
+                print(f"(nome={detalhes[0]}) - [QUT={detalhes[1]}] | {{preço={detalhes[2]}}}")
+
+        """A abordagem seguinte não funciona. além disso, como não lê linha à linha, impossibilita o mesmo tratamento de dados.
+        Output: 
+            (nome=Arroz) - [QUT=34] | {preço=15
+            Carne} """
+        #file = open(self.nome_ficheiro, "r", encoding="UTF8")
+        #produtos = file.read()
+        #file.close()
+        #detalhes = produtos.strip().split(",")
+        #print(f"(nome={detalhes[0]}) - [QUT={detalhes[1]}] | {{preço={detalhes[2]}}}")
+    
+    def apagar_conteudo(self):
+        """Criação extra enunciado, para que o ficheiro possa ser reiniciado em testes"""
+        file = open(self.nome_ficheiro, "w", encoding="UTF8") 
+        file.write("")
+        file.close()
+
+# ---- Implementação
+# - Criar 5 objectos
+produto1 = Produto("Arroz", 15,34) 
+produto2 = Produto("Carne", 2,20)
+produto3 = Produto("Tomate", 4,4)
+produto4 = Produto("Laranja", 8,3)
+produto5 = Produto("Peixe", 6,30)
+
+# - Teste
+# print(produto1.nome,produto2.nome, produto3.nome, produto4.nome, produto5.nome )
+
+# - Criar Ficheiro
+nome_ficheiro = "dados_produto.txt"
+gerenciador = GerenciadorDeProdutos(nome_ficheiro)
+
+# - Escrever objetos no ficheiro
+gerenciador.adicionar_produto(produto1)
+gerenciador.adicionar_produto(produto2)
+gerenciador.adicionar_produto(produto3)
+gerenciador.adicionar_produto(produto4)
+gerenciador.adicionar_produto(produto5)
+
+# - Retornar dados (a interpretação feita a partir do enunciado,
+# foi que a leitura do ficheiro e a sua impressão poderiam ser realizadas na mesma função)
+gerenciador.retornar_todos_os_dados()
+
+# - Para reiniciar o ficheiro
+#gerenciador.apagar_conteudo()
