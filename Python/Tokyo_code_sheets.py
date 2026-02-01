@@ -962,7 +962,9 @@ produto5 = Produto("Peixe", 6,30)
 # - Teste
 # print(produto1.nome,produto2.nome, produto3.nome, produto4.nome, produto5.nome )
 
-# - Criar Ficheiro
+
+
+#### 31 - Criar Ficheiro
 nome_ficheiro = "dados_produto.txt"
 gerenciador = GerenciadorDeProdutos(nome_ficheiro)
 
@@ -979,3 +981,35 @@ gerenciador.retornar_todos_os_dados()
 
 # - Para reiniciar o ficheiro
 #gerenciador.apagar_conteudo()
+
+#### EXERCICIO EXTRAS
+'''
+### EXERCÍCIO 1
+Neste exercício,devemoscriarumprogramaqueabra e leia um ficheiro de texto e nos proporcione a seguinte
+informação:
+• Nome doficheiro
+• Se o ficheiro está fechado ou não (True ouFalse)
+• O modo de abertura doficheiro
+O ficheirodetextovai denominar-seprovas.txt e teráoseguinte conteúdoemtextoplano(criarpreviamente):
+
+Olá, que tal está
+Isto é uma prova
+Hojenãochove
+Aproxima-seo natal
+Até logoe muitoboas
+
+Pesquisar nadocumentação quemétodosproporcionama informaçãonecessária.Por último,listaroconteúdo doficheiro.
+Aviso importante: se quiser ler um ficheiro escrito diretamente com Python, então é possível que encontre erros de codificação ao mostrar
+alguns caracteres. Assegurar-se que indica a codificação do ficheiro manualmente durante a abertura como argumento no open, por
+exemplo com UTF-8: open(..., encoding="utf8")
+'''
+print("\n ------- \nExercicio 1")
+
+def criar_ficheiro(nome_ficheiro, conteudo):
+    print("criar ficheiro de raiz, para o exercicio")
+    file = open(nome_ficheiro, "w", encoding="UTF8") 
+    file.write(conteudo)
+    file.close()
+
+text="Olá, que tal está\nIsto é uma prova\nHojenãochove\nAproxima-se o natal\nAté logo e muitoboas"
+criar_ficheiro("provas.txt", text)
