@@ -982,7 +982,8 @@ gerenciador.retornar_todos_os_dados()
 # - Para reiniciar o ficheiro
 #gerenciador.apagar_conteudo()
 
-#### EXERCICIO EXTRAS
+
+#### 32  EXERCICIO EXTRAS
 '''
 ### EXERCÍCIO 1
 Neste exercício,devemoscriarumprogramaqueabra e leia um ficheiro de texto e nos proporcione a seguinte
@@ -1013,3 +1014,5 @@ def criar_ficheiro(nome_ficheiro, conteudo):
 
 text="Olá, que tal está\nIsto é uma prova\nHojenãochove\nAproxima-se o natal\nAté logo e muitoboas"
 criar_ficheiro("provas.txt", text)
+
+
