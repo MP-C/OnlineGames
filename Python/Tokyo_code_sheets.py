@@ -1016,3 +1016,38 @@ text="Olá, que tal está\nIsto é uma prova\nHojenãochove\nAproxima-se o natal
 criar_ficheiro("provas.txt", text)
 
 
+
+'''
+EXERCÍCIO 2
+Sobreoficheiroanterior, vamos obter a seguinte informação:
+• Leitura de uma linhado ficheiro
+• Leitura do ficheiro linha a linha
+'''
+print("\n ------- \nExercicio 2")
+
+# Leitura do ficheiro
+print("\nLeitura do ficheiro")
+file = open("provas.txt", "r", encoding="UTF8")
+texto = file.read()
+file.close()
+print(texto)
+
+# Leitura de todo o ficheiro mas numa linha apenas
+print("\nLeitura de todo o ficheiro mas numa linha apenas")
+file = open("provas.txt", "r", encoding="UTF8")
+texto = file.readlines()
+file.close()
+print(texto)
+
+# Leitura de uma linha do ficheiro
+print("\nLeitura de uma linha do ficheiro")
+file = open("provas.txt", "r", encoding="UTF8")
+texto = file.readline()
+file.close()
+print(texto)
+
+# Leitura do ficheiro linha a linha
+print("\nLeitura do ficheiro linha a linha")
+with open("provas.txt", "r", encoding="UTF8") as ficheiro:
+    for linha in ficheiro:
+        print(linha)
