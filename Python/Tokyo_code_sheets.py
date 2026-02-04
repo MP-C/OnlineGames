@@ -1075,3 +1075,20 @@ def adicionar_novo_texto(nome_ficheiro, nova_linha):
 
 adicionar_novo_texto("provas.txt", ", esta é uma nova linha")
 confirmar_escrita_ficheiro("provas.txt")
+
+
+'''
+EXERCÍCIO 4
+Sobre o ficheiro anterior,fazer a seguinte operação:
+• Abrir o ficheiro em modo escrita (substituindo o conteúdo) e escrever uma nova linha de texto.
+Rever se está a funcionar corretamente comprovando o ficheiro (fechar e abrir para poder visualizar as alterações).
+'''
+
+print("\n ------- \nExercicio 4")
+def substituir_texto_no_ficheiro(nome_ficheiro, novo_texto):
+    file = open(nome_ficheiro, "w", encoding="UTF8") # w = write
+    file.write(novo_texto)
+    file.close()
+
+substituir_texto_no_ficheiro("provas.txt", "substituir texto escrito no ficheiro por algo novo")
+confirmar_escrita_ficheiro("provas.txt")
