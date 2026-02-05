@@ -1051,3 +1051,27 @@ print("\nLeitura do ficheiro linha a linha")
 with open("provas.txt", "r", encoding="UTF8") as ficheiro:
     for linha in ficheiro:
         print(linha)
+
+
+
+'''
+EXERCÍCIO 3
+Sobre o ficheiro anterior,fazer a seguinte operação:
+• Abrir o ficheiro em modo escrita (ligar o conteúdo, sem o substituir) e escrever uma nova linha de texto.
+Rever se está a funcionar corretamente comprovandoo ficheiro (fechar e abrir para poder visualizar as alterações).
+'''
+print("\n ------- \nExercicio 3")
+def confirmar_escrita_ficheiro(nome_ficheiro):
+    print("\nNome do ficheiro: ",nome_ficheiro)
+    file = open(nome_ficheiro, "r", encoding="UTF8")
+    texto = file.read()
+    file.close()
+    print(texto)
+
+def adicionar_novo_texto(nome_ficheiro, nova_linha):
+    file = open(nome_ficheiro, "a", encoding="UTF8") # a = append
+    file.write(nova_linha)
+    file.close()
+
+adicionar_novo_texto("provas.txt", ", esta é uma nova linha")
+confirmar_escrita_ficheiro("provas.txt")
