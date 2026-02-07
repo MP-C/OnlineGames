@@ -1092,3 +1092,40 @@ def substituir_texto_no_ficheiro(nome_ficheiro, novo_texto):
 
 substituir_texto_no_ficheiro("provas.txt", "substituir texto escrito no ficheiro por algo novo")
 confirmar_escrita_ficheiro("provas.txt")
+
+
+
+'''
+EXERCÍCIO 5
+Neste exercício, devemos criar um programa para ler os dado de um ficheiro de texto, que transforme cada fila num
+dicionário e o adiciona a uma lista chamada pessoas. Logo, recorre-se às pessoas da lista e para cada uma mostrar
+deforma amigável todos os seus campos.Por exemplo,assim:
+(id=1) Carlos Pérez =>05/01/1989
+O ficheiro de texto denominar pessoas.txt e terá o seguinte conteúdo no texto plano(criá-lo previamente):
+1;Carlos;Pérez;05/01/1989
+2;Manuel;Heredia;26/12/1973
+3;Rosa;Campos;12/06/1961
+4;David;García;25/07/2006
+
+Os campos do dicionário serão por ordem:id, nome, apelido e nascimento.
+Aviso importante: se quiser ler um ficheiro que não se escreveu diretamente com o Python, então é possível que se encontrem erros de
+codificação ao mostrar alguns caracteres.
+Assegurar que indica a codificação do ficheiro manualmente durante a abertura como argumento no open, por exemplo com UTF-8:
+open(..., encoding="utf8")
+Pista: é possível que se tenha que recorrer a funções como replace ou split para poder modificar o texto de uma linha de texto. Pesquisar
+documentação sobre isso.
+'''
+print("\n ------- \nExercicio 5")
+'''Usando as funções criadas anteriormente, este exercicio fica da seguinte forma'''
+
+nome_do_ficheiro = "pessoas.txt"
+texto_ficheiro_novo = "1;Carlos;Pérez;05/01/1989\n2;Manuel;Heredia;26/12/1973\n3;Rosa;Campos;12/06/1961\n4;David;García;25/07/2006"
+criar_ficheiro(nome_do_ficheiro, texto_ficheiro_novo)
+confirmar_escrita_ficheiro(nome_do_ficheiro)
+
+pessoa = []
+with open(nome_do_ficheiro, "r", encoding="UTF8") as ficheiro:
+    for linha in ficheiro:
+        pessoa = linha.split(";")
+        print(f"(id={pessoa[0]}) {pessoa[1]} {pessoa[2]} =>{pessoa[3]}") # (id=1) Carlos Pérez =>05/01/1989
+
