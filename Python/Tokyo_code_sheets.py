@@ -1129,3 +1129,161 @@ with open(nome_do_ficheiro, "r", encoding="UTF8") as ficheiro:
         pessoa = linha.split(";")
         print(f"(id={pessoa[0]}) {pessoa[1]} {pessoa[2]} =>{pessoa[3]}") # (id=1) Carlos Pérez =>05/01/1989
 
+
+
+
+
+#### 33
+import os, random
+print("\nClassificação:")
+
+class Corredor:
+    def __init__(self, posicao, nome, nacionalidade, equipa, pontos):
+        self.posicao = posicao
+        self.nome = nome 
+        self.nacionalidade = nacionalidade 
+        self.equipa = equipa 
+        self.pontos = int(pontos)
+
+class Classificacao:
+    def __init__(self, nome_ficheiro):
+        self.nome_ficheiro = nome_ficheiro
+        # Cria o ficheiro com o cabeçalho apenas se ele não existir
+        if not os.path.exists(self.nome_ficheiro):
+            with open(self.nome_ficheiro, "w", encoding="UTF8") as file:
+                file.write("Posicao,Nome,Nacionalidade,Equipa,Points\n")
+    
+    def reiniciar_ficheiro(self):
+        """Apaga tudo e escreve apenas o cabeçalho para evitar erros de leitura"""
+        with open(self.nome_ficheiro, "w", encoding="UTF8") as file:
+            file.write("Posicao,Nome,Nacionalidade,Equipa,Pontos\n")
+        
+    def adicionar_jogador(self, jogador):
+        try:
+            linha = f"{jogador.posicao},{jogador.nome},{jogador.nacionalidade},{jogador.equipa},{jogador.pontos}\n"
+            with open(self.nome_ficheiro, "a", encoding="UTF8") as file:
+                file.write(linha)
+        except Exception as e:
+            print(f"Erro ao gravar: {e}")
+
+    def mostrar_classificacao(self):
+        print(f"\n{'POS':<4} | {'PILOTO':<20} | {'NAC':<5} | {'EQUIPA':<20} | {'PTS'}")
+        print("-" * 65)
+        try:
+            with open(self.nome_ficheiro, "r", encoding="UTF8") as file:
+                next(file) # Pula a primeira linha (cabeçalho)
+                for conteudo in file:
+                    detalhes = conteudo.strip().split(",")
+                    if len(detalhes) == 5:
+                        print(f"{detalhes[0]:<4} | {detalhes[1]:<20} | {detalhes[2]:<5} | {detalhes[3]:<20} | {detalhes[4]}")
+        except FileNotFoundError:
+            print("Ficheiro não encontrado.")
+
+    @staticmethod
+    def gerar_vencedores_aleatorios():
+        pilotos = [
+            "Lando Norris", "Max Verstappen", "Oscar Piastri", "George Russell", 
+            "Charles Leclerc", "Lewis Hamilton", "Kimi Antonelli", "Alexander Albon", 
+            "Carlos Sainz", "Fernando Alonso", "Nico Hulkenberg", "Isack Hadjar", 
+            "Oliver Bearman", "Liam Lawson", "Esteban Ocon", "Lance Stroll", 
+            "Yuki Tsunoda", "Pierre Gasly", "Gabriel Bortoleto", "Franco Colapinto",
+            "Jack Doohan"
+        ]
+        return random.sample(pilotos, 10)
+
+    def atribuir_pontos_corrida(self, vencedores):
+        pontuacao = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1]
+        dados_pilotos = []
+
+        with open(self.nome_ficheiro, "r", encoding="UTF8") as file:
+            linhas = file.readlines()
+            header = linhas[0]
+            
+            for linha in linhas[1:]:
+                dados = linha.strip().split(",")
+                nome_piloto = dados[1]
+                pontos_atuais = int(dados[4])
+
+                if nome_piloto in vencedores:
+                    indice_vitoria = vencedores.index(nome_piloto)
+                    pontos_atuais += pontuacao[indice_vitoria]
+
+                piloto = f"{dados[0]},{dados[1]},{dados[2]},{dados[3]},{pontos_atuais}\n"
+                dados_pilotos.append(piloto)
+                dados_pilotos.sort(key=lambda x: x[4], reverse=True)
+
+        with open(self.nome_ficheiro, "w", encoding="UTF8") as file:
+            file.write(header)
+            file.writelines(dados_pilotos)
+        
+    def ordenar_por_pontos(self):
+        try:
+            dados_pilotos = []
+            with open(self.nome_ficheiro, "r", encoding="UTF8") as file:
+                linhas = file.readlines()
+                header = linhas[0]
+                for linha in linhas[1:]:
+                    dados = linha.strip().split(",")
+                    if len(dados) == 5:
+                        dados[4] = int(dados[4]) 
+                        dados_pilotos.append(dados)
+            dados_pilotos.sort(key=lambda x: x[4], reverse=True)
+            linhas_ordenadas = [header]
+            for i, piloto in enumerate(dados_pilotos, 1):
+                nova_linha = f"{i},{piloto[1]},{piloto[2]},{piloto[3]},{piloto[4]}\n"
+                linhas_ordenadas.append(nova_linha)
+
+            with open(self.nome_ficheiro, "w", encoding="UTF8") as file:
+                file.writelines(linhas_ordenadas)
+            print("✨ Classificação e posições atualizadas:")
+        except Exception as e:
+            print(f"Erro ao ordenar: {e}")
+
+# --- INSTANCIAÇÃO ---
+documento = "M5_01_ExercicioExtra_Formula1.txt"
+grand_premio = Classificacao(documento)
+
+# Limpar o ficheiro antes de começar a adicionar os jogadores
+grand_premio.reiniciar_ficheiro()
+
+jogadores = [
+    Corredor("1", "Lando Norris", "GBR", "McLaren", "0"),
+    Corredor("2", "Max Verstappen", "NED", "Red Bull Racing", "0"),
+    Corredor("3", "Oscar Piastri", "AUS", "McLaren", "0"),
+    Corredor("4", "George Russell", "GBR", "Mercedes", "0"),
+    Corredor("5", "Charles Leclerc", "MON", "Ferrari", "0"),
+    Corredor("6", "Lewis Hamilton", "GBR", "Ferrari", "0"),
+    Corredor("7", "Kimi Antonelli", "ITA", "Mercedes", "0"),
+    Corredor("8", "Alexander Albon", "THA", "Williams", "0"),
+    Corredor("9", "Carlos Sainz", "ESP", "Williams", "0"),
+    Corredor("10", "Fernando Alonso", "ESP", "Aston Martin", "0"),
+    Corredor("11", "Nico Hulkenberg", "GER", "Kick Sauber", "0"),
+    Corredor("12", "Isack Hadjar", "FRA", "Racing Bulls", "0"),
+    Corredor("13", "Oliver Bearman", "GBR", "Haas F1 Team", "0"),
+    Corredor("14", "Liam Lawson", "NZL", "Racing Bulls", "0"),
+    Corredor("15", "Esteban Ocon", "FRA", "Haas F1 Team", "0"),
+    Corredor("16", "Lance Stroll", "CAN", "Aston Martin", "0"),
+    Corredor("17", "Yuki Tsunoda", "JPN", "Red Bull Racing", "0"),
+    Corredor("18", "Pierre Gasly", "FRA", "Alpine", "0"),
+    Corredor("19", "Gabriel Bortoleto", "BRA", "Kick Sauber", "0"),
+    Corredor("20", "Franco Colapinto", "ARG", "Alpine", "0"),
+    Corredor("21", "Jack Doohan", "AUS", "Alpine", "0")
+]
+
+# Adicionar todos os jogadores ao ficheiro
+for jogador in jogadores:
+    grand_premio.adicionar_jogador(jogador)
+
+# Mostrar resultados
+grand_premio.mostrar_classificacao()
+
+# Simular 4 Provas => atribuir classificações
+for i in range(0, 4):
+    vencedores_da_prova = Classificacao.gerar_vencedores_aleatorios()
+    print(f"\n\n🏆 RESULTADO PROVA {i+1}: {vencedores_da_prova[0]} venceu!")
+    grand_premio.atribuir_pontos_corrida(vencedores_da_prova)
+    grand_premio.ordenar_por_pontos()
+    grand_premio.mostrar_classificacao()
+
+
+
