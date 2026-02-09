@@ -1304,3 +1304,48 @@ for i in range(0, 4):
     * A quantidade de notas suficientes e insuficientes por disciplina (Matemática, Português, Ciências).
 * Salve o ficheiro modificado como __"dados_analise.xlsx"__.caracteres).
 '''
+
+
+# 34 Fazer o exercício aqui
+import openpyxl
+
+# A. Criar um ficheiro
+def criar_configurar_ficheiro(nome):
+    tabela = openpyxl.Workbook()
+    
+    # Selecionar a folha ativa e mudar o título
+    planilha = tabela.active 
+    planilha.title = "planilha"
+    
+    # 1. Definir o cabeçalho usando uma lista simples
+    cabecalho = ["Nome", "Idade", "Nota Matemática", "Nota Português", "Nota Ciências"]
+    planilha.append(cabecalho) # O append adiciona a lista inteira na primeira linha disponível
+
+    # 2. Dados em formato de lista de strings (como no seu exemplo)
+    conteudo = [
+        "João, 16, 8, 7, 6",
+        "Maria, 17, 19, 12, 14",
+        "Pedro, 16, 6, 9, 10",
+        "Ana, 18, 15, 20, 17"
+    ]
+
+    # 3. Adicionar conteúdo percorrendo a lista
+    for linha_texto in conteudo:
+        dados_separados = linha_texto.split(", ")   # Transformar "João, 16, ..." em ["João", "16", ...]
+        planilha.append(dados_separados)             # Adicionar a linha tratada à planilha
+    
+    # 4. Guardar o ficheiro
+    tabela.save(nome)
+    print(f"Ficheiro {nome} criado com sucesso!")
+    tabela.close()
+
+def mostrar_tabela(nome_ficheiro):
+    wb = openpyxl.load_workbook(nome_ficheiro)
+    folha_um = wb['planilha']
+
+    # Imprime por colunas
+    for linhas in folha_um.columns:
+        for columna in linhas:
+            print(columna.coordinate, columna.value)
+        print("------------")
+    wb.close()
