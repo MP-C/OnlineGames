@@ -1349,3 +1349,44 @@ def mostrar_tabela(nome_ficheiro):
             print(columna.coordinate, columna.value)
         print("------------")
     wb.close()
+
+
+# B. Adicione uma nova coluna chamada "Avaliação" em cada disciplina (Matemática, Português e Ciências).
+def rescrever_tabela_avaliacao(nome):
+    tabela = openpyxl.Workbook()
+    planilha = tabela.active 
+    planilha.title = "planilha"
+    
+    cabecalho = ["Nome", "Idade", "Nota Matemática","Avaliação Matemática", "Nota Português", "Avaliação Português", "Nota Ciências", "Avaliação Ciências"]
+    planilha.append(cabecalho) # O append adiciona a lista inteira na primeira linha disponível
+
+    conteudo = [
+        "João, 16, 8, 7, 6",
+        "Maria, 17, 19, 12, 14",
+        "Pedro, 16, 6, 9, 10",
+        "Ana, 18, 15, 20, 17"
+    ]
+
+    for linha_texto in conteudo:
+        dados_separados = linha_texto.split(", ")
+        # print(dados_separados) # Para verificar o que está dentro antes de entrar
+        linha_completa =[
+            dados_separados[0],                        # primeira coluna => Nome
+            dados_separados[1],                        # segundo coluna => Idade
+            dados_separados[2],                        # terceira coluna => Matemática
+            avaliacao_da_nota(dados_separados[2], 10), # quarta coluna => Validado
+            dados_separados[3],                        # quinta coluna => Português
+            avaliacao_da_nota(dados_separados[3], 10), # sexta coluna => Validado
+            dados_separados[4],                        # séptima coluna => Ciências
+            avaliacao_da_nota(dados_separados[4], 10), # oitava coluna => Validado
+        ]
+        # print(linha_completa) # Para verificar o que está dentro quando sai
+        planilha.append(linha_completa)    
+    
+    tabela.save(nome)
+    print(f"\nFicheiro {nome} construido com sucesso!")
+    tabela.close()
+
+def avaliacao_da_nota(dados, nota_suficiente):
+    ''' Função que auxilia a transformação de dados de forma simplificada '''
+    return "Suficiente" if int(dados) >= nota_suficiente else "Insuficiente"
