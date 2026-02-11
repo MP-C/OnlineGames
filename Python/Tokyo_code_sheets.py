@@ -1286,4 +1286,21 @@ for i in range(0, 4):
     grand_premio.mostrar_classificacao()
 
 
+#####
+'''
+#### Criação
+* Crie um ficheiro Excel chamado __"dados.xlsx"__ com os dados fornecidos a seguir, utilizando a biblioteca __openpyxl__:
 
+| Nome      | Idade | Nota Matemática | Nota Português | Nota Ciências |
+|-----------|-------|-----------------|----------------|---------------|
+| João      | 16    | 8               | 7              | 6             |
+| Maria     | 17    | 19              | 12             | 14            |
+| Pedro     | 16    | 6               | 9              | 10            |
+| Ana       | 18    | 15              | 20             | 17          
+* Adicione uma nova coluna chamada "Avaliação" em cada disciplina (Matemática, Português e Ciências).
+* A coluna Avaliação deve conter o valor "Suficiente" se a nota for igual ou superior a 10, ou "Insuficiente" se for inferior a 10.
+* Crie uma nova folha chamada "Resumo", que deve incluir:
+    * O número total de alunos.
+    * A quantidade de notas suficientes e insuficientes por disciplina (Matemática, Português, Ciências).
+* Salve o ficheiro modificado como __"dados_analise.xlsx"__.caracteres).
+'''
