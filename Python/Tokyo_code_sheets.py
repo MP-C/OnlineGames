@@ -1390,3 +1390,68 @@ def rescrever_tabela_avaliacao(nome):
 def avaliacao_da_nota(dados, nota_suficiente):
     ''' Função que auxilia a transformação de dados de forma simplificada '''
     return "Suficiente" if int(dados) >= nota_suficiente else "Insuficiente"
+
+
+
+# C. Crie uma nova folha chamada "Resumo" :* O número total de alunos.* A quantidade de notas suficientes e insuficientes por disciplina (Matemática, Português, Ciências).
+def criar_nova_folha(nome_ficheiro):
+    wb = openpyxl.load_workbook(nome_ficheiro)
+    folha_um = wb[wb.sheetnames[0]]
+    folha_dois = wb.create_sheet("Resumo")
+    # print(wb.sheetnames) # Para verificar
+    
+    folha_dois["A1"] = "Numero total de alunos"
+    folha_dois.append(["Disciplina","Suficiente","Insuficiente"])
+
+    total_alunos = 0
+    disciplina = {} # dicionáirio
+
+    for coluna in folha_um.columns:
+        titulo_coluna = coluna[0].value # cabeçalho da coluna
+        if titulo_coluna == "Nome":
+            for i in range(1, len(coluna)):
+                total_alunos += 1
+                # print("alunos", total_alunos)
+
+        elif "Avaliação" in titulo_coluna:
+            suficiente = 0
+            insuficiente = 0
+            for i in range(1, len(coluna)):
+                # print("coluna valor", coluna[i].value)
+                if str(coluna[i].value) == "Suficiente":
+                    suficiente += 1
+                elif str(coluna[i].value) == "Insuficiente":
+                    insuficiente += 1
+            disciplina[titulo_coluna] = [suficiente, insuficiente]
+    # print(disciplina) # Para verificar
+
+    folha_dois["B1"] = total_alunos
+    for disciplina, classificacao in disciplina.items():
+        folha_dois.append([disciplina, classificacao[0],classificacao[1]])
+
+    # D. Salve o ficheiro modificado como "dados_analise.xlsx".caracteres).
+    wb.save(nome_ficheiro)
+    nome_ficheiro = (nome_ficheiro+".caracteres")
+    wb.save(nome_ficheiro)
+    wb.close()
+
+def total_avaliacao_disciplina(disciplina, coluna):
+    ''' Serve para contar os Suficientes e Insuficientes por cada disciplina, devolvendo uma lista [suficiente][insuficiente]/disciplina'''
+    suficiente = 0
+    insuficiente = 0
+    if str(coluna.value) == "Suficiente":
+        suficiente += 1
+    if str(coluna.value) == "Insuficiente":
+        insuficiente += 1
+    print("suficiente", suficiente)
+    print("insuficiente", insuficiente)
+    return [[suficiente], [insuficiente]]
+
+nome_ficheiro = "dados.xlsx"
+criar_configurar_ficheiro(nome_ficheiro)
+# mostrar_tabela(nome_ficheiro) # Para verificar
+rescrever_tabela_avaliacao(nome_ficheiro)
+# mostrar_tabela(nome_ficheiro) # Para verificar
+criar_nova_folha(nome_ficheiro)
+# mostrar_tabela(nome_ficheiro) # Para verificar
+
