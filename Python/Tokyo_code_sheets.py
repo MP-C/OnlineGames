@@ -1455,3 +1455,111 @@ rescrever_tabela_avaliacao(nome_ficheiro)
 criar_nova_folha(nome_ficheiro)
 # mostrar_tabela(nome_ficheiro) # Para verificar
 
+
+############# 
+## 35
+'''
+#### Criação
+
+* Crie o ficheiro __"dados.csv"__ com os dados fornecidos, utilizando a biblioteca csv:
+
+| Produto   | Categoria   | Preço  | Quantidade |
+|-----------|-------------|--------|------------|
+| Teclado   | Informática | 20.00  | 100        |
+| Mouse     | Informática | 15.00  | 200        |
+| Cadeira   | Móveis      | 100.00 | 50         |
+| Caneca    | Utensílios  | 5.00   | 300        |
+| Mesa      | Móveis      | 150.00 | 20         |
+| Cadeira   | Móveis      | 250.00 | 20         |
+
+* Ordene os dados pela coluna "Preço", do maior para o menor.
+* Filtrar os dados por produtos com preço acima de 25.
+* Após ordenar e filtrar, salve os resultados em um novo ficheiro CSV chamado __"dados_filtrados.csv"__.
+'''
+
+import csv
+
+# A. Criar um ficheiro
+def criar_configurar_ficheiro(nome):
+    # Criar documento
+    with open(nome, "w", encoding="utf-8", newline='') as tabela:
+        tabela = open(nome,"w")
+        
+        # 2. Dados em formato de lista de strings
+        conteudo = [
+            "Teclado, Informatica, 20.00, 100",
+            "Mouse, Informatica, 15.00, 200",
+            "Cadeira, Móveis, 100.00, 50",
+            "Caneca, Utensílios, 5.00, 300",
+            "Mesa, Móveis, 150.00, 20",
+            "Cadeira, Móveis, 250.00, 20"
+        ]
+
+    # 1. Adicionar conteúdo percorrendo a lista
+    writer = csv.writer(tabela)
+    writer.writerow(['Produto', 'Categoria','Preço','Quantidade'])
+    for linha in conteudo:
+        limpos = linha.split(", ") # .split(", ") divide a string em colunas reais
+        writer.writerow(limpos)
+
+    # 2. Guardar o ficheiro
+    #del writer
+    tabela.close()
+    print(f"Ficheiro {nome} criado com sucesso!")
+
+def mostrar_tabela(nome_ficheiro):
+    with open(nome_ficheiro, "r") as ficheiro:
+        reader = csv.reader(ficheiro, delimiter=',')
+        
+        for line, row in enumerate(reader):
+            next(reader)
+            print('Linha: ' + str({line}))
+            print(f"Produto: {row[0]} | Categoria: {row[1]} | Preço: {row[2]} | Quantidade': {row[3]}")
+        print("------------")
+    ficheiro.close()
+
+def ordenar_tabela(nome_ficheiro):
+    '''Para Ordernar a tabela'''
+    print("\n --- Tabela ordenada por preço ---")
+    with open(nome_ficheiro, "r") as ficheiro:
+        # DictReader para podermos usar o nome da coluna 'Preço'
+        reader = csv.DictReader(ficheiro)
+        lista_dados = list(reader)
+        
+    # Ordenar convertendo a string para float para ordenação numérica
+    lista_final = sorted(lista_dados, key=lambda x: float(x['Preço']), reverse=False)
+
+    for row in enumerate(lista_final):
+        print(f"Produto: {row}")
+    print("------------")
+    ficheiro.close()
+
+def filtrar_tabela_guardar(nome_ficheiro, nome_ficheiro_final, preco): 
+    '''Para filtrar os dados sobre base de um valor'''
+    count_files=0
+
+    # Para ler, guardar e fechar automaticamente
+    with open(nome_ficheiro,"r") as ficheiro:
+        reader = csv.DictReader(ficheiro)
+
+        # Continua a tratar de projetos de forma progressivas
+        with open(nome_ficheiro_final, mode='w', encoding='utf-8', newline='') as outfile:
+            writer = csv.DictWriter(outfile, fieldnames=reader.fieldnames)
+            writer.writeheader()
+            
+            for row in reader:
+                # print("row:", row)# to teste
+                if float(row['Preço']) >= preco: # Filter 
+                    count_files += 1
+                    writer.writerow(row)
+
+    print(f"Tabela filtrada com :", count_files, "entradas")
+
+nome_ficheiro = "dados.csv"
+nome_ficheiro_final = "dados_filtrados.csv"
+
+criar_configurar_ficheiro(nome_ficheiro)
+mostrar_tabela(nome_ficheiro) # Para verificar
+ordenar_tabela(nome_ficheiro)
+filtrar_tabela_guardar(nome_ficheiro, nome_ficheiro_final, 25.00)
+#mostrar_tabela(nome_ficheiro_final) # Para verificar
