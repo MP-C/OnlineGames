@@ -1563,3 +1563,113 @@ mostrar_tabela(nome_ficheiro) # Para verificar
 ordenar_tabela(nome_ficheiro)
 filtrar_tabela_guardar(nome_ficheiro, nome_ficheiro_final, 25.00)
 #mostrar_tabela(nome_ficheiro_final) # Para verificar
+
+
+######
+## 36
+'''
+#### Criação
+
+* Crie o ficheiro Excel "vendas.xlsx" com os dados fornecidos a seguir:
+
+| Mês        | Vendas  |
+|------------|---------|
+| Janeiro    | 2000    |
+| Fevereiro  | 3000    |
+| Março      | 2500    |
+| Abril      | 4000    |
+| Maio       | 3500    |
+| Junho      | 4500    |
+
+* Utilize a biblioteca __openpyxl__ para gerar um gráfico de linha que mostre a evolução das vendas ao longo dos meses.
+* Adicione o gráfico à folha, posicionando-o abaixo da tabela de vendas.
+* Salve o ficheiro como __"vendas_com_grafico.xlsx"__.
+'''
+
+# Fazer o exercício aqui
+import openpyxl
+from openpyxl.chart import AreaChart, LineChart, Reference
+#from openpyxl.chart.axis import DateAxis
+
+# A. Criar um ficheiro
+def criar_configurar_ficheiro(nome):
+    tabela = openpyxl.Workbook()
+    
+    # Selecionar a folha ativa e mudar o título
+    planilha = tabela.active 
+    planilha.title = "Relatório de Vendas"
+    
+    # 1. Definir o cabeçalho usando uma lista simples
+    cabecalho = ["Mês", "Vendas"]
+    planilha.append(cabecalho) # O append adiciona a lista inteira na primeira linha disponível
+
+    # 2. Dados em formato de lista de strings (como no seu exemplo)
+    conteudo = [
+        "Janeiro, 2000",
+        "Fevereiro, 3000",
+        "Março, 2500",
+        "Abril, 4000",
+        "Maio, 3500",
+        "Junho, 4500"
+    ]
+
+    # 3. Adicionar conteúdo percorrendo a lista
+    for linha_texto in conteudo:
+        dados_separados = linha_texto.split(", ")
+        planilha.append(dados_separados) 
+    
+    # 4. Guardar o ficheiro
+    tabela.save(nome)
+    print(f"Ficheiro {nome} criado com sucesso!")
+    tabela.close()
+
+def mostrar_tabela(nome_ficheiro):
+    wb = openpyxl.load_workbook(nome_ficheiro)
+    folha_um = wb['Relatório de Vendas']
+
+    # Imprime por colunas
+    for linhas in folha_um.columns:
+        for columna in linhas:
+            print(columna.coordinate, columna.value)
+        print("------------")
+    wb.close()
+
+def gerar_grafico_linhas(nome_ficheiro, novo_ficheiro_final):
+    wb = openpyxl.load_workbook(nome_ficheiro)
+    folha = wb["Relatório de Vendas"]
+
+    # Criar o objeto de gráfico de linha
+    grafico = LineChart() # AreaChart() 
+    grafico.title = "Evolução de Vendas"
+    grafico.style = 13
+    
+    # Definir os dados (vendas) e as categorias (meses)
+    grafico.x_axis.title = 'Meses'
+    grafico.y_axis.title = 'Vendas'
+
+    # Os dados estão na coluna A1:B7
+    meses = Reference(folha, min_col=1, min_row=2, max_row=7) # Categorias => A1: A7 (meses)
+    grafico.set_categories(meses)
+    
+    data = Reference(folha, min_col=2, min_row=1, max_col=2, max_row=7) # Informação => B1: B7 (vendas)
+    grafico.add_data(data, titles_from_data=True, from_rows=False)
+    
+    # Estilo do gráfico
+    grafico.y_axis.scaling.min = 0
+    grafico.y_axis.scaling.max = 6000
+    grafico.y_axis.majorUnit = 500
+    grafico.series[0].smooth = True
+    
+    # 5. Adicionar o gráfico à planilha abaixo da tabela (com 7 linhas)
+    folha.add_chart(grafico, "A9")
+    
+    # 6. Salvar
+    wb.save(novo_ficheiro_final)
+    print("Gráfico criado com sucesso no arquivo:" + novo_ficheiro_final)
+
+nome_ficheiro = "vendas.xlsx"
+novo_ficheiro_final = "vendas_com_grafico.xlsx"
+
+criar_configurar_ficheiro(nome_ficheiro)
+mostrar_tabela(nome_ficheiro) # Para verificar
+gerar_grafico_linhas(nome_ficheiro, novo_ficheiro_final)
