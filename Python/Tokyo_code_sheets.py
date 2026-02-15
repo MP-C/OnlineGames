@@ -1673,3 +1673,41 @@ novo_ficheiro_final = "vendas_com_grafico.xlsx"
 criar_configurar_ficheiro(nome_ficheiro)
 mostrar_tabela(nome_ficheiro) # Para verificar
 gerar_grafico_linhas(nome_ficheiro, novo_ficheiro_final)
+
+
+# 37 Fazer o exercício aqui
+import json
+
+def transformar_em_dicionario(lista):
+    print(lista)
+    lista_dictionary = json.loads(lista)
+    # print(lista_dictionary) # Resultado para testes
+    return lista_dictionary
+
+def guardar_ficheiro(dicionario, ficheiro_nome):
+    with open(ficheiro_nome, "w", encoding="utf-8") as ficheiro:
+        json.dump(dicionario, ficheiro, indent=4, ensure_ascii=False) # Transformar de python para JSON, Gravando o objeto diretamente no ficheiro
+
+def ler_ficheiro(ficheiro_nome):
+    with open(ficheiro_nome, "r", encoding="utf-8") as ficheiro: # Lê o conteúdo do ficheiro e Transformar em dicionário
+        dados = json.load(ficheiro) 
+        
+        frutas = dados["Frutaria"]["Frutas"]
+        print("\nQuantidades de frutas:")
+        for fruta in frutas:
+            print(f"{fruta['Nome']}: {fruta['Quantidade']}")
+
+        legumes = dados["Frutaria"]["Legumes"]
+        print("\nQuantidades de legumes:")
+        for legume in legumes:
+            print(f"{legume['Nome']}: {legume['Quantidade']}")
+
+mercearia = '{"Frutaria": { "Frutas": [{"Nome":"Bananas", "Quantidade":5}, {"Nome":"Mangas", "Quantidade":10}, {"Nome":"Maracuja", "Quantidade":6}], "Legumes": [{"Nome":"Batata Doce", "Quantidade":10}, {"Nome":"Corgete", "Quantidade":2}, {"Nome":"Beterraba", "Quantidade":4}]}}'
+ficheiro_nome = "frutaria.json"
+# print("Mercearia",type(mercearia)) #class 'str' => OK
+
+dicionario = transformar_em_dicionario(mercearia)
+# print(type(dicionario))  #class 'dict' => OK
+
+guardar_ficheiro(dicionario, ficheiro_nome)
+ler_ficheiro(ficheiro_nome)
