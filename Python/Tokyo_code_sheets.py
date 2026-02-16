@@ -1711,3 +1711,41 @@ dicionario = transformar_em_dicionario(mercearia)
 
 guardar_ficheiro(dicionario, ficheiro_nome)
 ler_ficheiro(ficheiro_nome)
+
+
+
+# 38
+import json
+
+def criar_ficheiro_json(nome_ficheiro, dados_para_transformar):
+    dados_corrigidos = dados_para_transformar.replace("'", '"')
+    dicionario = json.loads(dados_corrigidos)
+
+    with open(nome_ficheiro, 'w', encoding='utf-8') as f:
+        json.dump(dicionario, f, indent=4)
+
+def mostrar_dados(nome_ficheiro, valor_a_imprimir):
+    with open(nome_ficheiro, 'r', encoding='utf-8') as f:
+        cidades = json.load(f)
+    
+    dados_ficheiro = []
+    dados = ()
+    for cidade in cidades['marcadores']:
+        dados = cidade['city'], cidade['latitude'], cidade['longitude']
+        dados_ficheiro.append(dados)
+        print(cidade[valor_a_imprimir])
+
+    print("dados_ficheiro", dados_ficheiro)
+    
+    guardar_json(nome_ficheiro, dados_ficheiro)
+
+def guardar_json(nome_ficheiro, dados):
+    with open(nome_ficheiro, 'w', encoding='utf-8') as f:
+        json.dump(dados, nome_ficheiro, indent=4) 
+    
+
+dados_para_transfomar = "{'marcadores': [{'latitude': 40.416875,'longitude': -3.703308,'city': 'Madrid','description': 'Puerta del Sol'},{'latitude': 40.417438,'longitude': -3.693363,'city': 'Madrid','description': 'Paseo del Prado'},{'latitude': 40.407015,'longitude': -3.691163,'city': 'Madrid','description': 'Estación de Atocha'}]}"
+nome_ficheiro = "marcadores.json"
+criar_ficheiro_json(nome_ficheiro,dados_para_transfomar)
+mostrar_dados(nome_ficheiro, "description")
+guardar_json(nome_ficheiro, dados)
