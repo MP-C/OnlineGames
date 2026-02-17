@@ -1712,40 +1712,50 @@ dicionario = transformar_em_dicionario(mercearia)
 guardar_ficheiro(dicionario, ficheiro_nome)
 ler_ficheiro(ficheiro_nome)
 
-
-
 # 38
+
 import json
+# {string} em dicionario = {"":""} + loads
+# dicionario em json => dump
+# json en dicionario => load
 
-def criar_ficheiro_json(nome_ficheiro, dados_para_transformar):
+def criar_ficheiro_json(nome_ficheiro_final, dados_para_transformar):
+    # Para que os dados possam ter estrutura, tem de se substituir pelas aspas corretas
     dados_corrigidos = dados_para_transformar.replace("'", '"')
-    dicionario = json.loads(dados_corrigidos)
+    # Transformar string em dicionario
+    dicionario = json.loads(dados_corrigidos) # load a "S" => loads
 
-    with open(nome_ficheiro, 'w', encoding='utf-8') as f:
+    with open(nome_ficheiro_final, 'w', encoding='utf-8') as f:
+    # Transformar dicionario em JSON
         json.dump(dicionario, f, indent=4)
 
-def mostrar_dados(nome_ficheiro, valor_a_imprimir):
-    with open(nome_ficheiro, 'r', encoding='utf-8') as f:
-        cidades = json.load(f)
+# Exiba os dados de maneira legível somente das descrições de cada ponto turístico.
+def mostrar_dados(nome_ficheiro_final, valor_a_imprimir):
+    with open(nome_ficheiro_final, 'r', encoding='utf-8') as ficheiro:
+        cidades = json.load(ficheiro)
     
-    dados_ficheiro = []
+    marcadores_ficheiro = []
     dados = ()
+    # Aproveitar para que ao ler/ imprimir, se faça uma triagem imediadta. Assim, não se tem de percorrer novamente a lista
     for cidade in cidades['marcadores']:
-        dados = cidade['city'], cidade['latitude'], cidade['longitude']
-        dados_ficheiro.append(dados)
-        print(cidade[valor_a_imprimir])
-
-    print("dados_ficheiro", dados_ficheiro)
+        dados = {'city': cidade['city'],'latitude': cidade['latitude'],'longitude': cidade['longitude']}
+        marcadores_ficheiro.append(dados)
+        print(cidade[valor_a_imprimir]) # Imprime as descrições
     
-    guardar_json(nome_ficheiro, dados_ficheiro)
+    # print("dados_ficheiro", dados_ficheiro)
+    guardar_json(nome_ficheiro_final, marcadores_ficheiro)
 
-def guardar_json(nome_ficheiro, dados):
-    with open(nome_ficheiro, 'w', encoding='utf-8') as f:
-        json.dump(dados, nome_ficheiro, indent=4) 
-    
+# Salve o JSON as informações no ficheiro "marcadores.json", como: do nome da cidade, latitude e longitude.
+def guardar_json(nome_ficheiro_final, dados):
+    json_marcadores = {'marcadores': dados}
+    # print(json_marcadores) # Para testar
+    with open(nome_ficheiro_final, 'w', encoding='utf-8') as ficheiro:
+        json.dump(json_marcadores, ficheiro, indent=4,) 
 
+# Crie o JSON a seguir como uma string em Python:
 dados_para_transfomar = "{'marcadores': [{'latitude': 40.416875,'longitude': -3.703308,'city': 'Madrid','description': 'Puerta del Sol'},{'latitude': 40.417438,'longitude': -3.693363,'city': 'Madrid','description': 'Paseo del Prado'},{'latitude': 40.407015,'longitude': -3.691163,'city': 'Madrid','description': 'Estación de Atocha'}]}"
-nome_ficheiro = "marcadores.json"
-criar_ficheiro_json(nome_ficheiro,dados_para_transfomar)
-mostrar_dados(nome_ficheiro, "description")
-guardar_json(nome_ficheiro, dados)
+nome_ficheiro_final = "marcadores.json"
+
+# Utilize  o módulo json para carregar o conteúdo dessa string e transformá-lo em um dicionário Python.
+criar_ficheiro_json(nome_ficheiro_final,dados_para_transfomar)
+mostrar_dados(nome_ficheiro_final, "description")
