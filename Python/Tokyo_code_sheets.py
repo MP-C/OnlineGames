@@ -1676,6 +1676,31 @@ gerar_grafico_linhas(nome_ficheiro, novo_ficheiro_final)
 
 
 # 37 Fazer o exercício aqui
+
+'''
+#### Criação
+
+* Crie o JSON a seguir como uma string em Python:
+
+{
+'marcadores': [{'latitude': 40.416875,
+   'longitude': -3.703308,
+   'city': 'Madrid',
+   'description': 'Puerta del Sol'},
+  {'latitude': 40.417438,
+   'longitude': -3.693363,
+   'city': 'Madrid',
+   'description': 'Paseo del Prado'},
+  {'latitude': 40.407015,
+   'longitude': -3.691163,
+   'city': 'Madrid',
+   'description': 'Estación de Atocha'}]
+}
+
+* Utilize  o módulo __json__ para carregar o conteúdo dessa string e transformá-lo em um dicionário Python.
+* Exiba os dados de maneira legível somente das descrições de cada ponto turístico.
+* Salve o JSON as informações no ficheiro "__marcadores.json__", como: do nome da cidade, latitude e longitude.
+'''
 import json
 
 def transformar_em_dicionario(lista):
@@ -1712,8 +1737,26 @@ dicionario = transformar_em_dicionario(mercearia)
 guardar_ficheiro(dicionario, ficheiro_nome)
 ler_ficheiro(ficheiro_nome)
 
-# 38
 
+# 38
+'''
+[
+    {"nome": "João", "idade": 28, "interesses": ["música", "futebol", "cinema"]},
+    {"nome": "Maria", "idade": 34, "interesses": ["literatura", "viajar", "pintura"]},
+    {"nome": "Ana", "idade": 22, "interesses": ["fotografia", "moda", "tecnologia"]}
+]
+
+* Converta esse conteúdo em um ficheiro CSV com a seguinte estrutura:
+
+| Nome  | Idade | Interesse 1   | Interesse 2   | Interesse 3    |
+|-------|-------|---------------|---------------|----------------|
+| João  | 28    | música        | futebol       | cinema         |
+| Maria | 34    | literatura    | viajar        | pintura        |
+| Ana   | 22    | fotografia    | moda          | tecnologia      |
+
+* Salve o ficheiro CSV com o nome "__usuarios.csv__".
+* Depois faça a leitura do conteúdo do ficheiro "__usuarios.csv__" para certificar que foi salvo corretamente.x"__.
+'''
 import json
 # {string} em dicionario = {"":""} + loads
 # dicionario em json => dump
