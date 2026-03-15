@@ -1802,3 +1802,48 @@ nome_ficheiro_final = "marcadores.json"
 # Utilize  o módulo json para carregar o conteúdo dessa string e transformá-lo em um dicionário Python.
 criar_ficheiro_json(nome_ficheiro_final,dados_para_transfomar)
 mostrar_dados(nome_ficheiro_final, "description")
+
+
+
+# 39
+import json,csv
+
+# Carregue o JSON a seguir em uma lista de dicionários. 
+def carregar_dicionario(json_pessoas):
+    return json.loads(json_pessoas)
+
+# Converta esse conteúdo em um ficheiro CSV na estrutura
+def converter_para_csv(dicionario, nome_ficheiro):
+    cabecalho = ["Nome", "Idade", "Interesse 1", "Interesse 2", "Interesse 3"]
+
+    with open(nome_ficheiro, "w", encoding="utf-8", newline='') as tabela:
+        tabela = open(nome_ficheiro,"w")
+
+    # Adicionar conteúdo percorrendo a lista
+    writer = csv.writer(tabela)
+    writer.writerow(cabecalho)
+
+    for pessoa in dicionario:
+        dados = [pessoa['nome'], pessoa['idade']]
+        dados.extend(pessoa['interesses']) # para ler cada item, sem ter de percorrer com um novo 'for'
+        writer.writerow(dados)
+
+    #tabela.save(nome_ficheiro)
+    print(f"Ficheiro {nome_ficheiro} criado com sucesso!")
+    tabela.close()
+
+
+# Depois faça a leitura do conteúdo do ficheiro "usuarios.csv"
+def imprimir(ficheiro):
+    with open(nome_ficheiro, "r") as ficheiro:
+        reader = csv.reader(ficheiro)
+        # Imprime por colunas
+        for linha in reader:
+            print(" | ".join(linha))
+
+json_pessoas='[{"nome": "João", "idade": 28, "interesses": ["música", "futebol", "cinema"]},{"nome": "Maria", "idade": 34, "interesses": ["literatura", "viajar", "pintura"]},{"nome": "Ana", "idade": 22, "interesses": ["fotografia", "moda", "tecnologia"]}]'
+nome_ficheiro ="usuarios.csv"
+
+dicionario = carregar_dicionario(json_pessoas)
+converter_para_csv(dicionario, nome_ficheiro)
+imprimir(nome_ficheiro)
