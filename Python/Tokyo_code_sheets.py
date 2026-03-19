@@ -1935,3 +1935,58 @@ nome_ficheiro_final = "marcadores.json"
 # Utilize  o módulo json para carregar o conteúdo dessa string e transformá-lo em um dicionário Python.
 criar_ficheiro_json(nome_ficheiro_final,dados_para_transfomar)
 mostrar_dados(nome_ficheiro_final, "description")
+
+
+
+################ 43 
+
+import json
+import csv
+
+# Carregue o JSON a seguir em uma lista de dicionários. 
+def carregar_dicionario(json_pessoas):
+    return json.loads(json_pessoas)
+
+# Converter o conteúdo em um ficheiro CSV na estrutura
+def converter_para_csv(dicionario, nome_ficheiro):
+    cabecalho = ["Nome", "Idade", "Interesse 1", "Interesse 2", "Interesse 3"]
+
+    with open(nome_ficheiro, "w", newline='') as tabela: # '' => é para que ao abrir o arquivo, sejam evitadas linhas em branco
+        writer = csv.writer(tabela)
+        writer.writerow(cabecalho)
+
+        for pessoa in dicionario:
+            dados = [pessoa['nome'], pessoa['idade']]
+            dados.extend(pessoa['interesses']) # para ler cada item, sem ter de percorrer com um novo 'for'
+            writer.writerow(dados)
+
+    print(f"Ficheiro {nome_ficheiro} criado com sucesso!")
+    tabela.close()
+
+
+# Fazer a leitura do conteúdo do ficheiro "usuarios.csv"
+def imprimir(nome_ficheiro):
+    """Lê o CSV e imprime-o formatado como uma tabela alinhada no terminal."""
+    try:
+        with open(nome_ficheiro, "r") as ficheiro:
+            reader = csv.reader(ficheiro)
+            
+            # Formatação tabelas e colunas
+            print(f"{'TABELA DE USUÁRIOS':^75}")
+            print("-" * 75)
+            
+            for i, linha in enumerate(reader):
+                print(f"{linha[0]:<12} | {linha[1]:<6} | {linha[2]:<15} | {linha[3]:<15} | {linha[4]:<15}")
+
+                if i == 0: # Linha decorativa após o cabeçalho
+                    print("-" * 75)
+
+    except FileNotFoundError:
+        print("Erro: O ficheiro não existe.")
+
+json_pessoas='[{"nome": "João", "idade": 28, "interesses": ["música", "futebol", "cinema"]},{"nome": "Maria", "idade": 34, "interesses": ["literatura", "viajar", "pintura"]},{"nome": "Ana", "idade": 22, "interesses": ["fotografia", "moda", "tecnologia"]}]'
+nome_ficheiro ="usuarios.csv"
+
+dicionario = carregar_dicionario(json_pessoas)
+converter_para_csv(dicionario, nome_ficheiro)
+imprimir(nome_ficheiro)
