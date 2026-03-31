@@ -1990,3 +1990,97 @@ nome_ficheiro ="usuarios.csv"
 dicionario = carregar_dicionario(json_pessoas)
 converter_para_csv(dicionario, nome_ficheiro)
 imprimir(nome_ficheiro)
+
+
+
+####### 44
+
+import sqlite3 as s
+import os
+
+def eliminar_db_se_existir(db_name):
+    if os.path.exists(db_name):
+        os.remove(db_name)
+        print(f"Base de dados '{db_name}' eliminada.")
+    else:
+        print(f"A base de dados '{db_name}' não existe.")
+
+def sql_criar_tabela(tabela):
+    return f"CREATE TABLE IF NOT EXISTS {tabela} (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, cargo TEXT, salario REAL);"    
+
+def connexion(db_name, tabela):
+    conexao = s.connect(str(db_name), timeout=10)
+    cursor = conexao.cursor()
+    cursor.execute(sql_criar_tabela(tabela))
+    conexao.commit()
+    return conexao
+
+def criar_dados(conexao, tabela, dados):
+    cursor = conexao.cursor()
+    cursor.executemany(f"INSERT INTO {tabela} (nome, cargo, salario) VALUES (?, ?, ?);", dados)
+    conexao.commit()
+
+def actualizar_3primeirossalarios_percentagem(conexao, tabela, percentagem):
+    cursor = conexao.cursor()
+    # Pista: Usamos uma subquery para limitar o UPDATE apenas aos IDs 1, 2 e 3
+    sql = f"""
+    UPDATE {tabela} 
+    SET salario = salario * (1 + {percentagem/100}) 
+    WHERE id IN (SELECT id FROM {tabela} LIMIT 3)
+    """
+    cursor.execute(sql)
+    conexao.commit()
+    print(f"Salário dos 3 primeiros atualizado em {percentagem}%.")
+    conexao.commit()
+
+def eleminar_registo(conexao, tabela, id):
+    cursor = conexao.cursor()
+    cursor.execute(f"DELETE FROM {tabela} WHERE ID ={id}")
+    conexao.commit()
+
+def imprimir_funcionarios_ordenados(conexao, tabela, ordem):
+    cursor = conexao.cursor()
+    cursor.execute(f"SELECT * FROM {tabela} ORDER BY {ordem} ASC")
+    conexao.commit()
+
+    resultados = cursor.fetchall()
+    print(f"\n--- Listagem de {tabela} (Ordenado por {ordem}) ---")
+    for elementos in resultados:
+        print(f"ID: {elementos[0]} | Nome: {elementos[1]:<15} | Cargo: {elementos[2]:<12} | Salário: {elementos[3]:.2f}€")
+
+try:
+    # --- EXECUÇÃO ---
+    tabela = "Funcionarios"
+    db = "empresa.db"
+
+    # 1. Ligar e Criar Tabela
+    eliminar_db_se_existir(db) # Caso de segundo teste
+    conn = connexion(db, tabela)
+
+    # 2. Dados de Exemplo (Lista de Tuplos)
+    dados = [
+        ("João Silva", "Analista", 2500.0),
+        ("Maria Souza", "Gerente", 4500.0),
+        ("Ana Costa", "Developer", 3200.0),
+        ("Pedro Alves", "Estagiário", 1000.0), # Este é o ID 4 para eliminar
+        ("Carlos Rocha", "Developer", 3100.0),
+        ("Beatriz Nunes", "Analista", 2700.0),
+        ("Ricardo Melo", "Developer", 3350.0),
+        ("Sónia Martins", "Gerente", 4200.0),
+        ("Tiago Lopes", "Estagiário", 1050.0),
+        ("Helena Vaz", "Analista", 2650.0)
+    ]
+
+    # 3. Operações
+    criar_dados(conn, tabela, dados)
+    actualizar_3primeirossalarios_percentagem(conn, tabela, 10) # Aumento de salário de 10%: 1000=>1100; 2500=> 2750; 3200=>3520; 
+    eleminar_registo(conn, tabela, 4) # Remove o id 4
+    imprimir_funcionarios_ordenados(conn, tabela, "salario")
+    conn.close()
+
+except s.OperationalError as e:
+    print(f"Erro de SQL: {e}. Verifique se a tabela '{tabela}' existe e tem dados.")
+
+finally:
+    conn.close()
+    print("\nConexão encerrada.")
