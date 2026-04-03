@@ -2084,3 +2084,63 @@ except s.OperationalError as e:
 finally:
     conn.close()
     print("\nConexão encerrada.")
+
+
+
+######## 45
+
+    import sqlite3 as s
+
+def connexion(db_name):
+    conexao = s.connect(str(db_name))
+    cursor = conexao.cursor()
+    return cursor
+
+def imprimir_funcionarios_ordenados(cursor, tabela, titulo):
+    dados = cursor.fetchall()
+    print(f"\n--- Listagem de {titulo} de {tabela} ---\n => Dados: '{dados}'\n ----------------------------------------")
+
+def obter_media(cursor, nome_tabela, dado):
+    cursor.execute(f"SELECT AVG({dado}) as media_salarial FROM {nome_tabela}")
+    media = cursor.fetchall()[0][0]
+    print(f"A media salarial é {media}")
+    return media
+
+def dispersao_salarial(cursor, tabela, media):
+    resultado = cursor.execute(f"SELECT cargo, salario FROM {tabela} GROUP BY cargo HAVING {media} > salario")
+    imprimir_funcionarios_ordenados(resultado, tabela, "dispersão")
+
+def extremos_salariais(cursor, tabela):
+    cursor.execute(f"SELECT * FROM {tabela} ORDER BY salario ASC LIMIT 1")
+    imprimir_funcionarios_ordenados(cursor, tabela, "extremos: Mínimo")
+
+    cursor.execute(f"SELECT * FROM {tabela} ORDER BY salario DESC LIMIT 1")
+    imprimir_funcionarios_ordenados(cursor, tabela, "extremos: Máximo")
+
+    cursor.execute(f"SELECT ID, (MAX(salario)-MIN(salario)) as dif_salarial FROM {tabela} GROUP BY ID")
+    imprimir_funcionarios_ordenados(cursor, tabela, "dif_salarial entre mínimo e máximo")
+    
+def quantidade_funcionarios_cargo(cursor, tabela):
+    cursor.execute(f"SELECT cargo, COUNT(*) FROM {tabela} GROUP BY cargo")
+    imprimir_funcionarios_ordenados(cursor, tabela, "Distribuicao por cargo MAX > MIN | media")
+
+def relatorio(cursor, tabela):
+    cursor.execute(f"SELECT cargo, COUNT(*), MIN(salario), MAX(salario), AVG(salario) FROM {tabela} GROUP BY cargo")
+    imprimir_funcionarios_ordenados(cursor, tabela, "média")
+
+# --- EXECUÇÃO ---
+tabela = "Funcionarios"
+db = "empresa.db"
+
+# 1. Ligar e Criar Tabela
+conn = connexion(db)
+
+# 2. Operações
+media = obter_media(conn, tabela, "salario")
+dispersao_salarial(conn, tabela, media)         # Descobrir possíveis disparidades salariais entre os funcionários de diferentes cargos.
+extremos_salariais(conn, tabela)                # Identificar os cargos com os maiores e menores salários médios.
+quantidade_funcionarios_cargo(conn, tabela)     # Determinar quantos funcionários existem por cargo e entender a distribuição salarial em cada cargo.
+relatorio(conn, tabela)                         # Fornecer um relatório geral que possa ajudar a diretoria a ajustar os salários para garantir mais equidade e competitividade no mercado.
+
+conn.close()
+
