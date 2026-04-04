@@ -2144,3 +2144,24 @@ relatorio(conn, tabela)                         # Fornecer um relatório geral q
 
 conn.close()
 
+
+
+######  47
+import random
+
+# 1. Criar um array de 100 elementos aleatórios compreendidos entre 1 e 1000 (podem ser números inteiros). 
+#  Este array irá chamar-se dólares
+dolares = random.sample(range(1000),100)
+print("Array 'Dolares' com 100 numeros aleatórios inteiros:", dolares)
+
+# 2. Fazer a conversão dos preços em dólares do primeiro array para um segundo array que se vai chamar euros. Devemos utilizar a  seguinte conversão: 
+#  - 1 USD = 0,874413 EUR
+euros =  []
+for price in dolares:
+    result = (price * 0.874413)
+    euros.append(round(result,2))
+
+#euros = (dolares * 0.874413)
+
+# 3. Mostrar o resultado do array de euros, arredondando a 2 casas decimais.
+print(f"Conversão em euros:", euros)
