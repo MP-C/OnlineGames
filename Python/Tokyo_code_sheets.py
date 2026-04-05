@@ -2165,3 +2165,59 @@ for price in dolares:
 
 # 3. Mostrar o resultado do array de euros, arredondando a 2 casas decimais.
 print(f"Conversão em euros:", euros)
+
+
+############# 48
+import pandas as pd
+import unicodedata
+
+# Carregar como dataframe de pandas csv 05_05_imdb_títulos.csv
+def carregar_csv(file_name):
+    try:
+        # 1. Carregar o ficheiro
+        df = pd.read_csv(file_name)
+        print(f"Ficheiro '{file_name}' carregado com sucesso!")
+
+        # 2. Exportar para JSON
+        json_name = file_name.replace('.csv', '.json')
+#       df.to_json(json_name, orient='records', lines=True)
+        print(f"Dados exportados para: {json_name}")
+        
+        return df
+
+    except FileNotFoundError:
+        print(f"Erro: O ficheiro '{file_name}' não foi encontrado.")
+        return None
+
+
+# Para transformar o texto em algo identico na base de dados
+def normalizar_texto(texto):
+    texto_normalizado = unicodedata.normalize('NFKD', texto) # (ex: 'ã' => 'a' + '~')
+    texto_sem_acentos = u"".join([c for c in texto_normalizado if not unicodedata.combining(c)])
+    return texto_sem_acentos.lower()
+
+file_titulos = "05_05_imdb_titulos.csv"
+file_elenco = "05_05_imdb_elenco.csv"
+
+# Utilize o módulo json para carregar o conteúdo dessa string e transformá-lo em um dicionário Python.
+dados_titulos = carregar_csv(file_titulos)
+dados_elenco = carregar_csv(file_elenco)
+
+mostrar_5_registos(dados_titulos)
+mostrar_5_registos(dados_elenco)
+mostrar_numero_de_registos(dados_titulos, file_titulos)
+mostrar_numero_de_registos(dados_elenco, file_elenco)
+mostrar_5_titulos_mais_antigos(dados_titulos)
+mostrar_filmes_titulo_palavra(dados_titulos, 'Dracula')
+mostrar_titulos_mais_repetidos(dados_titulos, 10)
+mostrar_primeiro_filme(dados_titulos, 'Romeo and Juliet')
+listar_filmes_com_palavra_cronologica_do_mais_velho(dados_titulos, 'Exorcist')
+mostrar_filmes_feitos_no_ano(dados_titulos, 1950)
+mostrar_filmes_entre_anos(dados_titulos, 1950, 1959)
+mostrar_todas_papeis_trilogia(dados_elenco, 'The Godfather')
+mostrar_elenco_ordenando_classificacao_completa_nome_data(dados_elenco, 'Drácula',1958)
+mostrar_quantidade_papeis_por_ator(dados_elenco, 'Bruce Wayne')
+mostrar_quantidade_papeis_por_ator_carreira(dados_elenco, 'Robert De Niro')
+listar_papeis_protagonista_ator_decada_ordenado_ano_decrescente(dados_elenco, 'Charlton Heston', 60)
+mostrar_quantos_papéis_atores(dados_elenco, "actor", 50)
+mostrar_quantos_papéis_atores(dados_elenco, "actress", 50)
