@@ -2189,6 +2189,10 @@ def carregar_csv(file_name):
         print(f"Erro: O ficheiro '{file_name}' não foi encontrado.")
         return None
 
+# e mostrar os seus 5 primeiros registos
+def mostrar_5_registos(df):
+    if df is not None:
+        print("\n", df.head(5))
 
 # Para transformar o texto em algo identico na base de dados
 def normalizar_texto(texto):
