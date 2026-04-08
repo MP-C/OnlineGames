@@ -2194,6 +2194,12 @@ def mostrar_5_registos(df):
     if df is not None:
         print("\n", df.head(5))
 
+# Mostrar o número de registos do dataframe de títulos
+def mostrar_numero_de_registos(df, file_name):
+    if df is not None:
+        print(f"\nTotal de registos em {file_name}: {len(df)}")
+
+
 # Para transformar o texto em algo identico na base de dados
 def normalizar_texto(texto):
     texto_normalizado = unicodedata.normalize('NFKD', texto) # (ex: 'ã' => 'a' + '~')
