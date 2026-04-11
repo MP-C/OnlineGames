@@ -2199,6 +2199,13 @@ def mostrar_numero_de_registos(df, file_name):
     if df is not None:
         print(f"\nTotal de registos em {file_name}: {len(df)}")
 
+# Mostrar os 5 titulos mais antigas
+def mostrar_5_titulos_mais_antigos(df):
+	antigos = df.sort_values(by='year', ascending=True).head(5) # Ordenar do mais antigo para o mais novo e mostar apenas os 5 primeiros
+	if not antigos.empty:
+		print("\nOs 5 filmes mais antigos:\n", antigos)
+	else:
+		print("\nNão foram encontrados filmes")
 
 # Para transformar o texto em algo identico na base de dados
 def normalizar_texto(texto):
