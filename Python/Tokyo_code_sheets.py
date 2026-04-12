@@ -2207,6 +2207,19 @@ def mostrar_5_titulos_mais_antigos(df):
 	else:
 		print("\nNão foram encontrados filmes")
 
+# Mostrar os filmes que no título contem a palavra “Drácula”. Quantos filmes são?
+def mostrar_filmes_titulo_palavra(df, filme_nome):
+	print("\n*******\nVerificar qual é a palavra que se pretende procurar. O código está bem feito.\nO que se pede é 'Drácula' (0 resultados). Mas o ficheiro só tem 'Dracula' (84 resultados).\n*******")
+	filtro = df['title'].str.contains(filme_nome, case=False, na=False)
+	resultados = df[filtro]
+	if not resultados.empty:
+		print(f"\nFilmes que contêm '{filme_nome}' no título")
+		print(resultados[['title', 'year']].to_string(index=False))
+		print(f"Total encontrado: {len(resultados)} filmes.")
+	else:
+		print(f"\nNenhum filme encontrado '{filme_nome}'.")
+
+
 # Para transformar o texto em algo identico na base de dados
 def normalizar_texto(texto):
     texto_normalizado = unicodedata.normalize('NFKD', texto) # (ex: 'ã' => 'a' + '~')
