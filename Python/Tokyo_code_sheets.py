@@ -2219,6 +2219,12 @@ def mostrar_filmes_titulo_palavra(df, filme_nome):
 	else:
 		print(f"\nNenhum filme encontrado '{filme_nome}'.")
 
+# Mostrar os 10 títulos mais comuns (que mais se repetem)
+def mostrar_titulos_mais_repetidos(df, total):
+	contagem = df['title'].value_counts() # Todos os filmes contados
+	top_titulos = contagem.head(total) # Apenas com a quantidade que se quer 'total'
+	print("\nOs 10 filmes mais repetidos:\n", top_titulos)
+
 
 # Para transformar o texto em algo identico na base de dados
 def normalizar_texto(texto):
