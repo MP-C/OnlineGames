@@ -2225,6 +2225,13 @@ def mostrar_titulos_mais_repetidos(df, total):
 	top_titulos = contagem.head(total) # Apenas com a quantidade que se quer 'total'
 	print("\nOs 10 filmes mais repetidos:\n", top_titulos)
 
+# Mostrar qual foi o primeiro filme chamado “Romeo and Juliet”
+def mostrar_primeiro_filme(df, filme_nome):
+	filtro = df[df['title'] == filme_nome]
+	primeiro = filtro.sort_values(by='year', ascending=True).head(1)
+	ano = primeiro['year'].values[0]
+	print(f"\nO primeiro filme {filme_nome} foi em :", ano)
+
 
 # Para transformar o texto em algo identico na base de dados
 def normalizar_texto(texto):
