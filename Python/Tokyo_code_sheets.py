@@ -2232,6 +2232,13 @@ def mostrar_primeiro_filme(df, filme_nome):
 	ano = primeiro['year'].values[0]
 	print(f"\nO primeiro filme {filme_nome} foi em :", ano)
 
+# Listar todas os filmes que contenham a palavra “Exorcist”, ordenados do mais antigo ao mais recente
+def listar_filmes_com_palavra_cronologica_do_mais_velho(df, filme_nome):
+	filtro_com_palavra_procurada_no_titulo = df[df['title'].str.contains(filme_nome)]
+	resultados_ordenados_por_ano_cronologico = filtro_com_palavra_procurada_no_titulo.sort_values(by='year', ascending=True)
+	filmes = resultados_ordenados_por_ano_cronologico[['year', 'title']].to_string(index=False)
+	print(f"\nOs filmes com a palavra {filme_nome} são:\n", filmes)
+
 
 # Para transformar o texto em algo identico na base de dados
 def normalizar_texto(texto):
