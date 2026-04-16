@@ -2239,6 +2239,12 @@ def listar_filmes_com_palavra_cronologica_do_mais_velho(df, filme_nome):
 	filmes = resultados_ordenados_por_ano_cronologico[['year', 'title']].to_string(index=False)
 	print(f"\nOs filmes com a palavra {filme_nome} são:\n", filmes)
 
+# Mostrar quantos filmes foram feitas no ano 1950
+def mostrar_filmes_feitos_no_ano(df,ano):
+	filtro_filmes_no_ano = df[df['year'] == ano]
+	filmes_do_ano = filtro_filmes_no_ano.sort_values(by='title', ascending=True)[['title']].to_string(index=False)
+	print(f"\nOs filmes produzidos em {ano} foram {len(filmes_do_ano)}:\n", filmes_do_ano)
+
 
 # Para transformar o texto em algo identico na base de dados
 def normalizar_texto(texto):
