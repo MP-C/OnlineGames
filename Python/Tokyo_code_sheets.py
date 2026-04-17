@@ -2245,6 +2245,12 @@ def mostrar_filmes_feitos_no_ano(df,ano):
 	filmes_do_ano = filtro_filmes_no_ano.sort_values(by='title', ascending=True)[['title']].to_string(index=False)
 	print(f"\nOs filmes produzidos em {ano} foram {len(filmes_do_ano)}:\n", filmes_do_ano)
 
+# Mostrar quantaos filmes foram feitas de 1950 a 1959 (inclusive)
+def mostrar_filmes_entre_anos(df,ano_inicio, ano_final):
+	filtro_filmes_no_ano = df[(df['year'] >= ano_inicio) & (df['year'] <= ano_final)]
+	filmes_do_ano = filtro_filmes_no_ano.sort_values(by='title', ascending=True)[['year', 'title']].to_string(index=False)
+	print(f"\nOs filmes produzidos entre {ano_inicio} e {ano_final} foram {len(filmes_do_ano)}:\n", filmes_do_ano)
+
 
 # Para transformar o texto em algo identico na base de dados
 def normalizar_texto(texto):
