@@ -2251,6 +2251,12 @@ def mostrar_filmes_entre_anos(df,ano_inicio, ano_final):
 	filmes_do_ano = filtro_filmes_no_ano.sort_values(by='title', ascending=True)[['year', 'title']].to_string(index=False)
 	print(f"\nOs filmes produzidos entre {ano_inicio} e {ano_final} foram {len(filmes_do_ano)}:\n", filmes_do_ano)
 
+# Mostrar todas os papéis que teve a trilogia “The Godfather”, agrupando pelo papel e forneca a informação da quantidade de vezes esse papel apareceu (exemplo: michael corleone aparece nos 3 filmes da triologia).:
+def mostrar_todas_papeis_trilogia(df,filme_nome): 
+	filtro_de_todos_filmes = df[df['title'].str.contains(filme_nome)]
+	contagem_papeis = filtro_de_todos_filmes.groupby('character').size() # para contar a quantidade de vezes que o personagem apareceu
+	#todos_papeis_de_cada_filme = filtro_de_todos_filmes[['character']].to_string(index=False) # Para apresentar o 'n' a seguir aos personagens
+	print(f"\nTodos os papeis que o fime {filme_nome} teve:", contagem_papeis)
 
 # Para transformar o texto em algo identico na base de dados
 def normalizar_texto(texto):
