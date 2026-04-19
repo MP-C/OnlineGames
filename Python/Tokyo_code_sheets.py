@@ -2258,6 +2258,16 @@ def mostrar_todas_papeis_trilogia(df,filme_nome):
 	#todos_papeis_de_cada_filme = filtro_de_todos_filmes[['character']].to_string(index=False) # Para apresentar o 'n' a seguir aos personagens
 	print(f"\nTodos os papeis que o fime {filme_nome} teve:", contagem_papeis)
 
+# Mostrar o elenco completo, ordenado pela classificação “n” do filme “Drácula” de 1958
+def mostrar_elenco_ordenando_classificacao_completa_nome_data(df,filme_nome, ano):
+	filme_nome_tratado = normalizar_texto(filme_nome)
+	filtro_elenco_filme_no_ano = df[(df['title'].str.contains(filme_nome_tratado, case=False, na=False)) & (df['year'] == ano)]
+	elenco_ordenado = filtro_elenco_filme_no_ano.sort_values(by='title', ascending=True)
+	if not elenco_ordenado.empty:
+		print(f"\nO elenco de {filme_nome} de {ano} :\n", elenco_ordenado[['year','title', 'name', 'character']].to_string(index=False))
+	else:
+		print(f"Não foi encontrado o elenco para '{filme_nome}' no ano {ano}.")
+
 # Para transformar o texto em algo identico na base de dados
 def normalizar_texto(texto):
     texto_normalizado = unicodedata.normalize('NFKD', texto) # (ex: 'ã' => 'a' + '~')
