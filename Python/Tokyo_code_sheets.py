@@ -2268,6 +2268,17 @@ def mostrar_elenco_ordenando_classificacao_completa_nome_data(df,filme_nome, ano
 	else:
 		print(f"Não foi encontrado o elenco para '{filme_nome}' no ano {ano}.")
 
+
+# Mostrar quantos papéis teve “Bruce Wayne” como protagonista (Dica: Em Batman de 1989, existe Bruce Wayne e tambem Young Bruce Wayne, que deverão ambos aparecer).
+def mostrar_quantidade_papeis_por_ator(df,personagem):
+	filtro_filmes_com_actor_no_elenco = df[df['character'].str.contains(personagem)]
+	filmes_ordenados = filtro_filmes_com_actor_no_elenco.sort_values(by='year', ascending=True)
+	if not filmes_ordenados.empty:
+		print(f"\nOs filmes onde {personagem} foi representado foram {len(filmes_ordenados)}:\n", filmes_ordenados[['year', 'title', 'character', 'name']].to_string(index=False))
+	else:
+		print(f"Não foi encontrado o elenco com personagem '{personagem}'")
+
+
 # Para transformar o texto em algo identico na base de dados
 def normalizar_texto(texto):
     texto_normalizado = unicodedata.normalize('NFKD', texto) # (ex: 'ã' => 'a' + '~')
