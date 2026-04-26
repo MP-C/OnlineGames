@@ -2278,6 +2278,17 @@ def mostrar_quantidade_papeis_por_ator(df,personagem):
 	else:
 		print(f"Não foi encontrado o elenco com personagem '{personagem}'")
 
+# Mostrar quantos papéis fez “Robert de Niro” na sua carreira
+def mostrar_quantidade_papeis_por_ator_carreira(df,ator_nome):
+	filtro_actor_nome_em_filmes = df[df['name'].str.contains(ator_nome)]
+	filmes_participados = filtro_actor_nome_em_filmes.sort_values(by='year', ascending=True) # .nunique()
+	if not filmes_participados.empty:
+		print(f"\nOs filmes onde {ator_nome} actuou foram {len(filmes_participados)}:\n", filmes_participados[['year', 'title', 'character']].to_string(index=False))
+	else:
+		print(f"Não foram encontrados filmes com o ator '{ator_nome}'")
+
+
+
 
 # Para transformar o texto em algo identico na base de dados
 def normalizar_texto(texto):
