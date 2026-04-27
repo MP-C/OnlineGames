@@ -2287,6 +2287,16 @@ def mostrar_quantidade_papeis_por_ator_carreira(df,ator_nome):
 	else:
 		print(f"Não foram encontrados filmes com o ator '{ator_nome}'")
 
+# Listagem de papéis como protagonista (n=1) que teve o ator “Charlton Heston” na década dos 60’s, ordenado  por ano de forma descendente.
+def listar_papeis_protagonista_ator_decada_ordenado_ano_decrescente(df,ator_nome,decada):
+	ano_inicio = 1900 + decada
+	ano_fim = ano_inicio + 9
+	filtro_filmes_com_protagonista = df[(df['name'].str.contains(ator_nome)) & (df['year'].between(ano_inicio, ano_fim)) & (df['n'] == 1)]
+	filmes = filtro_filmes_com_protagonista.sort_values(by='year', ascending=False)
+	if not filmes.empty:
+		print(f"\nOs filmes ({len(filmes)}) que o/a {ator_nome} protagonizou foram :\n", filmes[['year', 'title', 'character']].to_string(index=False))
+	else:
+		print(f"Não foram encontrados filmes com o ator '{ator_nome}'")
 
 
 
