@@ -2298,6 +2298,17 @@ def listar_papeis_protagonista_ator_decada_ordenado_ano_decrescente(df,ator_nome
 	else:
 		print(f"Não foram encontrados filmes com o ator '{ator_nome}'")
 
+# Mostrar quantos papéis para atores teve na década 50’s
+def mostrar_quantos_papéis_atores(df, genero, decada):
+	ano_inicio = 1900 + decada
+	ano_fim = ano_inicio + 9
+	
+	filtro_papeis_diferente_genro_por_decada = df[(df['type'] == genero) & (df['year'].between(ano_inicio, ano_fim))]
+	papeis = filtro_papeis_diferente_genro_por_decada.sort_values(by='character', ascending=False)
+	if not papeis.empty:
+		print(f"\nOs papeis de géreno para {genero} na decada de {decada} foram ao todo {len(papeis)}.")
+	else:
+		print(f"Não foram encontrados papies de {genero} na decada de {decada}")
 
 
 # Para transformar o texto em algo identico na base de dados
