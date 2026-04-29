@@ -16,16 +16,21 @@
             <div class="col-md-4 offset-md-4 my-auto"> <!--Este div vai ocupar 4 colunas do espaço (centrado)-->
                 <div class="card"> <!--Criação do objeto card-->
                     <div class="card-header">
-                        <form action=""> <!-- Separamos o input do botão colocando o input neste form-group para que os elementos não estejam colados e haja separação entre eles -->
+                        <form action="/criar-tarefa" method="post"> <!-- Separamos o input do botão colocando o input neste form-group para que os elementos não estejam colados e haja separação entre eles -->
                             <div class="form-group">
                                 <input type="text" name="conteúdo_tarefa" placeholder="Tarefa" class="form-control" autofocus> <!-- name="conteúdo_tarefa" ajuda para rotas -->
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block"> <!-- btn-block faz com que o botão ocupe toda a largura -->
-                                Guardar
-                            </button>
+                            <button type="submit" class="btn btn-primary btn-block">Guardar </button>  <!-- btn-block faz com que o botão ocupe toda a largura -->
                         </form>
                     </div>
-                    <div class="card-body"></div>
+                    <div class="card-body">
+                        <!-- As etiquetas <ul> e <li> servem para criar listas em HTML -->
+                        <ul>
+                        <!-- Graças a Jinja pode-se introduzir código Python no nosso HTML e Python encarrega-se de o executar e interpretar -->
+                        {% for tarefa in lista_de_tarefas %}
+                            <li>{{tarefa.conteúdo}} </li> {% endfor %} <!-- conteúdo é a variável da classe Tarefa que armazena o texto da tarefa -->
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
