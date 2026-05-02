@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 # 1. CONFIGURAÇÕES (Sempre ANTES do SQLAlchemy)
@@ -24,7 +24,30 @@ with app.app_context():
 # 3. ROTAS DO SERVIDOR
 @app.route('/', methods=['GET'])
 def home():
-    return render_template("index.html")
+    todas_as_tarefas = Tarefa.query.all() # Consultamos e armazenamos todas  as tarefas da base de dados
+    # Agora na variável todas_as_tarefas estão armazenadas todas as tarefas. Vamos entregar esta variável ao template index.html
+    return render_template("index.html", lista_de_tarefas=todas_as_tarefas) # Carrega-se o template index.html
+
+@app.route('/criar-tarefa', methods=['POST'])
+def criar():
+    # tarefa é um objeto da classe Tarefa (uma instância da classe)
+    tarefa = Tarefa(conteúdo=request.form['conteúdo_tarefa'], feita=False)  # id não é necessário atribuí - lo manualmente, porque a primary key gera - se automaticamente
+    db.session.add(tarefa)  # Adicionar o objeto da Tarefa à base de dados
+    db.session.commit()  # Executar a operação pendente da base de dados
+    return redirect(url_for('home'))  # Redireciona-nos à função home()
+
+@app.route('/eliminar-tarefa/<id>')
+def eliminar(id):
+    tarefa = Tarefa.query.filter_by(id=int(id)).delete() # Pesquisa-se dentro da base de dados, aquele registro cujo id coincida com o proporcionado pelo parâmetro da rota. Quando se encontrar elimina-se
+    db.session.commit() # Executar a operação pendente da base de dados
+    return redirect(url_for('home')) # Redireciona-nos à função home() e se tudo correu bem, ao atualizar, a tarefa eliminada não vai aparecer na listage
+
+@app.route('/tarefa-feita/<id>')
+def feita(id):
+    tarefa = Tarefa.query.filter_by(id=int(id)).first() # Obtém-se a tarefa que se procura
+    tarefa.feita = not(tarefa.feita) # Guardar na variável booleana da tarefa, o seu contrário
+    db.session.commit() # Executar a operação pendente da base de dados
+    return redirect(url_for('home')) # Redireciona-nos para a função home()
 
 # 4. ARRANQUE DO SERVIDOR
 if __name__ == '__main__':

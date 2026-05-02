@@ -7,3 +7,8 @@ background: linear-gradient(to left, #E2E2E2, #C9D6FF); /* W3C, IE10+*/
 .titulo {
     font-family: 'Permanent Marker', cursive;
 }
+
+.tarefa_feita {
+    text-decoration: line-through;
+    color: #cfcfcf;
+}
